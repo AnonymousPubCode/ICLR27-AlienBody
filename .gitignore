@@ -1,0 +1,16 @@
+# Secrets / local
+.env
+**/fuxi_secrets.local.py
+*.pyc
+__pycache__/
+.DS_Store
+.vscode/
+.idea/
+
+# Large / local-only
+results/
+*.log
+*.pdf
+
+# GPT raw intermediates (keep local)
+web/static/assets/raw/

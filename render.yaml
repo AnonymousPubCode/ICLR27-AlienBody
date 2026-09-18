@@ -1,0 +1,20 @@
+# Render Blueprint — AlienBody interactive demo
+# https://render.com/docs/blueprint-spec
+#
+# One-click: Dashboard → New → Blueprint → connect
+#   AnonymousPubCode/ICLR27-AlienBody  (or your fork)
+# Then open the service URL Render prints.
+
+services:
+  - type: web
+    name: alienbody-demo
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: PORT
+        value: "7860"
+      - key: PYTHONUNBUFFERED
+        value: "1"

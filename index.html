@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<link rel="canonical" href="https://anonymouspubcode.github.io/ICLR27-AlienBody/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlienBody — The Gap Between Action Knowledge and Control</title>
+<meta name="description" content="AlienBody: the gap between action knowledge and control in LLM agents. Anonymous benchmark release under peer review.">
+<link rel="icon" href="assets/alienbody-logo.png">
+<link rel="stylesheet" href="website/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <img src="assets/alienbody-logo.png" alt="">
+    <span class="wordmark">AlienBody</span>
+    <nav>
+      <a href="#clips">Clips</a>
+      <a href="#games">Games</a>
+      <a href="#start">Quick start</a>
+      <a href="https://github.com/AnonymousPubCode/ICLR27-AlienBody">Code</a>
+    </nav>
+  </div>
+  <div class="rule" aria-hidden="true"></div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Diagnostic benchmark · under peer review</div>
+    <h1>The Gap Between Action Knowledge and Control in LLM Agents</h1>
+    <p class="subtitle">
+      Most agent benchmarks leak action meaning through button names.
+      AlienBody exposes anonymous IDs and asks models to <em>calibrate, then plan</em> —
+      separating exploration, interpretation, and search failures.
+    </p>
+    <div class="btnrow">
+      <a class="btn" href="https://anonymouspubcode.github.io/ICLR27-AlienBody/">Project website</a>
+      <a class="btn ghost" href="https://github.com/AnonymousPubCode/ICLR27-AlienBody">GitHub</a>
+      <a class="btn ghost" href="#clips">Watch clips</a>
+      <a class="btn ghost" href="https://github.com/AnonymousPubCode/ICLR27-AlienBody/blob/main/DEPLOY_DEMO.md">Host the demo</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="stats">
+    <div class="stat"><b>6</b><span>cognitive families</span></div>
+    <div class="stat"><b>720</b><span>Tier-M envs (secret withheld)</span></div>
+    <div class="stat"><b>40→9%</b><span>F2 GPT-4o true→misleading</span></div>
+    <div class="stat"><b>2</b><span>external games (Kirby, Crafter)</span></div>
+  </div>
+
+  <section>
+    <div class="eyebrow">Paper figure</div>
+    <h2>The name-prior fallacy in one figure</h2>
+    <figure>
+      <img src="assets/figures/teaser.png" alt="Teaser figure">
+      <figcaption>Same environment, same model — only labels change.</figcaption>
+    </figure>
+  </section>
+
+  <section id="clips">
+    <div class="eyebrow">AlienBody episodes</div>
+    <h2>Oracle · Systematic · Random on the same env</h2>
+    <p class="lede">Phase 1 = probe anonymous buttons. Phase 2 = reach the revealed target.</p>
+    <div class="grid3">
+      <div class="card">
+        <img src="assets/media/alienbody/family1_test_000_compare_oracle_systematic_random.gif" alt="F1 compare">
+        <div class="cap">F1 Adapt</div>
+      </div>
+      <div class="card">
+        <img src="assets/media/alienbody/family2_test_000_compare_oracle_systematic_random.gif" alt="F2 compare">
+        <div class="cap">F2 Spatial</div>
+      </div>
+      <div class="card">
+        <img src="assets/media/alienbody/family4_test_000_compare_oracle_systematic_random.gif" alt="F4 compare">
+        <div class="cap">F4 Relational</div>
+      </div>
+      <div class="card">
+        <img src="assets/media/alienbody/family3_test_000_compare_oracle_systematic_random.gif" alt="F3 compare">
+        <div class="cap">F3 Conditional</div>
+      </div>
+      <div class="card">
+        <img src="assets/media/alienbody/family5_test_000_compare_oracle_systematic_random.gif" alt="F5 compare">
+        <div class="cap">F5 Compositional</div>
+      </div>
+      <div class="card">
+        <img src="assets/media/alienbody/family6_test_000_compare_oracle_systematic_random.gif" alt="F6 compare">
+        <div class="cap">F6 Temporal</div>
+      </div>
+    </div>
+
+    <h2 style="margin-top:28px">Open-VLM replays</h2>
+    <p class="lede">Qwen3.5-4B trajectories re-rendered from evaluation logs (no re-query).</p>
+    <div class="pair">
+      <div class="card">
+        <img src="assets/media/alienbody/family1_test_004_qwen3.5-4b.gif" alt="Qwen F1 success">
+        <div class="cap">F1 success</div>
+      </div>
+      <div class="card">
+        <img src="assets/media/alienbody/family4_test_000_qwen3.5-4b.gif" alt="Qwen F4 struggle">
+        <div class="cap">F4 struggle</div>
+      </div>
+    </div>
+    <figure style="margin-top:20px">
+      <video controls playsinline poster="assets/figures/teaser.png">
+        <source src="assets/media/alienbody/family4_test_000_compare_oracle_systematic_random.mp4" type="video/mp4">
+      </video>
+      <figcaption>MP4: F4 side-by-side (Oracle / Systematic / Random).</figcaption>
+    </figure>
+  </section>
+
+  <section id="games">
+    <div class="eyebrow">External validity</div>
+    <h2>Name prior on Kirby &amp; Crafter</h2>
+    <p class="lede">
+      <span class="swatch true"></span>named vs
+      <span class="swatch anon"></span>anonymous — matched steps, same visual protocol.
+    </p>
+    <div class="pair">
+      <div class="card">
+        <img src="assets/media/games/kirby_named.png" alt="Kirby named">
+        <div class="cap">Kirby named · step 299</div>
+      </div>
+      <div class="card">
+        <img src="assets/media/games/kirby_anonymous.png" alt="Kirby anonymous">
+        <div class="cap">Kirby anonymous · step 299</div>
+      </div>
+      <div class="card">
+        <img src="assets/media/games/crafter_named.png" alt="Crafter named">
+        <div class="cap">Crafter named · step 150</div>
+      </div>
+      <div class="card">
+        <img src="assets/media/games/crafter_anonymous.png" alt="Crafter anonymous">
+        <div class="cap">Crafter anonymous · step 150</div>
+      </div>
+    </div>
+    <figure>
+      <img src="assets/figures/game_evidence.png" alt="Game evidence">
+      <figcaption>Paper collage of the same evidence.</figcaption>
+    </figure>
+  </section>
+
+  <section id="start">
+    <div class="eyebrow">Reproduce</div>
+    <h2>Quick start</h2>
+    <pre>pip install -r requirements.txt
+python scripts/run_eval.py --agent oracle --family 1 --split test --n-envs 3
+python web/app.py   # local interactive demo</pre>
+    <p style="margin-top:12px" class="lede">
+      Full layout, deploy notes, and citation stub:
+      <a href="https://github.com/AnonymousPubCode/ICLR27-AlienBody">repository README</a>.
+    </p>
+  </section>
+
+  <footer>
+    Anonymous authors · code/benchmark MIT · this page is part of the anonymous ICLR release.
+    A named camera-ready site will replace this mirror upon acceptance.
+  </footer>
+</div>
+
+</body>
+</html>

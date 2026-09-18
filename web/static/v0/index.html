@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AlienBody</title>
+<link rel="icon" type="image/png" href="/static/logo.png">
+<link rel="apple-touch-icon" href="/static/logo.png">
+<meta name="description" content="AlienBody — anonymous-action grounding benchmark demo">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg: #080c18;
+    --panel: rgba(12, 18, 36, 0.88);
+    --panel-solid: #0e1428;
+    --border: rgba(0, 200, 255, 0.12);
+    --border-hover: rgba(0, 200, 255, 0.35);
+    --accent: #00d4ff;
+    --accent-dim: rgba(0, 212, 255, 0.25);
+    --success: #00ff88;
+    --warning: #ff9500;
+    --danger: #ff3366;
+    --phase1: #00d4ff;
+    --phase2: #ff9500;
+    --text: #d8dce8;
+    --text-dim: #6878a0;
+    --text-bright: #f0f2f8;
+    --font: 'Space Grotesk', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', 'Fira Code', monospace;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html, body { height: 100%; overflow: hidden; }
+body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+}
+
+/* ── Background ── */
+#stars {
+    position: fixed; inset: 0;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ── App Layout ── */
+#app {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    height: 100vh;
+    padding: 12px 16px;
+    gap: 12px;
+}
+header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 10px 20px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    backdrop-filter: blur(24px);
+    flex-shrink: 0;
+}
+.logo {
+    display: flex; align-items: center; gap: 12px;
+    font-weight: 700; font-size: 1.35rem;
+    color: var(--accent);
+    letter-spacing: 4px;
+    text-shadow: 0 0 24px var(--accent-dim);
+    user-select: none;
+}
+.logo img {
+    width: 36px; height: 36px; border-radius: 8px;
+    border: 1px solid var(--border);
+}
+.logo span { color: var(--text-dim); font-size: 0.75rem; letter-spacing: 1px; margin-left: 4px; }
+.family-badge {
+    font-family: var(--mono); font-size: 0.8rem; font-weight: 500;
+    color: var(--text-dim);
+    padding: 4px 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 20px;
+}
+
+/* ── Main Grid ── */
+main {
+    flex: 1; display: flex; gap: 12px; min-height: 0;
+}
+.game-col {
+    flex: 1; display: flex; flex-direction: column; min-width: 0;
+    position: relative;
+}
+.game-wrap {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    backdrop-filter: blur(24px);
+    padding: 14px;
+    position: relative;
+    overflow: hidden;
+}
+.phase-bar {
+    width: 100%; display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px; flex-shrink: 0;
+}
+.phase-label {
+    font-family: var(--mono); font-size: 0.82rem; font-weight: 600;
+    letter-spacing: 2px; padding: 5px 16px;
+    border-radius: 6px;
+    transition: all 0.4s ease;
+}
+.phase-label.p1 {
+    background: rgba(0, 212, 255, 0.1); color: var(--phase1);
+    border: 1px solid rgba(0, 212, 255, 0.2);
+}
+.phase-label.p2 {
+    background: rgba(255, 149, 0, 0.1); color: var(--phase2);
+    border: 1px solid rgba(255, 149, 0, 0.2);
+}
+.step-label {
+    font-family: var(--mono); font-size: 0.78rem; color: var(--text-dim);
+}
+#game-canvas {
+    flex: 1; width: 100%; max-width: 100%;
+    aspect-ratio: 1 / 1;
+    border-radius: 10px;
+    cursor: default;
+}
+.budget-bar-wrap {
+    width: 100%; margin-top: 10px; flex-shrink: 0;
+}
+.budget-bar-bg {
+    width: 100%; height: 5px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px; overflow: hidden;
+}
+.budget-bar-fill {
+    height: 100%; border-radius: 3px;
+    transition: width 0.3s ease, background 0.3s ease;
+}
+.budget-text {
+    font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim);
+    margin-top: 4px; text-align: right;
+}
+
+/* ── Result Overlay ── */
+.result-overlay {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 50;
+    background: rgba(8, 12, 24, 0.7);
+    backdrop-filter: blur(8px);
+    border-radius: 14px;
+    opacity: 0;
+    animation: fadeIn 0.4s ease 0.1s forwards;
+}
+.result-card {
+    padding: 28px 48px; border-radius: 16px; text-align: center;
+    font-family: var(--mono); font-weight: 700; font-size: 1.6rem;
+    transform: scale(0.8); opacity: 0;
+    animation: popIn 0.4s cubic-bezier(.17,.67,.35,1.35) 0.2s forwards;
+    cursor: pointer;
+}
+.result-card.win {
+    background: rgba(0, 255, 136, 0.08); border: 2px solid rgba(0, 255, 136, 0.35);
+    color: var(--success); box-shadow: 0 0 60px rgba(0, 255, 136, 0.1);
+}
+.result-card.lose {
+    background: rgba(255, 51, 102, 0.08); border: 2px solid rgba(255, 51, 102, 0.35);
+    color: var(--danger); box-shadow: 0 0 60px rgba(255, 51, 102, 0.1);
+}
+.result-sub {
+    font-size: 0.7rem; font-weight: 400; opacity: 0.6; margin-top: 8px;
+}
+
+/* ── Control Panel ── */
+.ctrl-col {
+    width: 310px; display: flex; flex-direction: column; gap: 10px;
+    flex-shrink: 0; overflow-y: auto;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.08) transparent;
+}
+.card {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 14px; backdrop-filter: blur(24px); padding: 14px;
+}
+.card-title {
+    font-family: var(--mono); font-size: 0.68rem; font-weight: 500;
+    color: var(--text-dim); letter-spacing: 2.5px; margin-bottom: 10px;
+    text-transform: uppercase;
+}
+
+/* Action Buttons */
+.action-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+    margin-bottom: 10px;
+}
+.btn-action {
+    padding: 18px 8px;
+    font-family: var(--mono); font-size: 1.2rem; font-weight: 700;
+    color: var(--text);
+    background: linear-gradient(145deg, rgba(0,212,255,0.06), rgba(0,212,255,0.02));
+    border: 1px solid rgba(0,212,255,0.18);
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    position: relative; overflow: hidden;
+    outline: none;
+}
+.btn-action:hover:not(:disabled) {
+    background: linear-gradient(145deg, rgba(0,212,255,0.14), rgba(0,212,255,0.06));
+    border-color: rgba(0,212,255,0.5);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px rgba(0,212,255,0.12);
+}
+.btn-action:active:not(:disabled) {
+    transform: translateY(0);
+    box-shadow: 0 0 16px rgba(0,212,255,0.25) inset;
+}
+.btn-action.highlight {
+    border-color: var(--accent);
+    box-shadow: 0 0 20px rgba(0,212,255,0.2);
+    animation: pulseGlow 0.6s ease;
+}
+.btn-action:disabled {
+    opacity: 0.3; cursor: default; transform: none !important;
+}
+.btn-action .key-hint {
+    position: absolute; top: 4px; right: 6px;
+    font-size: 0.5rem; opacity: 0.35; letter-spacing: 0;
+}
+
+.btn-done {
+    width: 100%; padding: 11px;
+    font-family: var(--mono); font-size: 0.8rem; font-weight: 500;
+    color: var(--warning); letter-spacing: 1px;
+    background: rgba(255,149,0,0.05);
+    border: 1px solid rgba(255,149,0,0.15);
+    border-radius: 10px;
+    cursor: pointer; transition: all 0.15s ease; outline: none;
+}
+.btn-done:hover:not(:disabled) {
+    background: rgba(255,149,0,0.12); border-color: rgba(255,149,0,0.4);
+}
+.btn-done:disabled { opacity: 0.25; cursor: default; }
+
+/* Feedback */
+.feedback-log {
+    font-family: var(--mono); font-size: 0.7rem; color: var(--text-dim);
+    max-height: 140px; overflow-y: auto; line-height: 1.7;
+    scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.06) transparent;
+}
+.fb-entry { padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.02); }
+.fb-entry.phase-change { color: var(--warning); }
+.fb-step { color: rgba(255,255,255,0.2); }
+
+/* Settings */
+.row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
+.row label { font-size: 0.82rem; color: var(--text-dim); }
+.row select {
+    padding: 5px 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px; color: var(--text); font-family: var(--font); font-size: 0.82rem;
+    outline: none; cursor: pointer;
+}
+.row select:focus { border-color: var(--accent); }
+.row select option { background: var(--panel-solid); color: var(--text); }
+
+.btn-primary {
+    width: 100%; padding: 11px;
+    font-family: var(--mono); font-size: 0.85rem; font-weight: 600;
+    color: var(--bg); letter-spacing: 1px;
+    background: var(--accent); border: none; border-radius: 10px;
+    cursor: pointer; transition: all 0.15s ease; outline: none;
+}
+.btn-primary:hover {
+    filter: brightness(1.15);
+    box-shadow: 0 4px 24px rgba(0,212,255,0.3);
+    transform: translateY(-1px);
+}
+.btn-secondary {
+    width: 100%; padding: 11px;
+    font-family: var(--mono); font-size: 0.85rem; font-weight: 600;
+    color: var(--success); letter-spacing: 1px;
+    background: rgba(0,255,136,0.06);
+    border: 1px solid rgba(0,255,136,0.18);
+    border-radius: 10px;
+    cursor: pointer; transition: all 0.15s ease; outline: none;
+}
+.btn-secondary:hover {
+    background: rgba(0,255,136,0.12); border-color: rgba(0,255,136,0.4);
+    box-shadow: 0 4px 24px rgba(0,255,136,0.12);
+}
+.btn-stop {
+    width: 100%; padding: 11px;
+    font-family: var(--mono); font-size: 0.85rem; font-weight: 600;
+    color: var(--danger); letter-spacing: 1px;
+    background: rgba(255,51,102,0.06);
+    border: 1px solid rgba(255,51,102,0.18);
+    border-radius: 10px;
+    cursor: pointer; transition: all 0.15s ease; outline: none;
+    display: none;
+}
+.btn-stop:hover {
+    background: rgba(255,51,102,0.12); border-color: rgba(255,51,102,0.4);
+}
+
+/* AI indicator */
+.ai-badge {
+    display: none;
+    font-family: var(--mono); font-size: 0.7rem; font-weight: 600;
+    color: var(--success); letter-spacing: 1.5px;
+    padding: 3px 12px;
+    background: rgba(0,255,136,0.08);
+    border: 1px solid rgba(0,255,136,0.2);
+    border-radius: 4px;
+    animation: blink 1.2s ease infinite;
+}
+.ai-badge.active { display: inline-block; }
+
+/* Keyboard hint */
+.key-bar {
+    flex-shrink: 0; text-align: center;
+    font-family: var(--mono); font-size: 0.65rem; color: var(--text-dim);
+    opacity: 0.4; padding: 4px 0;
+}
+kbd {
+    display: inline-block; padding: 1px 5px;
+    background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 3px; font-family: var(--mono); font-size: 0.6rem;
+    margin: 0 1px;
+}
+
+/* ── Animations ── */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes popIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+@keyframes pulseGlow {
+    0% { box-shadow: 0 0 0 rgba(0,212,255,0); }
+    50% { box-shadow: 0 0 24px rgba(0,212,255,0.35); }
+    100% { box-shadow: 0 0 0 rgba(0,212,255,0); }
+}
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+}
+@keyframes flash {
+    0% { filter: brightness(2); }
+    100% { filter: brightness(1); }
+}
+</style>
+</head>
+<body>
+
+<canvas id="stars"></canvas>
+
+<div id="app">
+    <header>
+        <div class="logo"><img src="/static/logo.png" alt="AlienBody"/><span>ALIENBODY</span><span>anonymous action grounding</span></div>
+        <span class="ai-badge" id="ai-badge">AI PLAYING</span>
+        <div class="family-badge" id="family-badge">—</div>
+    </header>
+
+    <main>
+        <div class="game-col">
+            <div class="game-wrap" id="game-wrap">
+                <div class="phase-bar">
+                    <div class="phase-label p1" id="phase-label">PHASE 1 · CALIBRATION</div>
+                    <div class="step-label" id="step-label">Step 0 / 50</div>
+                </div>
+                <canvas id="game-canvas"></canvas>
+                <div class="budget-bar-wrap">
+                    <div class="budget-bar-bg"><div class="budget-bar-fill" id="budget-fill"></div></div>
+                    <div class="budget-text" id="budget-text">—</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ctrl-col">
+            <div class="card">
+                <div class="card-title">Actions</div>
+                <div class="action-grid" id="action-grid"></div>
+                <button class="btn-done" id="btn-done" disabled>DONE EXPLORING <kbd>D</kbd></button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Feedback</div>
+                <div class="feedback-log" id="feedback-log">
+                    <div class="fb-entry" style="opacity:0.4">Start a game to begin.</div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">New Game</div>
+                <div class="row"><label>Family</label>
+                    <select id="sel-family">
+                        <option value="1">F1 Remapped</option>
+                        <option value="2">F2 Directional</option>
+                        <option value="3">F3 State-Dep.</option>
+                        <option value="4">F4 Relational</option>
+                        <option value="5">F5 Composite</option>
+                        <option value="6">F6 Temporal</option>
+                    </select>
+                </div>
+                <div class="row"><label>Grid</label>
+                    <select id="sel-grid">
+                        <option value="8">8 × 8</option>
+                        <option value="16">16 × 16</option>
+                        <option value="24">24 × 24</option>
+                    </select>
+                </div>
+                <button class="btn-primary" id="btn-new">NEW GAME <kbd>N</kbd></button>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Watch AI</div>
+                <div class="row"><label>Agent</label>
+                    <select id="sel-agent">
+                        <option value="random">Random</option>
+                        <option value="systematic">Systematic</option>
+                        <option value="bayesian">Bayesian</option>
+                        <option value="memory">Memory-Aug.</option>
+                        <option value="oracle">Oracle</option>
+                    </select>
+                </div>
+                <div class="row"><label>Speed</label>
+                    <select id="sel-speed">
+                        <option value="150">Fast</option>
+                        <option value="350" selected>Normal</option>
+                        <option value="700">Slow</option>
+                    </select>
+                </div>
+                <button class="btn-secondary" id="btn-watch">▶ WATCH AI <kbd>W</kbd></button>
+                <button class="btn-stop" id="btn-stop">■ STOP</button>
+            </div>
+        </div>
+    </main>
+
+    <div class="key-bar">
+        <kbd>1</kbd>–<kbd>4</kbd> actions
+        <kbd>D</kbd> done exploring
+        <kbd>N</kbd> new game
+        <kbd>W</kbd> watch AI
+    </div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   AlienBody Frontend — Canvas Game + WebSocket
+   ═══════════════════════════════════════════════════ */
+
+// ── Color Palettes ──
+const FLOOR = {
+    0: [28, 34, 52],
+    1: [25, 95, 195],
+    2: [195, 50, 42],
+    3: [35, 165, 50],
+    4: [225, 190, 18],
+    5: [135, 135, 140],
+    6: [195, 18, 155],
+    7: [215, 110, 28],
+    8: [95, 185, 225],
+    9: [105, 18, 32],
+};
+const FLOOR_LIGHT = {};
+for (const k in FLOOR) FLOOR_LIGHT[k] = FLOOR[k].map(v => Math.min(255, v + 12));
+
+const ARC = {
+    0: [0,0,0], 1: [0,116,217], 2: [255,65,54], 3: [46,204,64],
+    4: [255,220,0], 5: [170,170,170], 6: [240,18,190], 7: [255,133,27],
+    8: [127,219,255], 9: [135,12,37],
+};
+
+const FAMILY_NAMES = {
+    1:'Remapped', 2:'Directional', 3:'State-Dep.', 4:'Relational',
+    5:'Composite', 6:'Temporal',
+};
+
+// ── State ──
+let S = null;            // current game state from server
+let prevAgent = null;    // previous agent position for animation
+let animT = 1;           // 0→1 movement animation progress
+let animStart = 0;
+const ANIM_MS = 180;
+
+let particles = [];
+let shakeT = 0;
+let phaseFlashT = 0;
+let feedbackLog = [];
+let aiActive = false;
+
+// ── Canvas refs ──
+let gc, gctx, sc, sctx;
+let starList = [];
+let dpr = 1;
+
+// ── WebSocket ──
+let ws = null;
+
+// ══════════════════════════════════════════════════
+//  INIT
+// ══════════════════════════════════════════════════
+function init() {
+    gc = document.getElementById('game-canvas');
+    gctx = gc.getContext('2d');
+    sc = document.getElementById('stars');
+    sctx = sc.getContext('2d');
+    dpr = window.devicePixelRatio || 1;
+
+    sizeStars();
+    makeStars(220);
+    sizeGame();
+    window.addEventListener('resize', () => { sizeStars(); makeStars(220); sizeGame(); });
+
+    setupUI();
+    connectWS();
+    requestAnimationFrame(loop);
+}
+
+function sizeStars() {
+    sc.width = window.innerWidth * dpr;
+    sc.height = window.innerHeight * dpr;
+    sc.style.width = window.innerWidth + 'px';
+    sc.style.height = window.innerHeight + 'px';
+}
+
+function makeStars(n) {
+    starList = [];
+    for (let i = 0; i < n; i++) {
+        starList.push({
+            x: Math.random(), y: Math.random(),
+            r: Math.random() * 1.2 + 0.3,
+            bright: Math.random() * 0.5 + 0.5,
+            tw: Math.random() * 0.003 + 0.001,
+        });
+    }
+}
+
+function sizeGame() {
+    const wrap = document.getElementById('game-wrap');
+    const bar = wrap.querySelector('.phase-bar');
+    const budg = wrap.querySelector('.budget-bar-wrap');
+    const ww = wrap.clientWidth - 28;
+    const wh = wrap.clientHeight - (bar ? bar.offsetHeight : 0) - (budg ? budg.offsetHeight : 0) - 44;
+    const sz = Math.max(180, Math.min(ww, wh));
+    gc.style.width = sz + 'px';
+    gc.style.height = sz + 'px';
+    gc.width = Math.round(sz * dpr);
+    gc.height = Math.round(sz * dpr);
+}
+
+// ══════════════════════════════════════════════════
+//  WEBSOCKET
+// ══════════════════════════════════════════════════
+function connectWS() {
+    const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
+    ws = new WebSocket(`${proto}//${location.host}/ws`);
+    ws.onopen = () => { sendNew(); };
+    ws.onmessage = e => {
+        const d = JSON.parse(e.data);
+        if (d.type === 'state') onState(d);
+    };
+    ws.onclose = () => setTimeout(connectWS, 2000);
+    ws.onerror = () => {};
+}
+
+function send(o) { if (ws?.readyState === 1) ws.send(JSON.stringify(o)); }
+
+function sendNew() {
+    const fam = +document.getElementById('sel-family').value;
+    const gs  = +document.getElementById('sel-grid').value;
+    send({ type: 'new_game', family: fam, gridSize: gs });
+    feedbackLog = [];
+    setAI(false);
+    removeResult();
+}
+
+function sendAction(a) {
+    if (!S || S.done || aiActive) return;
+    send({ type: 'action', action: a });
+}
+
+function sendDone() {
+    if (!S || S.phase !== 1 || S.done || aiActive) return;
+    send({ type: 'done_exploring' });
+}
+
+function sendWatch() {
+    if (!S) return;
+    const agent = document.getElementById('sel-agent').value;
+    const speed = +document.getElementById('sel-speed').value;
+    send({ type: 'watch_ai', agent, speed });
+    feedbackLog = [];
+    setAI(true);
+    removeResult();
+}
+
+function sendStop() { send({ type: 'new_game', family: S?.family || 1, gridSize: S?.gridSize || 8 }); setAI(false); }
+
+// ══════════════════════════════════════════════════
+//  STATE HANDLING
+// ══════════════════════════════════════════════════
+function onState(d) {
+    const phaseChanged = S && S.phase !== d.phase;
+    const agentMoved = S && d.agent &&
+        (S.agent.row !== d.agent.row || S.agent.col !== d.agent.col);
+
+    if (agentMoved) {
+        prevAgent = { row: S.agent.row, col: S.agent.col };
+        animT = 0;
+        animStart = performance.now();
+        spawnTrail(S.agent.row, S.agent.col, d.agent.row, d.agent.col);
+    }
+
+    S = d;
+    aiActive = !!d.aiMode;
+
+    if (phaseChanged) phaseFlashT = 1;
+    if (d.done) {
+        if (d.success) spawnConfetti();
+        else shakeT = 18;
+    }
+
+    updateUI();
+}
+
+function setAI(on) {
+    aiActive = on;
+    document.getElementById('ai-badge').classList.toggle('active', on);
+    document.getElementById('btn-watch').style.display = on ? 'none' : 'block';
+    document.getElementById('btn-stop').style.display = on ? 'block' : 'none';
+}
+
+// ══════════════════════════════════════════════════
+//  UI UPDATES
+// ══════════════════════════════════════════════════
+function updateUI() {
+    if (!S) return;
+
+    // Phase label
+    const pl = document.getElementById('phase-label');
+    if (S.phase === 1) {
+        pl.textContent = 'PHASE 1 · CALIBRATION';
+        pl.className = 'phase-label p1';
+    } else {
+        pl.textContent = 'PHASE 2 · NAVIGATE';
+        pl.className = 'phase-label p2';
+    }
+
+    // Step
+    document.getElementById('step-label').textContent = `Step ${S.step} / ${S.maxSteps}`;
+
+    // Family badge
+    document.getElementById('family-badge').textContent =
+        `F${S.family} ${S.familyName || FAMILY_NAMES[S.family] || ''} · ${S.actionType}`;
+
+    // Budget bar
+    const fill = document.getElementById('budget-fill');
+    const btxt = document.getElementById('budget-text');
+    if (S.phase === 1) {
+        const pct = Math.min(100, (S.phase1Steps / S.phase1Budget) * 100);
+        fill.style.width = pct + '%';
+        fill.style.background = `linear-gradient(90deg, var(--phase1), rgba(0,212,255,0.5))`;
+        btxt.textContent = `Exploration: ${S.phase1Steps} / ${S.phase1Budget}`;
+    } else {
+        const pct = Math.min(100, (S.step / S.maxSteps) * 100);
+        fill.style.width = pct + '%';
+        fill.style.background = pct > 80
+            ? `linear-gradient(90deg, var(--danger), rgba(255,51,102,0.5))`
+            : `linear-gradient(90deg, var(--phase2), rgba(255,149,0,0.5))`;
+        btxt.textContent = `Total: ${S.step} / ${S.maxSteps}`;
+    }
+
+    // Action buttons
+    const grid = document.getElementById('action-grid');
+    const nAct = S.nActions;
+    if (grid.children.length !== nAct) {
+        grid.innerHTML = '';
+        for (let i = 0; i < nAct; i++) {
+            const b = document.createElement('button');
+            b.className = 'btn-action';
+            b.innerHTML = `${i}<span class="key-hint">${i+1}</span>`;
+            b.onclick = () => sendAction(i);
+            grid.appendChild(b);
+        }
+    }
+    const btns = grid.querySelectorAll('.btn-action');
+    btns.forEach((b, i) => {
+        b.disabled = S.done || aiActive;
+        b.classList.toggle('highlight', aiActive && S.aiAction === i);
+    });
+
+    // Done button
+    const bd = document.getElementById('btn-done');
+    bd.disabled = S.phase !== 1 || S.done || aiActive;
+
+    // Feedback
+    if (S.feedback) {
+        feedbackLog.unshift({ text: S.feedback, step: S.step, phase: S.phase });
+        if (feedbackLog.length > 30) feedbackLog.length = 30;
+    }
+    const fl = document.getElementById('feedback-log');
+    fl.innerHTML = feedbackLog.map(e =>
+        `<div class="fb-entry${e.text.includes('Phase 2') ? ' phase-change' : ''}">` +
+        `<span class="fb-step">[${e.step}]</span> ${esc(e.text)}</div>`
+    ).join('');
+
+    // Result
+    if (S.done) showResult(S.success);
+}
+
+function esc(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+function showResult(win) {
+    removeResult();
+    const wrap = document.getElementById('game-wrap');
+    const ov = document.createElement('div');
+    ov.className = 'result-overlay';
+    ov.id = 'result-overlay';
+    const cls = win ? 'win' : 'lose';
+    const icon = win ? '★ SUCCESS ★' : '✗ FAILED';
+    const sub = win ? `${S.step} steps` : 'Ran out of steps';
+    ov.innerHTML = `<div class="result-card ${cls}" id="result-card">
+        ${icon}<div class="result-sub">${sub} · Click or press N for new game</div></div>`;
+    ov.onclick = () => { removeResult(); sendNew(); };
+    wrap.appendChild(ov);
+}
+
+function removeResult() {
+    const el = document.getElementById('result-overlay');
+    if (el) el.remove();
+}
+
+// ══════════════════════════════════════════════════
+//  INPUT
+// ══════════════════════════════════════════════════
+function setupUI() {
+    document.getElementById('btn-new').onclick = sendNew;
+    document.getElementById('btn-done').onclick = sendDone;
+    document.getElementById('btn-watch').onclick = sendWatch;
+    document.getElementById('btn-stop').onclick = sendStop;
+
+    document.addEventListener('keydown', e => {
+        if (e.target.tagName === 'SELECT' || e.target.tagName === 'INPUT') return;
+        const k = e.key.toLowerCase();
+        if (k >= '1' && k <= '6') { sendAction(+k - 1); e.preventDefault(); }
+        else if (k === 'd') { sendDone(); e.preventDefault(); }
+        else if (k === 'n') { sendNew(); e.preventDefault(); }
+        else if (k === 'w') { sendWatch(); e.preventDefault(); }
+    });
+}
+
+// ══════════════════════════════════════════════════
+//  PARTICLES
+// ══════════════════════════════════════════════════
+function spawnTrail(fr, fc, tr, tc) {
+    if (!S) return;
+    const cell = gc.width / dpr / S.gridSize;
+    const fx = (fc + 0.5) * cell, fy = (fr + 0.5) * cell;
+    for (let i = 0; i < 6; i++) {
+        particles.push({
+            x: fx, y: fy,
+            vx: (Math.random() - 0.5) * 2.5,
+            vy: (Math.random() - 0.5) * 2.5,
+            life: 1, decay: 0.025 + Math.random() * 0.02,
+            r: 1.5 + Math.random() * 2.5,
+            c: [0, 212, 255],
+        });
+    }
+}
+
+function spawnConfetti() {
+    const sz = gc.width / dpr;
+    const cx = sz / 2, cy = sz / 2;
+    const cols = [[0,255,136],[0,212,255],[255,220,0],[255,133,27],[240,18,190]];
+    for (let i = 0; i < 70; i++) {
+        const a = Math.random() * Math.PI * 2;
+        const sp = 2 + Math.random() * 5;
+        particles.push({
+            x: cx, y: cy,
+            vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 2,
+            life: 1, decay: 0.008 + Math.random() * 0.012,
+            r: 2 + Math.random() * 3.5,
+            c: cols[Math.floor(Math.random() * cols.length)],
+        });
+    }
+}
+
+function tickParticles() {
+    particles = particles.filter(p => {
+        p.x += p.vx; p.y += p.vy; p.vy += 0.08;
+        p.life -= p.decay;
+        return p.life > 0;
+    });
+    if (shakeT > 0) shakeT--;
+    if (phaseFlashT > 0) phaseFlashT -= 0.04;
+}
+
+// ══════════════════════════════════════════════════
+//  RENDER LOOP
+// ══════════════════════════════════════════════════
+function loop(ts) {
+    if (animT < 1) animT = Math.min(1, (ts - animStart) / ANIM_MS);
+    tickParticles();
+    drawStars(ts);
+    drawGame(ts);
+    requestAnimationFrame(loop);
+}
+
+// ── Stars ──
+function drawStars(ts) {
+    const w = sc.width, h = sc.height;
+    sctx.fillStyle = '#080c18';
+    sctx.fillRect(0, 0, w, h);
+    const grd = sctx.createRadialGradient(w/2, h*0.4, 0, w/2, h*0.4, w*0.6);
+    grd.addColorStop(0, 'rgba(8,25,55,0.35)');
+    grd.addColorStop(1, 'rgba(0,0,0,0)');
+    sctx.fillStyle = grd;
+    sctx.fillRect(0, 0, w, h);
+    for (const s of starList) {
+        const twk = Math.sin(ts * s.tw) * 0.3 + 0.7;
+        const a = s.bright * twk;
+        sctx.beginPath();
+        sctx.arc(s.x * w, s.y * h, s.r * dpr, 0, Math.PI * 2);
+        sctx.fillStyle = `rgba(190,210,255,${a})`;
+        sctx.fill();
+    }
+}
+
+// ── Game Canvas ──
+function drawGame(ts) {
+    const w = gc.width, h = gc.height;
+    const ctx = gctx;
+    ctx.save();
+    ctx.scale(dpr, dpr);
+    const sz = w / dpr;
+
+    // shake
+    const sx = shakeT > 0 ? (Math.random() - 0.5) * 5 : 0;
+    const sy = shakeT > 0 ? (Math.random() - 0.5) * 5 : 0;
+    ctx.translate(sx, sy);
+
+    // bg
+    ctx.fillStyle = '#0b1022';
+    ctx.fillRect(-8, -8, sz + 16, sz + 16);
+
+    if (!S) {
+        ctx.fillStyle = '#6878a0';
+        ctx.font = `${14}px "Space Grotesk", sans-serif`;
+        ctx.textAlign = 'center';
+        ctx.fillText('Connecting…', sz / 2, sz / 2);
+        ctx.restore();
+        return;
+    }
+
+    const gs = S.gridSize;
+    const cell = sz / gs;
+    const obs = new Set(S.obstacles.map(o => o[0] + ',' + o[1]));
+
+    // ── Tiles ──
+    for (let r = 0; r < gs; r++) {
+        for (let c = 0; c < gs; c++) {
+            const x = c * cell, y = r * cell;
+            const ci = S.grid[r][c];
+            const key = r + ',' + c;
+            if (obs.has(key)) {
+                drawObstacle(ctx, x, y, cell);
+            } else {
+                drawTile(ctx, x, y, cell, ci, r, c);
+            }
+        }
+    }
+
+    // ── Grid lines ──
+    ctx.strokeStyle = 'rgba(90,110,150,0.1)';
+    ctx.lineWidth = 0.5;
+    for (let i = 0; i <= gs; i++) {
+        const p = i * cell;
+        ctx.beginPath(); ctx.moveTo(p, 0); ctx.lineTo(p, sz); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(0, p); ctx.lineTo(sz, p); ctx.stroke();
+    }
+
+    // ── Target ──
+    if (S.phase === 2) drawTarget(ctx, S.target[0], S.target[1], cell, ts);
+
+    // ── Agent ──
+    drawAgent(ctx, cell, ts);
+
+    // ── Particles ──
+    for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r * p.life, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${p.c[0]},${p.c[1]},${p.c[2]},${p.life * 0.65})`;
+        ctx.fill();
+    }
+
+    // ── Phase flash overlay ──
+    if (phaseFlashT > 0) {
+        ctx.fillStyle = `rgba(0,212,255,${phaseFlashT * 0.12})`;
+        ctx.fillRect(0, 0, sz, sz);
+    }
+
+    ctx.restore();
+}
+
+function drawTile(ctx, x, y, sz, ci, r, c) {
+    const light = (r + c) % 2 === 0;
+    const pal = light ? FLOOR_LIGHT : FLOOR;
+    const col = pal[ci] || [28, 34, 52];
+    const pad = Math.max(0.5, sz * 0.03);
+    const rad = Math.max(1.5, sz * 0.08);
+    ctx.fillStyle = `rgb(${col[0]},${col[1]},${col[2]})`;
+    rr(ctx, x + pad, y + pad, sz - pad * 2, sz - pad * 2, rad);
+    ctx.fill();
+    if (ci > 0) {
+        ctx.fillStyle = 'rgba(255,255,255,0.05)';
+        ctx.fillRect(x + pad + 1, y + pad + 1, sz - pad * 2 - 2, (sz - pad * 2) * 0.3);
+    }
+}
+
+function drawObstacle(ctx, x, y, sz) {
+    const pad = Math.max(0.5, sz * 0.03);
+    const rad = Math.max(1.5, sz * 0.08);
+    ctx.fillStyle = 'rgb(32,28,38)';
+    rr(ctx, x + pad, y + pad, sz - pad * 2, sz - pad * 2, rad);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(90,70,80,0.4)';
+    ctx.lineWidth = Math.max(0.8, sz * 0.04);
+    const m = sz * 0.28;
+    ctx.beginPath();
+    ctx.moveTo(x + m, y + m); ctx.lineTo(x + sz - m, y + sz - m);
+    ctx.moveTo(x + sz - m, y + m); ctx.lineTo(x + m, y + sz - m);
+    ctx.stroke();
+}
+
+function drawTarget(ctx, row, col, cell, ts) {
+    const cx = (col + 0.5) * cell;
+    const cy = (row + 0.5) * cell;
+    const pulse = Math.sin(ts * 0.004) * 0.12 + 0.88;
+    const R = cell * 0.34 * pulse;
+
+    // glow
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 2.5);
+    g.addColorStop(0, 'rgba(0,220,180,0.14)');
+    g.addColorStop(1, 'rgba(0,220,180,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, R * 2.5, 0, Math.PI * 2); ctx.fill();
+
+    // outer diamond
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - R); ctx.lineTo(cx + R, cy);
+    ctx.lineTo(cx, cy + R); ctx.lineTo(cx - R, cy); ctx.closePath();
+    ctx.fillStyle = `rgba(0,220,180,${0.25 + pulse * 0.2})`;
+    ctx.fill();
+    ctx.strokeStyle = `rgba(0,255,200,${0.45 + pulse * 0.35})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // inner diamond
+    const ir = R * 0.48;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - ir); ctx.lineTo(cx + ir, cy);
+    ctx.lineTo(cx, cy + ir); ctx.lineTo(cx - ir, cy); ctx.closePath();
+    ctx.fillStyle = `rgba(0,255,200,${0.35 + pulse * 0.35})`;
+    ctx.fill();
+}
+
+function drawAgent(ctx, cell, ts) {
+    if (!S) return;
+    let row = S.agent.row, col = S.agent.col;
+
+    // smooth lerp
+    if (prevAgent && animT < 1) {
+        const e = easeOut(animT);
+        row = prevAgent.row + (row - prevAgent.row) * e;
+        col = prevAgent.col + (col - prevAgent.col) * e;
+    }
+
+    const cx = (col + 0.5) * cell;
+    const cy = (row + 0.5) * cell;
+    const R = cell * 0.36;
+
+    // glow
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R * 2.2);
+    g.addColorStop(0, 'rgba(0,212,255,0.1)');
+    g.addColorStop(1, 'rgba(0,212,255,0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, R * 2.2, 0, Math.PI * 2); ctx.fill();
+
+    // body
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    if (S.agent.color > 0) {
+        const ac = ARC[S.agent.color] || [200,200,200];
+        ctx.fillStyle = `rgb(${ac[0]},${ac[1]},${ac[2]})`;
+    } else {
+        ctx.fillStyle = '#dde0ea';
+    }
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(0,212,255,0.55)';
+    ctx.lineWidth = 1.8;
+    ctx.stroke();
+
+    // direction arrow
+    const dir = S.agent.dir;
+    const angles = [-Math.PI/2, 0, Math.PI/2, Math.PI];
+    const a = angles[dir];
+    const aLen = R * 0.85;
+    const tipX = cx + Math.cos(a) * aLen;
+    const tipY = cy + Math.sin(a) * aLen;
+    const lx = cx + Math.cos(a + 2.6) * aLen * 0.45;
+    const ly = cy + Math.sin(a + 2.6) * aLen * 0.45;
+    const rx = cx + Math.cos(a - 2.6) * aLen * 0.45;
+    const ry = cy + Math.sin(a - 2.6) * aLen * 0.45;
+    ctx.beginPath(); ctx.moveTo(tipX, tipY); ctx.lineTo(lx, ly); ctx.lineTo(rx, ry); ctx.closePath();
+    ctx.fillStyle = 'rgba(255,60,50,0.85)';
+    ctx.fill();
+
+    // subtle idle bob
+    const bob = Math.sin(ts * 0.003) * 0.8;
+    const eyeD = R * 0.25;
+    const eX = cx + Math.cos(a) * eyeD;
+    const eY = cy + Math.sin(a) * eyeD + bob;
+    ctx.beginPath(); ctx.arc(eX, eY, R * 0.11, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+}
+
+// ── Helpers ──
+function rr(ctx, x, y, w, h, r) {
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r);
+    ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+    ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r);
+    ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y);
+    ctx.closePath();
+}
+
+function easeOut(t) { return 1 - Math.pow(1 - t, 3); }
+
+// ── Boot ──
+document.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>

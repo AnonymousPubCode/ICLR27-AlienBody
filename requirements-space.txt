@@ -1,0 +1,6 @@
+# Slim deps for Hugging Face Spaces (interactive demo only)
+numpy>=1.24
+Pillow>=10.0
+fastapi>=0.110
+uvicorn[standard]>=0.27
+websockets>=12.0
