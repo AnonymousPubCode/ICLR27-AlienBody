@@ -20,7 +20,7 @@ STAGES = ["Z1\nzero-shot", "Z3\n+verify", "Z4\n+fallback"]
 FAMILIES = [
     ("F4 Relational",    [2, 47, 94],  [8, 40, 94],  98, 100),
     ("F5 Compositional", [26, 65, 62], [30, 85, 80], 100, 100),
-    ("F6 Temporal",      [24, 20, 8],  [6, 34, 12],  58, 74),
+    ("F6 Temporal",      [32, 34, 8],  [6, 44, 10],  90, 100),
 ]
 SERIES = [("GPT-4o", C_GPT4O, "o", "-"), ("DeepSeek V4 Pro", C_DS, "s", "--")]
 
@@ -41,7 +41,7 @@ def label_points(ax, x, ya, yb):
 
 
 def build():
-    fig, axes = plt.subplots(1, 3, figsize=(W_COL, 2.05), sharey=True)
+    fig, axes = plt.subplots(1, 3, figsize=(W_COL, 1.8), sharey=True)
     x = np.arange(3)
 
     for k, (ax, (fam, gpt, ds, ev, afmb)) in enumerate(zip(axes, FAMILIES)):
@@ -85,7 +85,7 @@ def build():
                    bbox_to_anchor=(1.02, 0.02), fontsize=6.5, handlelength=1.8,
                    labelspacing=0.3)
 
-    fig.subplots_adjust(left=0.075, right=0.995, top=0.88, bottom=0.2, wspace=0.12)
+    fig.subplots_adjust(left=0.075, right=0.995, top=0.87, bottom=0.22, wspace=0.12)
     save(fig, "fmb_inductive")
 
 

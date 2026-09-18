@@ -23,38 +23,37 @@ BUDGET = 20
 
 
 def build():
-    fig, ax = plt.subplots(figsize=(W_COL * 0.62, 2.05))
-
-    ax.axvline(4, color=FAINT, lw=0.7, ls="--", zorder=1)
-    ax.axvline(BUDGET, color=FAINT, lw=0.7, ls=":", zorder=1)
-    ax.text(4, 4.28, "optimal (4 steps)", ha="center", va="bottom", fontsize=6.4, color=MUTED)
-    ax.text(BUDGET, 4.28, "budget", ha="center", va="bottom", fontsize=6.4, color=MUTED)
-
-    for (xs, ys), col, lw, name, sub in [
-        (REDUNDANT, C_GPT4O, 1.5, "Redundant", "Qwen3.5-397B, image"),
-        (PREMATURE, RED, 1.5, "Premature", "Qwen3.5-4B, image"),
-        (STRUCTURED, GREEN, 1.8, "Structured", "Systematic script"),
-    ]:
-        ax.step(xs, ys, where="post", color=col, lw=lw, zorder=3, solid_capstyle="round")
-        ax.plot(xs[-1], ys[-1], "o", color=col, ms=3.6, zorder=4)
-
-    # direct labels at the end of each trace
-    ax.text(3.4, 0.82, "Premature\nQwen3.5-4B, stops at 1 of 4", ha="left", va="top",
-            fontsize=6.6, color=RED, linespacing=1.15)
-    ax.text(13.4, 3.55, "Redundant\nQwen3.5-397B, ~4 tries per action", ha="left",
-            va="top", fontsize=6.6, color=C_GPT4O, linespacing=1.15)
-    ax.text(4.5, 3.5, "Structured\nSystematic, 1 new action / step", ha="left", va="center",
-            fontsize=6.6, color=GREEN, linespacing=1.15)
-
-    ax.set_xlabel("Phase-1 step")
-    ax.set_ylabel("Unique actions discovered")
-    ax.set_xlim(-0.3, 21.5)
-    ax.set_ylim(-0.15, 4.75)
-    ax.set_xticks([0, 4, 8, 12, 16, 20])
-    ax.set_yticks([0, 1, 2, 3, 4])
-    ygrid(ax)
-    fig.subplots_adjust(left=0.1, right=0.99, top=0.95, bottom=0.17)
-    save(fig, "exploration_patterns")
+    W,H=5.5,1.76
+    fig=plt.figure(figsize=(W,H),facecolor='white')
+    ax=fig.add_axes([.34/W,.36/H,3.21/W,1.06/H])
+    ax.set(xlim=(-.25,20.6),ylim=(-.12,4.32),xticks=[0,4,8,12,16,20],yticks=range(5))
+    ax.yaxis.grid(True,color='#D8DDDF',lw=.45,zorder=0)
+    for edge in ('top','right','left'):
+        ax.spines[edge].set_visible(False)
+    ax.spines['bottom'].set(color='#7D878C',linewidth=.55)
+    ax.tick_params(axis='both',length=0,pad=3,labelsize=6.3)
+    ax.set_xlabel('Phase-1 step',fontsize=6.6,labelpad=3)
+    fig.text(.05/W,1.61/H,'Unique actions tested',fontsize=7.5,weight='bold',va='center')
+    fig.text(3.80/W,1.61/H,'Illustrative patterns',fontsize=7.5,weight='bold',va='center')
+    ax.axvline(4,color='#B3B9BD',ls='--',lw=.65)
+    ax.axvline(BUDGET,color='#B3B9BD',ls=':',lw=.65)
+    entries=[(PREMATURE,RED,'o',':','Premature','Qwen3.5-4B'),
+             (REDUNDANT,C_GPT4O,'s','--','Redundant','Qwen3.5-397B'),
+             (STRUCTURED,GREEN,'^','-','Structured','Systematic')]
+    for k,((xs,ys),c,m,ls,name,model) in enumerate(entries):
+        ax.step(xs,ys,where='post',color=c,lw=1.2,ls=ls,zorder=3)
+        ax.plot(xs[-1],ys[-1],marker=m,color=c,ms=3.7,mfc='white',mew=1,zorder=4)
+        y=1.28-k*.38
+        fig.add_artist(plt.Line2D([3.83/W,3.96/W,4.09/W],[y/H]*3,
+            transform=fig.transFigure,color=c,ls=ls,lw=1.2,marker=m,markevery=[1],
+            ms=3.7,mfc='white',mew=1))
+        fig.text(4.18/W,y/H,name,fontsize=6.8,color=INK,weight='bold',va='center')
+        fig.text(4.18/W,(y-.14)/H,model,fontsize=6.2,color=MUTED,va='center')
+    fig.text(3.80/W,.13/H,'4 actions | 20-step budget',fontsize=6.2,color=MUTED,va='center')
+    out=figure_out_dir();out.mkdir(parents=True,exist_ok=True)
+    fig.savefig(out/'exploration_patterns.pdf')
+    fig.savefig(out/'exploration_patterns.png',dpi=300)
+    plt.close(fig)
 
 
 if __name__ == "__main__":

@@ -21,38 +21,40 @@ ROWS = [
         ("kirby_named_step299.png", "named", "scroll 36, 12 checkpoints", C_TRUE),
         ("kirby_anonymous_step299.png", "anonymous", "scroll 1, still at spawn", C_ANON),
     ]),
-    ("Crafter, step 150 / 300", [
-        ("crafter_named_step150.png", "named", "4 achievements unlocked", C_TRUE),
-        ("crafter_anonymous_step150.png", "anonymous", "0 achievements", C_ANON),
+    ("Crafter, v2 protocol, step 149 / 150", [
+        ("crafter_v2_named_seed0_step149.png", "named", "0 achievements, no item collected", C_TRUE),
+        ("crafter_v2_anonymous_seed0_step149.png", "anonymous", "2 achievements, wood collected", C_ANON),
     ]),
 ]
 LETTERS = "abcd"
 
 
 def build():
-    fig = plt.figure(figsize=(W_COL * 0.8, 3.75))
-    # height ratios follow the native aspect ratios (Kirby 160x144, Crafter 512x512)
-    gs = fig.add_gridspec(2, 2, height_ratios=[144 / 160, 1.0], hspace=0.42, wspace=0.10,
-                          left=0.02, right=0.98, top=0.93, bottom=0.07)
-    k = 0
-    for r, (row_title, cells) in enumerate(ROWS):
-        for c, (fname, cond, note, col) in enumerate(cells):
-            ax = fig.add_subplot(gs[r, c])
-            im = np.asarray(Image.open(CAPTURES / fname).convert("RGB"))
-            ax.imshow(im, interpolation="nearest")
-            ax.set_xticks([]); ax.set_yticks([])
-            for sp in ax.spines.values():
-                sp.set_visible(True); sp.set_color(col); sp.set_linewidth(1.4)
-            ax.set_title(f"({LETTERS[k]}) {cond}", fontsize=7.6, color=col, loc="left", pad=3)
-            ax.text(0.5, -0.05, note, transform=ax.transAxes, ha="center", va="top",
-                    fontsize=7, color=INK)
-            k += 1
-        # row title centred over the pair
-        pos_l = gs[r, 0].get_position(fig)
-        pos_r = gs[r, 1].get_position(fig)
-        fig.text((pos_l.x0 + pos_r.x1) / 2, pos_l.y1 + 0.035, row_title, ha="center",
-                 va="bottom", fontsize=7.6, color=MUTED, fontstyle="italic")
-    save(fig, "game_evidence")
+    # Four native-aspect frames in one compact row, grouped by game.
+    W, H = 5.5, 1.88
+    fig = plt.figure(figsize=(W,H), facecolor='white')
+    for group, title in enumerate(["Kirby's Dream Land | step 299", "Crafter (v2) | step 149"]):
+        x = .04 + group*2.76
+        fig.text(x/W,1.78/H,title,fontsize=8,weight='bold',va='center')
+    fig.add_artist(plt.Line2D([2.75/W]*2,[.10/H,1.83/H],transform=fig.transFigure,
+                              color='#D8DDDF',lw=.5))
+    for k,(fname,cond,note,col) in enumerate([cell for _,cells in ROWS for cell in cells]):
+        x = .05 + (k//2)*2.76 + (k%2)*1.34
+        fig.text(x/W,1.56/H,f'({LETTERS[k]}) {cond}',fontsize=6.8,color=col,va='center')
+        im=np.asarray(Image.open(CAPTURES/fname).convert('RGB'))
+        iw=1.25
+        ih=iw*im.shape[0]/im.shape[1]
+        ax=fig.add_axes([x/W,(.25+(1.25-ih)/2)/H,iw/W,ih/H])
+        ax.imshow(im,interpolation='nearest',aspect='equal')
+        ax.set_xticks([]);ax.set_yticks([])
+        for sp in ax.spines.values():
+            sp.set_visible(True);sp.set_color(col);sp.set_linewidth(1.1)
+            sp.set_linestyle('-' if cond=='named' else '--')
+        fig.text((x+iw/2)/W,.12/H,note,fontsize=5.7,color=INK,ha='center',va='center')
+    out=figure_out_dir();out.mkdir(parents=True,exist_ok=True)
+    fig.savefig(out/'game_evidence.pdf')
+    fig.savefig(out/'game_evidence.png',dpi=300)
+    plt.close(fig)
 
 
 if __name__ == "__main__":

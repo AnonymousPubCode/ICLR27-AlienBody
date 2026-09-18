@@ -1,147 +1,193 @@
 #!/usr/bin/env python3
-"""Figure 1 (teaser): the name-prior fallacy.
+"""Figure 1: label intervention, measured success, and game illustrations.
 
-  (a) one environment, three label strips (named-true / named-misleading /
-      anonymous) and the SR each strip yields for GPT-4o on F2
-  (b) GPT-4o SR under the three labelings on F1 / F2
-  (c) the same confound on two real games (equal square frames)
+Drawn on a 6.1 x 2.22-inch canvas: the four-frame game panel adds width while
+keeping the source figure's height fixed. LaTeX fits it to the column width.
+Diagrams, bars, and text remain vector objects; game images preserve native
+aspect ratio without cropping.
 
-Output: fig/teaser.pdf (+ .png preview)
+Numbers match gen_fig_name_prior.py and stat_recheck/stat_recheck_output.txt
+section 4: two equal-sized GPT-4o image-evaluation batches, each reusing the
+same 50 environment IDs. These are pooled point estimates, not new trials.
+Panel (a) is explicitly a schematic F1 mapping, not an observed F2 episode.
+
+The game images are illustrative replay frames ONLY. The archival Crafter
+renderer used seed 0 for seed-1 action logs; Kirby selected the best named
+rollout. Therefore these images must not be presented as paired, representative,
+or verified evaluation trajectories. The four images are restored at the
+user's request for side-by-side inspection, not as quantitative evidence.
+
+Preview: python code/scripts/gen_fig_teaser.py
+Publish: python code/scripts/gen_fig_teaser.py --out fig
 """
 from __future__ import annotations
 
-import matplotlib.patches as mpatches
+import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.gridspec import GridSpec
 from PIL import Image
 
-from figstyle import *  # noqa: F401,F403
-
-GPT4O = {"F1": (74.0, 82.0, 50.0), "F2": (23.0, 40.0, 9.0)}
-C_AGENT, C_GOAL, C_CELL, C_GRID = INK, "#C9A65A", "#FAF9F6", "#D5D2CC"
+from figstyle import CAPTURES, C_ANON, C_MIS, C_TRUE, INK, figure_out_dir
 
 
-def _fit_square(path, size=320, bg=(246, 244, 240)):
-    im = Image.open(path).convert("RGB")
-    scale = min(size / im.width, size / im.height)
-    nw, nh = max(1, int(im.width * scale)), max(1, int(im.height * scale))
-    im = im.resize((nw, nh), Image.NEAREST)
-    canvas = Image.new("RGB", (size, size), bg)
-    canvas.paste(im, ((size - nw) // 2, (size - nh) // 2))
-    return np.asarray(canvas)
+# Order shared by the action matrix and the bars.
+CONDITIONS = (
+    ("Anonymous", C_ANON, ("act_0", "act_1", "act_2", "act_3")),
+    ("True names", C_TRUE, ("right", "left", "up", "down")),
+    ("Misleading", C_MIS, ("left", "right", "down", "up")),
+)
+GPT4O = {"F1": (75.0, 82.0, 50.0), "F2": (25.0, 40.0, 9.0)}
+
+WIDTH, HEIGHT = 6.10, 2.22
+SECONDARY = "#5F6970"
+RULE = "#D8DDDF"
+GOLD = "#C9A65A"
 
 
-def _rounded(ax, xy, w, h, fc, ec="none", lw=0.0, r=0.08, **kw):
-    ax.add_patch(mpatches.FancyBboxPatch(
-        xy, w, h, boxstyle=f"round,pad=0,rounding_size={r}",
-        facecolor=fc, edgecolor=ec, linewidth=lw, **kw))
+def text(fig, x, y, value, **kwargs):
+    """Place text using inches, independently of subplot bounds."""
+    return fig.text(x / WIDTH, y / HEIGHT, value, va="center", **kwargs)
 
 
-def panel_a(ax):
-    ax.set_xlim(0, 10.0)
-    ax.set_ylim(-0.1, 5.1)
-    ax.set_aspect("equal")
+def axes(fig, x, y, w, h):
+    return fig.add_axes([x / WIDTH, y / HEIGHT, w / WIDTH, h / HEIGHT])
+
+
+def panel_title(fig, x, letter, title):
+    text(fig, x, 2.105, f"({letter})", fontsize=8.3, fontweight="bold")
+    text(fig, x + 0.22, 2.105, title, fontsize=8.3, fontweight="bold")
+
+
+def panel_a(fig):
+    ax = axes(fig, 0.04, 0.10, 2.02, 1.87)
+    ax.set(xlim=(0, 2.02), ylim=(0, 1.87), aspect="equal")
     ax.axis("off")
 
-    # -- shared mini grid (left) --
-    ox, oy, s = 0.15, 1.15, 0.85
-    for i in range(3):
-        for j in range(3):
-            _rounded(ax, (ox + i * s, oy + j * s), s * 0.88, s * 0.88, C_CELL, C_GRID, 0.7, r=0.06)
-    ax.add_patch(mpatches.Circle((ox + 0.44 * s, oy + 2.44 * s), 0.22, facecolor=C_AGENT))
-    ax.add_patch(mpatches.Rectangle((ox + 2.2 * s, oy + 0.2 * s), 0.48 * s, 0.48 * s,
-                                    facecolor=C_GOAL, edgecolor="none"))
-    cx = ox + 1.44 * s
-    ax.text(cx, oy - 0.3, "one environment", fontsize=6.4, ha="center", va="top",
-            color=MUTED, style="italic")
-    ax.text(cx, oy + 3 * s + 0.05, "F2 Spatial", fontsize=6.4, ha="center", va="bottom",
-            color=MUTED)
+    # A compact grid gives context; no trajectory or result is implied.
+    gx, gy, cell, gap = 0.045, 1.32, 0.142, 0.018
+    for col in range(3):
+        for row in range(3):
+            ax.add_patch(patches.FancyBboxPatch(
+                (gx + col * (cell + gap), gy + row * (cell + gap)),
+                cell, cell, boxstyle="round,pad=0,rounding_size=0.018",
+                facecolor="#F7F8F8", edgecolor="#CCD2D5", linewidth=0.5,
+            ))
+    ax.add_patch(patches.Circle(
+        (gx + cell / 2, gy + 2 * (cell + gap) + cell / 2),
+        0.048, facecolor=INK, edgecolor="none"))
+    ax.add_patch(patches.Rectangle(
+        (gx + 2 * (cell + gap) + 0.03, gy + 0.03),
+        0.082, 0.082, facecolor=GOLD, edgecolor="none"))
+    ax.text(gx + 0.23, gy - 0.082, "F1 example", ha="center", va="center",
+            fontsize=6.4, color=SECONDARY)
+    ax.annotate("", xy=(0.76, 1.55), xytext=(0.56, 1.55),
+                arrowprops={"arrowstyle": "-|>", "lw": 0.7,
+                            "color": SECONDARY, "mutation_scale": 6})
+    ax.text(0.83, 1.68, "Fixed dynamics", fontsize=7.3, va="center")
+    ax.text(0.83, 1.50, "Same model", fontsize=7.3, va="center")
+    ax.text(0.83, 1.30, "Only labels vary", fontsize=7.3, va="center",
+            fontweight="bold")
 
-    # -- three label strips (right) --
-    rows = [
-        (3.45, "named-true", ["right", "left", "up", "down"], 40.0, C_TRUE),
-        (1.95, "named-misleading", ["left", "right", "down", "up"], 9.0, C_MIS),
-        (0.45, "anonymous", ["act_0", "act_1", "act_2", "act_3"], 23.0, C_ANON),
-    ]
-    x0, bw, bh, gap = 3.35, 1.12, 0.6, 0.08
-    for y, title, labs, sr, col in rows:
-        ax.text(x0, y + bh + 0.08, title, fontsize=6.6, color=col, ha="left", va="bottom")
-        for k, lab in enumerate(labs):
-            x = x0 + k * (bw + gap)
-            _rounded(ax, (x, y), bw, bh, col, r=0.08)
-            ax.text(x + bw / 2, y + bh / 2, lab, fontsize=5.6, color="white",
-                    ha="center", va="center", family=["Consolas", "DejaVu Sans Mono"])
-        ax.text(9.95, y + bh / 2, f"{sr:g}%", fontsize=9.5, fontweight="bold",
-                color=col, ha="right", va="center")
-    ax.text(9.95, 3.45 + bh + 0.08, "GPT-4o SR", fontsize=6.0, color=MUTED,
-            ha="right", va="bottom")
-
-    ax.annotate("", xy=(3.2, 2.45), xytext=(ox + 3 * s - 0.05, 2.45),
-                arrowprops=dict(arrowstyle="-|>", color=MUTED, lw=0.7, mutation_scale=6))
-
-
-def panel_b(ax):
-    fams = ["F1 Adapt", "F2 Spatial"]
-    x = np.arange(len(fams))
-    w = 0.25
-    conds = [("anonymous", C_ANON), ("named-true", C_TRUE), ("named-misleading", C_MIS)]
-    for k, (lab, col) in enumerate(conds):
-        vals = [GPT4O[f][k] for f in ("F1", "F2")]
-        bars = ax.bar(x + (k - 1) * w, vals, w * 0.92, color=col, edgecolor="none",
-                      zorder=3, label=lab)
-        bar_labels(ax, bars, dy=1.5, fontsize=6.2)
-    ax.set_ylabel("SR (%)", labelpad=2, fontsize=7)
-    ax.set_xticks(x)
-    ax.set_xticklabels(fams, fontsize=7)
-    ax.set_ylim(0, 100)
-    ax.set_yticks([0, 25, 50, 75, 100])
-    ax.tick_params(axis="x", length=0)
-    ax.tick_params(axis="y", labelsize=6.5)
-    ygrid(ax)
-    # colours are keyed in panel (a); no separate legend needed
+    # Aligned columns denote fixed effects. Misleading labels form a
+    # derangement; anonymous IDs show one schematic example permutation.
+    bx, bw, bgap, bh = 0.68, 0.31, 0.028, 0.255
+    centers = [bx + i * (bw + bgap) + bw / 2 for i in range(4)]
+    ax.text(0.04, 1.08, "Effect", fontsize=6.7, color=SECONDARY, va="center")
+    for x, direction in zip(centers, (r"$\rightarrow$", r"$\leftarrow$",
+                                       r"$\uparrow$", r"$\downarrow$")):
+        ax.text(x, 1.08, direction, ha="center", va="center", fontsize=10)
+    ax.plot([0.04, 2.005], [0.95, 0.95], lw=0.5, color=RULE)
+    for y, (name, color, labels) in zip((0.65, 0.34, 0.03), CONDITIONS):
+        ax.text(0.04, y + bh / 2, name, fontsize=6.9, color=color,
+                va="center", fontweight="bold")
+        for x, label in zip(centers, labels):
+            ax.add_patch(patches.FancyBboxPatch(
+                (x - bw / 2, y), bw, bh,
+                boxstyle="round,pad=0,rounding_size=0.025",
+                facecolor=color, alpha=0.09, edgecolor="none"))
+            ax.add_patch(patches.FancyBboxPatch(
+                (x - bw / 2, y), bw, bh,
+                boxstyle="round,pad=0,rounding_size=0.025",
+                facecolor="none", edgecolor=color, linewidth=0.55))
+            ax.text(x, y + bh / 2, label, ha="center", va="center",
+                    color=color, fontsize=6.0,
+                    family=["Consolas", "DejaVu Sans Mono"])
 
 
-def panel_c(fig, gs_cell):
-    sub = gs_cell.subgridspec(2, 2, wspace=0.06, hspace=0.12)
-    frames = [
-        (CAPTURES / "kirby_anonymous_step299.png", "anonymous", C_ANON),
-        (CAPTURES / "kirby_named_step299.png", "named", C_TRUE),
-        (CAPTURES / "crafter_anonymous_step150.png", "anonymous", C_ANON),
-        (CAPTURES / "crafter_named_step150.png", "named", C_TRUE),
-    ]
-    row_titles = ["Kirby, t = 299", "Crafter, t = 150"]
-    for idx, (path, label, col) in enumerate(frames):
-        r, c = divmod(idx, 2)
-        ax = fig.add_subplot(sub[r, c])
-        ax.imshow(_fit_square(path), interpolation="nearest")
-        ax.set_xticks([]); ax.set_yticks([])
-        for sp in ax.spines.values():
-            sp.set_visible(True); sp.set_color(col); sp.set_linewidth(1.3)
-        if r == 0:
-            ax.set_title(label, fontsize=6.6, color=col, pad=2)
-        if c == 0:
-            ax.text(-0.07, 0.5, row_titles[r], transform=ax.transAxes, rotation=90,
-                    ha="right", va="center", fontsize=6.2, color=MUTED)
+def panel_b(fig):
+    text(fig, 2.36, 1.88, "Success rate (%)", fontsize=6.9, color=SECONDARY)
+    ax = axes(fig, 2.42, 0.40, 1.31, 1.28)
+    centers = np.array([0.0, 1.15])
+    width = 0.265
+    for k, (_, color, _) in enumerate(CONDITIONS):
+        values = [GPT4O[family][k] for family in ("F1", "F2")]
+        bars = ax.bar(centers + (k - 1) * width, values, width * 0.89,
+                      color=color, edgecolor="none", zorder=3)
+        for bar, value in zip(bars, values):
+            ax.text(bar.get_x() + bar.get_width() / 2, value + 2.5,
+                    f"{value:g}", ha="center", va="bottom", fontsize=7.0)
+    ax.set(xlim=(-0.52, 1.67), ylim=(0, 100), yticks=[0, 50, 100], xticks=[])
+    ax.yaxis.grid(True, color=RULE, linewidth=0.5, zorder=0)
+    ax.tick_params(axis="y", labelsize=6.5, length=0, pad=3)
+    for spine in ("top", "left", "right"):
+        ax.spines[spine].set_visible(False)
+    ax.spines["bottom"].set(color="#7D878C", linewidth=0.55)
+    for x, family, subtitle in zip(centers, ("F1", "F2"), ("Cardinal", "Egocentric")):
+        ax.text(x, -0.105, family, transform=ax.get_xaxis_transform(),
+                ha="center", va="center", fontsize=7.3, fontweight="bold")
+        ax.text(x, -0.23, subtitle, transform=ax.get_xaxis_transform(),
+                ha="center", va="center", fontsize=6.5, color=SECONDARY)
+
+
+def panel_c(fig):
+    # These are selected archival replays, not verified paired trajectories.
+    # Their side-by-side placement supports qualitative inspection only.
+    x0, width, gap = 4.25, 0.82, 0.10
+    columns = (("anonymous", "Anonymous", C_ANON), ("named", "Named", C_TRUE))
+    for col, (_, label, color) in enumerate(columns):
+        text(fig, x0 + col * (width + gap) + width / 2, 1.91, label,
+             ha="center", fontsize=7.0, fontweight="bold", color=color)
+    for game, step, top in (("kirby", 299, 1.77), ("crafter", 150, 0.93)):
+        for col, (condition, _, color) in enumerate(columns):
+            path = CAPTURES / f"{game}_{condition}_step{step}.png"
+            with Image.open(path) as source:
+                pixels = np.asarray(source.convert("RGB"))
+            height = width * pixels.shape[0] / pixels.shape[1]
+            ax = axes(fig, x0 + col * (width + gap), top - height, width, height)
+            ax.imshow(pixels, interpolation="nearest", aspect="equal")
+            ax.set(xticks=[], yticks=[])
+            for spine in ax.spines.values():
+                spine.set_visible(True)
+                spine.set_color(color)
+                spine.set_linewidth(1.1)
+            if col == 0:
+                text(fig, x0 - 0.12, top - height / 2,
+                     f"{game.title()}, t = {step}", ha="center", rotation=90,
+                     fontsize=6.5, color=SECONDARY)
+    text(fig, x0, 0.035, "Illustrative replay frames", fontsize=6.1,
+         color=SECONDARY, style="italic")
 
 
 def build():
-    # drawn at the true column width so that type renders at its nominal size
-    fig = plt.figure(figsize=(W_COL, 1.95))
-    gs = GridSpec(1, 3, figure=fig, width_ratios=[1.75, 1.0, 1.05],
-                  wspace=0.22, left=0.005, right=0.995, top=0.86, bottom=0.10)
-
-    ax_a = fig.add_subplot(gs[0]); panel_a(ax_a)
-    ax_b = fig.add_subplot(gs[1]); panel_b(ax_b)
-    panel_c(fig, gs[2])
-
-    for cell, txt in zip(gs, ["(a) Same environment, only the labels change",
-                              "(b) Labels move success",
-                              "(c) The same confound in two games"]):
-        pos = cell.get_position(fig)
-        x = pos.x0 - (0.075 if txt.startswith("(b)") else 0.0)
-        fig.text(x, 0.955, txt, fontsize=7.4, fontweight="bold", ha="left", va="center")
-    save(fig, "teaser")
+    fig = plt.figure(figsize=(WIDTH, HEIGHT), facecolor="white")
+    panel_title(fig, 0.04, "a", "Label intervention")
+    panel_title(fig, 2.27, "b", "GPT-4o success")
+    panel_title(fig, 4.00, "c", "Game examples")
+    for x in (2.16, 3.88):
+        fig.add_artist(plt.Line2D([x / WIDTH, x / WIDTH], [0.05 / HEIGHT, 1.98 / HEIGHT],
+                                 transform=fig.transFigure, color=RULE, linewidth=0.5))
+    panel_a(fig)
+    panel_b(fig)
+    panel_c(fig)
+    out = figure_out_dir()
+    out.mkdir(parents=True, exist_ok=True)
+    target = out / "teaser.pdf"
+    # Fixed physical bounds keep this source canvas at exactly 6.1 x 2.22 in.
+    fig.savefig(target, facecolor="white",
+                metadata={"Title": "AlienBody: label intervention and success"})
+    fig.savefig(target.with_suffix(".png"), dpi=300, facecolor="white")
+    plt.close(fig)
+    print(f"Saved: {target}")
 
 
 if __name__ == "__main__":

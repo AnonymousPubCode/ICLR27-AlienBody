@@ -20,14 +20,14 @@ SERIES = [
 
 
 def build():
-    fig, ax = plt.subplots(figsize=(3.1, 2.3))
+    fig, ax = plt.subplots(figsize=(3.1, 2.0))
     x = np.arange(len(INTERFACES))
 
-    # in-context region vs. code region
+    # in-context region vs. code region (labels sit inside the axes box)
     ax.axvspan(-0.5, 1.5, color=PAPER_BG, lw=0, zorder=0)
-    ax.text(0.5, 118, "search in dialogue", ha="center", va="center", fontsize=6.6,
+    ax.text(0.5, 116, "search in dialogue", ha="center", va="center", fontsize=6.6,
             color=MUTED, fontstyle="italic")
-    ax.text(2.5, 118, "search as code", ha="center", va="center", fontsize=6.6,
+    ax.text(3.45, 116, "search as code", ha="right", va="center", fontsize=6.6,
             color=MUTED, fontstyle="italic")
 
     for label, ys, col, mk, ls in SERIES:
@@ -53,7 +53,7 @@ def build():
     ax.set_xticklabels(INTERFACES, fontsize=7, linespacing=1.1)
     ax.set_yticks([0, 25, 50, 75, 100])
     ax.set_ylabel("F4 Relational SR (%)", labelpad=3)
-    ax.set_ylim(-4, 126)
+    ax.set_ylim(-4, 124)
     ax.set_xlim(-0.5, 3.5)
     ax.tick_params(axis="x", length=0)
     ygrid(ax)
@@ -62,9 +62,10 @@ def build():
     handles = [plt.Line2D([], [], color=c, marker=m, ls=l, ms=4, markerfacecolor="white",
                           markeredgewidth=1.2, lw=1.2) for _, _, c, m, l in SERIES]
     ax.legend(handles, [s[0] for s in SERIES], loc="center left",
-              bbox_to_anchor=(0.0, 0.66), fontsize=6.6, handlelength=1.8)
+              bbox_to_anchor=(0.0, 0.62), fontsize=6.6, handlelength=1.8,
+              labelspacing=0.35)
 
-    fig.subplots_adjust(left=0.16, right=0.98, top=0.9, bottom=0.2)
+    fig.subplots_adjust(left=0.16, right=0.98, top=0.97, bottom=0.22)
     save(fig, "wall_ladder")
 
 

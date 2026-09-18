@@ -9,10 +9,22 @@ Usage::
     from figstyle import *        # applies rcParams on import
     fig, ax = plt.subplots(figsize=(W_COL, 2.4))
     ...
-    save(fig, "planning_wall")    # -> fig/planning_wall.pdf (+ .png preview)
+    save(fig, "planning_wall")    # -> build/fig/planning_wall.pdf (+ .png preview)
+
+Output isolation (R7/G7): ``save`` writes to the **untracked** scratch dir
+``papers/alienbody/build/fig`` by default, so a stray regeneration cannot dirty
+the tracked ``fig/`` tree that the LaTeX sources read.  Writing into the tracked
+tree is explicit, via ``--out fig`` on the command line or the environment
+variable ``ALIENBODY_FIG_OUT``::
+
+    python scripts/gen_fig_teaser.py --out fig          # tracked paper tree
+    ALIENBODY_FIG_OUT=fig python scripts/gen_fig_teaser.py
+    python scripts/gen_fig_teaser.py --out /tmp/preview # any other directory
 """
 from __future__ import annotations
 
+import os
+import sys
 from pathlib import Path
 
 import matplotlib as mpl
@@ -23,9 +35,13 @@ import matplotlib.pyplot as plt
 # ─────────────────────────────────────────────────────────────────────
 HERE = Path(__file__).resolve().parent
 PAPER = HERE.parent.parent            # papers/alienbody
-FIG = PAPER / "fig"
+FIG = PAPER / "fig"                   # tracked tree (\includegraphics reads this)
+BUILD_FIG = PAPER / "build" / "fig"   # untracked scratch dir (root .gitignore: build/)
 CAPTURES = FIG / "game_captures"
 RESULTS = HERE.parent / "results"
+
+#: tokens accepted by --out / $ALIENBODY_FIG_OUT meaning "the tracked fig/ tree"
+TRACKED_TOKENS = {"fig", "tracked"}
 
 # ICLR text width is 5.5in; figures are usually included at \columnwidth.
 W_COL = 5.5
@@ -51,6 +67,7 @@ C_ANON, C_TRUE, C_MIS, C_CAT = MUTED, GREEN, RED, AMBER
 
 # Models
 C_GPT4O, C_GEMINI, C_DS, C_GPT51, C_QWEN = ACCENT, GREEN, VIOLET, AMBER, SLATE
+C_GEMMA = "#6E7F8A"       # cool grey (Gemma; distinct from Qwen slate)
 C_FMB, C_ORACLE = GREEN, INK
 
 # Sequential ramp for heat-tinted matrices (white -> ACCENT)
@@ -119,14 +136,47 @@ def bar_labels(ax, bars, fmt="{:.0f}", dy=1.2, fontsize=6.8, color=INK, **kw):
                 ha="center", va="bottom", fontsize=fontsize, color=color, **kw)
 
 
-def save(fig, stem: str, png: bool = True, pad: float = 0.02):
-    FIG.mkdir(parents=True, exist_ok=True)
-    out = FIG / f"{stem}.pdf"
-    fig.savefig(out, bbox_inches="tight", pad_inches=pad)
+def figure_out_dir(argv=None, environ=None) -> Path:
+    """Resolve the directory :func:`save` writes figures to (R7/G7).
+
+    Precedence: ``--out DIR`` / ``--out=DIR`` on the command line, then
+    ``$ALIENBODY_FIG_OUT``, then the untracked default ``build/fig``.  The
+    tokens ``fig`` / ``tracked`` select the tracked ``fig/`` tree explicitly.
+    """
+    argv = list(sys.argv[1:] if argv is None else argv)
+    env = os.environ if environ is None else environ
+    token = env.get("ALIENBODY_FIG_OUT")
+    for i, arg in enumerate(argv):
+        if arg == "--out" and i + 1 < len(argv):
+            token = argv[i + 1]
+            break
+        if arg.startswith("--out="):
+            token = arg.split("=", 1)[1]
+            break
+    if not token:
+        return BUILD_FIG
+    token = token.strip()
+    if token in TRACKED_TOKENS:
+        return FIG
+    return Path(token).expanduser()
+
+
+def save(fig, stem: str, png: bool = True, pad: float = 0.02, out=None):
+    """Write ``stem.pdf`` (+ ``.png``) into :func:`figure_out_dir`.
+
+    Pass ``out`` to force a directory (``out=FIG`` for the tracked tree).
+    """
+    out_dir = FIG if out == "tracked" else (Path(out) if out is not None
+                                            else figure_out_dir())
+    out_dir.mkdir(parents=True, exist_ok=True)
+    target = out_dir / f"{stem}.pdf"
+    fig.savefig(target, bbox_inches="tight", pad_inches=pad)
     if png:
-        fig.savefig(out.with_suffix(".png"), dpi=200, bbox_inches="tight", pad_inches=pad)
+        fig.savefig(target.with_suffix(".png"), dpi=200, bbox_inches="tight",
+                    pad_inches=pad)
     plt.close(fig)
-    print(f"Saved: {out}")
+    tag = "  [tracked paper tree]" if out_dir == FIG else ""
+    print(f"Saved: {target}{tag}")
 
 
-__all__ = [n for n in dir() if not n.startswith("_")]
+__all__ = [n for n in dir() if not n.startswith("_") and n not in {"os", "sys"}]
