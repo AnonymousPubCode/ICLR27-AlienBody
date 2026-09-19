@@ -111,9 +111,9 @@ def make_trained_fmb_agent(config, lora_path: str, base_model: str = None):
             with open(adapter_cfg_path) as _f:
                 adapter_cfg = _json.load(_f)
             base_model = adapter_cfg.get("base_model_name_or_path",
-                                          "/project/model/Qwen3-VL-4B-Instruct")
+                                          "models/Qwen3-VL-4B-Instruct")
         else:
-            base_model = "/project/model/Qwen3-VL-4B-Instruct"
+            base_model = "models/Qwen3-VL-4B-Instruct"
 
     client = TrainedLoraClient(
         base_model_path=base_model,

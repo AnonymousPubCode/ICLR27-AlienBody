@@ -138,6 +138,44 @@ class AlienBodyEnv:
         self._transition_to_phase2()
         return self._get_obs()
 
+    def consume_invalid_action(self, reason: str = "parse_failure") -> tuple[dict, float, bool, bool, dict]:
+        """Consume one action-budget unit without applying an environment action.
+
+        This is used only by preregistered evaluation protocols where malformed
+        model output must be penalized but must not be silently converted into
+        action 0.  The event is retained in the trajectory as ``action=None``.
+        """
+        if self.state is None:
+            raise RuntimeError("Call reset() before consume_invalid_action().")
+        if self.state.done:
+            raise RuntimeError("Episode is done. Call reset().")
+
+        self.state.step_count += 1
+        if self.state.phase == Phase.CALIBRATION:
+            self.state.phase1_steps += 1
+        else:
+            self.state.phase2_steps += 1
+        self.state.action_history.append({
+            "step": self.state.step_count,
+            "phase": int(self.state.phase),
+            "action": None,
+            "parse_failure": reason,
+            "prev_pos": (self.state.agent_pos.row, self.state.agent_pos.col),
+            "new_pos": (self.state.agent_pos.row, self.state.agent_pos.col),
+            "prev_dir": self.state.agent_dir,
+            "new_dir": self.state.agent_dir,
+            "prev_color": self.state.agent_color,
+            "new_color": self.state.agent_color,
+            "position_changed": False,
+            "direction_changed": False,
+            "color_changed": False,
+        })
+        truncated = self.state.step_count >= self.config.max_total_steps
+        if truncated:
+            self.state.done = True
+        obs = self._get_obs()
+        return obs, 0.0, False, truncated, self._get_info()
+
     def _transition_to_phase2(self):
         """Internal: switch from Phase 1 to Phase 2."""
         self.state.phase = Phase.EXECUTION

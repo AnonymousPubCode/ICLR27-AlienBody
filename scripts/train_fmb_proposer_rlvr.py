@@ -19,7 +19,7 @@ a trainable capability.
 
 Usage (on server, GPUs 5,6 via CUDA_VISIBLE_DEVICES):
     python scripts/train_fmb_proposer_rlvr.py \
-        --base /project/model/Qwen3.5-9B \
+        --base models/Qwen3.5-9B \
         --output models/proposer_rlvr_9b \
         --families 4,5 --rounds 6 --steps-per-round 120 \
         --group-size 8 --tau 0.8 --lr 1e-4
@@ -278,7 +278,7 @@ def sft_step(model, tok, pairs: list[tuple[str, str]], epochs: int,
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--base", default="/project/model/Qwen3.5-9B")
+    ap.add_argument("--base", default="models/Qwen3.5-9B")
     ap.add_argument("--output", default="models/proposer_rlvr_9b")
     ap.add_argument("--families", default="4,5")
     ap.add_argument("--rounds", type=int, default=6)

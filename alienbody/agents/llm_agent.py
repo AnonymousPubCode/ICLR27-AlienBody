@@ -233,12 +233,14 @@ class VLLMClient(ModelClient):
 
         for attempt in range(self.max_retries):
             try:
+                extra_body = {"skip_special_tokens": True}
+                extra_body.update(kwargs.get("extra_body", {}))
                 response = self._client.chat.completions.create(
                     model=self.model,
                     messages=vllm_messages,
-                    temperature=self.temperature,
+                    temperature=kwargs.get("temperature", self.temperature),
                     max_tokens=kwargs.get("max_tokens", 256),
-                    extra_body={"skip_special_tokens": True},
+                    extra_body=extra_body,
                 )
                 self.total_tokens += response.usage.total_tokens if response.usage else 0
                 content = response.choices[0].message.content or ""
@@ -276,6 +278,8 @@ class LLMAgent(Agent):
         action_labels: list[str] | None = None,   # name-prior ablation
         response_max_tokens: int = 128,    # max output tokens per turn
                                             # (thinking models need >= 600)
+        bon_n: int = 1,                    # Best-of-N: sample N candidates per
+                                            # step (phase 2) and majority-vote
     ):
         self.client = client
         self.modality = modality
@@ -286,6 +290,7 @@ class LLMAgent(Agent):
         self.assist_level = assist_level
         self.action_mapping = action_mapping
         self.response_max_tokens = response_max_tokens
+        self.bon_n = bon_n
 
         self._messages: list[dict] = []
         self._system_prompt = build_system_prompt(
@@ -366,21 +371,40 @@ class LLMAgent(Agent):
         # Trim history if too long
         self._trim_history()
 
-        # Call LLM
-        response = self.client.complete(self._messages, max_tokens=self.response_max_tokens)
+        # Call LLM — Best-of-N mode samples N candidates (phase 2) and
+        # majority-votes on the parsed action; history keeps only the winner.
+        if self.bon_n > 1 and phase == 2:
+            from collections import Counter
+            votes = []
+            for _ in range(self.bon_n):
+                response = self.client.complete(
+                    self._messages,
+                    max_tokens=self.response_max_tokens,
+                    temperature=0.7,
+                )
+                if not response or not response.strip():
+                    votes.append(0)
+                    continue
+                parsed = parse_action_response(response, self.n_actions)
+                votes.append(0 if parsed == "done" else parsed)
+            result = Counter(votes).most_common(1)[0][0]
+            response = f"<bon n={self.bon_n} votes={votes} winner={result}>"
+        else:
+            response = self.client.complete(self._messages, max_tokens=self.response_max_tokens)
 
-        # Guard against empty responses (e.g., thinking models that consume
-        # output tokens for internal reasoning). Treat as action 0.
-        if not response or not response.strip():
-            response = "0"
+            # Guard against empty responses (e.g., thinking models that consume
+            # output tokens for internal reasoning). Treat as action 0.
+            if not response or not response.strip():
+                response = "0"
+
+            # Parse response
+            result = parse_action_response(response, self.n_actions)
 
         self._reasoning_log.append(response)
 
         # Add assistant response to history
         self._messages.append({"role": "assistant", "content": response})
 
-        # Parse response
-        result = parse_action_response(response, self.n_actions)
         if result == "done":
             return DONE_EXPLORING
         return result
@@ -422,6 +446,7 @@ def make_agent(
     familiar: bool = False,
     assist_level: int = 0,
     action_mapping: list[str] | None = None,
+    bon_n: int = 1,
     **kwargs,
 ) -> LLMAgent:
     """Create an LLMAgent from a model name string.
@@ -446,6 +471,7 @@ def make_agent(
         return LLMAgent(
             client=client, modality=modality, prompt_variant=variant,
             familiar=familiar, assist_level=assist_level, action_mapping=action_mapping,
+            bon_n=bon_n,
         )
 
     if "gpt" in model.lower() or "o1" in model.lower() or "o3" in model.lower():
@@ -455,14 +481,15 @@ def make_agent(
     elif "gemini" in model.lower():
         client = GeminiClient(model=model, **kwargs)
     else:
-        # Try Fuxi API as fallback for all other models
+        # Try gateway API as fallback for all other models
         try:
-            from alienbody.agents.fuxi_client import FuxiClient
-            client = FuxiClient(model=model, **kwargs)
+            from alienbody.agents.gateway_client import GatewayClient
+            client = GatewayClient(model=model, **kwargs)
         except (ImportError, ValueError):
-            raise ValueError(f"Unknown model: {model}. Use 'gpt-*', 'claude-*', 'gemini-*', 'vllm:*', or a Fuxi model name.")
+            raise ValueError(f"Unknown model: {model}. Use 'gpt-*', 'claude-*', 'gemini-*', 'vllm:*', or a gateway model name.")
 
     return LLMAgent(
         client=client, modality=modality, prompt_variant=variant,
         familiar=familiar, assist_level=assist_level, action_mapping=action_mapping,
+        bon_n=bon_n,
     )

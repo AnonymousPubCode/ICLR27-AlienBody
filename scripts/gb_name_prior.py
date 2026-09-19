@@ -7,7 +7,7 @@ screenshot→action loop under three prompt conditions and measure objective
 level progress via RAM (scroll_x / health) plus checkpoint hash matches.
 
 Run locally (PyBoy on Windows via VideoGameZero) or anywhere with pyboy;
-the VLM is called through AlienBody's FuxiClient (GPT-4o image).
+the VLM is called through AlienBody's GatewayClient (GPT-4o image).
 
 Usage:
   python scripts/gb_name_prior.py --condition named --n-runs 3
@@ -131,9 +131,9 @@ def hamming(a: str, b: str) -> int:
 def run_episode(condition: str, model: str, max_steps: int,
                 cp_hashes: dict[int, str], out_dir: str) -> dict:
     from shared.emulators.gba.interface import GBAInterface as GameBoyInterface
-    from alienbody.agents.fuxi_client import FuxiClient
+    from alienbody.agents.gateway_client import GatewayClient
 
-    client = FuxiClient(model=model)
+    client = GatewayClient(model=model)
     env = GameBoyInterface(render=False)
     ok = env.load_game(ROM_PATH)
     assert ok, f"failed to load {ROM_PATH}"

@@ -17,13 +17,13 @@ WALL = 3
 
 # Provenance of the numbers below. They are transcribed results from the
 # results/ tree, not computed at plot time; per-row sources, relative to it:
-#   GPT-4o           gpt4o_l3_f{1..6}/fuxi_gpt-4o/            -> metrics.sr_pct
-#   Gemini 3.1 Pro   gemini_l3_f{1..6}/fuxi_gemini-3-pro-preview/   (image)
+#   GPT-4o           gpt4o_l3_f{1..6}/gateway_gpt-4o/            -> metrics.sr_pct
+#   Gemini 3.1 Pro   gemini_l3_f{1..6}/gateway_gemini-3-pro-preview/   (image)
 #                    most cells -> metrics.sr_pct; the F4 cell is that run's
 #                    success count (n_success = 2 of 38 recorded episodes,
 #                    whereas its recorded sr_pct is 5.26), because that run was
 #                    restarted and is not comparable to the clean n=50 rows
-#   DeepSeek V4 Pro  dsv4pro_l3_fixed/fuxi_dsv4-lh/  (text; F2 42.86 printed as 43)
+#   DeepSeek V4 Pro  dsv4pro_l3_fixed/gateway_dsv4-lh/  (text; F2 42.86 printed as 43)
 #                    F4 from dsv4pro_l3_f4/, which has 0 successes across all
 #                    219 recorded episodes (50 unique environments)
 #   Qwen3-VL-32B     action_collapse/qwen32bvl_l3.json -> per_family.FN.sr_pct
@@ -60,6 +60,8 @@ PROBE_NAMES = {"GPT-5.1", "Gemma-4-26B"}
 
 
 W, H = 5.5, 1.91
+# Preserve type sizes; tighten vertical geometry rather than scaling the PDF.
+FIG_HEIGHT = 1.70
 MUTED, RULE = "#657078", "#D8DDDF"
 
 
@@ -85,7 +87,7 @@ def build():
     assert all(vals[WALL] == expected[name] for name, vals, _ in rows)
     ys = [1.36, 1.225, 1.09, .955, .765, .630, .440, .305]
 
-    fig = plt.figure(figsize=(W, H), facecolor="white")
+    fig = plt.figure(figsize=(W, FIG_HEIGHT), facecolor="white")
     text(fig, .04, 1.79, "(a) L3 success by family (%)", fontsize=8.2, weight="bold")
     text(fig, 3.99, 1.79, "(b) F4 contrast", fontsize=8.2, weight="bold")
     centers = [1.38 + .40 * j for j in range(6)]

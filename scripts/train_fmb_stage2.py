@@ -9,7 +9,7 @@ and efficiency_bonus = 1 - (phase1_steps / phase1_budget).
 
 Usage:
     python scripts/train_fmb_stage2.py \
-        --base /project/model/Qwen3-VL-4B-Instruct \
+        --base models/Qwen3-VL-4B-Instruct \
         --lora models/fmb_stage1_large/final \
         --output models/fmb_stage2 \
         --family 1 --episodes 100

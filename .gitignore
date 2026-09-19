@@ -1,6 +1,6 @@
 # Secrets / local
 .env
-**/fuxi_secrets.local.py
+**/gateway_secrets.local.py
 *.pyc
 __pycache__/
 .DS_Store

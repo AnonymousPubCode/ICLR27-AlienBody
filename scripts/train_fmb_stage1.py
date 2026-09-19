@@ -10,7 +10,7 @@ teaches it to actively design experiments.
 
 Usage:
     python scripts/train_fmb_stage1.py \
-        --model /project/model/Qwen3-VL-4B-Instruct \
+        --model models/Qwen3-VL-4B-Instruct \
         --data data/fmb_trajectories/train.jsonl \
         --output models/fmb_stage1 \
         --epochs 3 --batch-size 4
@@ -243,7 +243,7 @@ def train(
 def main():
     parser = argparse.ArgumentParser(description="FMB Stage 1 Training")
     parser.add_argument("--model", type=str, required=True,
-                        help="Base model path (e.g., /project/model/Qwen3-VL-4B-Instruct)")
+                        help="Base model path (e.g., models/Qwen3-VL-4B-Instruct)")
     parser.add_argument("--data", type=str, required=True,
                         help="Training data JSONL path")
     parser.add_argument("--output", type=str, default="models/fmb_stage1",

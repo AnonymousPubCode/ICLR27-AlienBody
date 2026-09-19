@@ -25,7 +25,7 @@ for i, m in enumerate(messages):
     clen = len(c) if isinstance(c, str) else len(str(c))
     print(f"  [{i}] role={m['role']}, content_len={clen}")
 
-client = VLLMClient(model="/project/model/Qwen3.5-4B", base_url="http://localhost:8000/v1")
+client = VLLMClient(model="models/Qwen3.5-4B", base_url="http://localhost:8000/v1")
 try:
     resp = client.complete(messages, max_tokens=10)
     print(f"Response: {resp[:100]}...")

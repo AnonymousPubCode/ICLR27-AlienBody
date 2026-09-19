@@ -47,11 +47,14 @@ def main():
     while generated < args.count and attempts < max_attempts:
         attempts += 1
         seed = args.family * 1000000 + 70000 + attempts
-        # Tier-L uses the full 6-effect relational vocabulary
+        # Tier-L uses the canonical 6-effect prefix of the relational
+        # vocabulary (TYPE_C_EFFECTS[:6]). Passing the full list would let
+        # the generator draw a random 6-subset (generator.py shuffles then
+        # truncates), which does not reproduce data/envs_l.
         from alienbody.env.actions import TYPE_C_EFFECTS
         config = generate_env(
             family=args.family, idx=generated, split=args.split, seed=seed,
-            tier_tag="l", effects_override=list(TYPE_C_EFFECTS), **TIER_L,
+            tier_tag="l", effects_override=list(TYPE_C_EFFECTS[:6]), **TIER_L,
         )
         result = validate_solvable(config)
         if result["solvable"] and result["optimal_steps"] >= 3:

@@ -14,7 +14,9 @@ from __future__ import annotations
 import ast
 import re
 import signal
+import sys
 import textwrap
+import time
 import traceback
 from collections import deque
 from typing import Any
@@ -180,24 +182,46 @@ def _run_sandbox(
         **env,
     }
 
-    # Windows has no SIGALRM; use soft next_state budget as the main limiter.
-    # On POSIX we still install an alarm as a backstop.
+    # D34: the timeout has to hold on Windows, where there is no SIGALRM.  A
+    # legal ``while True:`` in a submitted program otherwise spins the runner at
+    # 100% CPU forever and the cell can never finish (observed 2026-09-15 on the
+    # preflight2 F4 dsv4 J4 cell: 35+ min at 100% CPU, nothing written).  The
+    # alarm stays on POSIX as a backstop; the deadline trace hook is what bounds
+    # ``exec`` everywhere -- it fires on line events in the submitted program's
+    # own frames, so a Python-level infinite loop raises instead of spinning.
+    # A pure C-level call that never returns to bytecode (``pow(3, 10**9)``) is
+    # out of its reach and is bounded only by memory; none was observed, and
+    # next_state loops are bounded by the query budget regardless.
     use_alarm = hasattr(signal, "SIGALRM")
+    deadline = time.monotonic() + float(timeout_s)
+    ticks = 0
+
+    def _trace(frame, event, arg):  # noqa: ARG001
+        nonlocal ticks
+        if frame.f_code.co_filename != "<agent_code>":
+            return None               # never instrument the adapter's frames
+        ticks += 1
+        if ticks % 4096 == 0 and time.monotonic() > deadline:
+            raise _SandboxTimeout("sandbox timeout")
+        return _trace
 
     def _handler(signum, frame):  # noqa: ARG001
         raise _SandboxTimeout("sandbox timeout")
 
-    old = None
+    old_alarm = None
     if use_alarm:
-        old = signal.signal(signal.SIGALRM, _handler)
+        old_alarm = signal.signal(signal.SIGALRM, _handler)
         signal.setitimer(signal.ITIMER_REAL, timeout_s)
+    old_trace = sys.gettrace()
+    sys.settrace(_trace)
     try:
         exec(compiled, namespace, namespace)  # noqa: S102 — intentional sandbox
     finally:
+        sys.settrace(old_trace)
         if use_alarm:
             signal.setitimer(signal.ITIMER_REAL, 0)
-            if old is not None:
-                signal.signal(signal.SIGALRM, old)
+            if old_alarm is not None:
+                signal.signal(signal.SIGALRM, old_alarm)
 
     return {
         "PLAN": namespace.get("PLAN"),

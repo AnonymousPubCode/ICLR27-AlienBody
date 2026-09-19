@@ -10,7 +10,7 @@ bottleneck by feeding color values and spatial relations as text.
 
 Usage:
     torchrun --nproc_per_node=8 scripts/train_fmb_stage1_text.py \
-        --model /project/model/Qwen3.5-4B \
+        --model models/Qwen3.5-4B \
         --data data/fmb_trajectories/train_text.jsonl \
         --output models/fmb_stage1_text_4b \
         --epochs 10 --batch-size 4 --lr 1e-4
@@ -20,9 +20,11 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import random
 import sys
 from pathlib import Path
 
+import numpy as np
 import torch
 from datasets import Dataset
 from peft import LoraConfig, get_peft_model, TaskType
@@ -181,7 +183,14 @@ def setup_model(model_path: str, lora_r: int = 16, lora_alpha: int = 32):
 
 # ── Training ─────────────────────────────────────────────────────
 
-def train(model_path, data_path, output_dir, epochs, batch_size, lr, lora_r):
+def train(model_path, data_path, output_dir, epochs, batch_size, lr, lora_r, seed=42):
+    """Fixed-seed training for the induction-frontier repro pack."""
+    random.seed(seed)
+    np.random.seed(seed)
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    print(f"Repro seed: {seed}")
+
     tokenizer = AutoTokenizer.from_pretrained(model_path, trust_remote_code=True)
     if tokenizer.pad_token is None:
         tokenizer.pad_token = tokenizer.eos_token
@@ -211,6 +220,8 @@ def train(model_path, data_path, output_dir, epochs, batch_size, lr, lora_r):
         bf16=True,
         ddp_find_unused_parameters=False,
         report_to="none",
+        seed=seed,
+        data_seed=seed,
     )
 
     trainer = Trainer(
@@ -238,9 +249,11 @@ def main():
     parser.add_argument("--batch-size", type=int, default=4)
     parser.add_argument("--lr", type=float, default=1e-4)
     parser.add_argument("--lora-r", type=int, default=16)
+    parser.add_argument("--seed", type=int, default=42,
+                        help="Global seed for the induction-frontier repro")
     args = parser.parse_args()
 
-    train(args.model, args.data, args.output, args.epochs, args.batch_size, args.lr, args.lora_r)
+    train(args.model, args.data, args.output, args.epochs, args.batch_size, args.lr, args.lora_r, args.seed)
 
 
 if __name__ == "__main__":

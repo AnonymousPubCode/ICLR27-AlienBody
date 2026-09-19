@@ -2,11 +2,11 @@
 
 Synchronous wrapper around a configurable OpenAI-compatible / custom chat
 proxy. Endpoints and credentials come from environment variables (see
-``.env.example``) or an optional gitignored ``fuxi_secrets.local.py``.
+``.env.example``) or an optional gitignored ``gateway_secrets.local.py``.
 
 Usage:
-    from alienbody.agents.fuxi_client import FuxiClient
-    client = FuxiClient(model="gpt-4.1")
+    from alienbody.agents.gateway_client import GatewayClient
+    client = GatewayClient(model="gpt-4.1")
     response = client.complete([{"role": "user", "content": "Hello"}])
 """
 from __future__ import annotations
@@ -26,7 +26,7 @@ from alienbody.agents.llm_agent import ModelClient
 
 # ── Model → API version mapping ──────────────────────────────────
 
-FUXI_MODELS = {
+GATEWAY_MODELS = {
     "gpt-4o": {"api_version": "v2", "max_tokens": 16384},
     "gpt-4.1": {"api_version": "v2", "max_tokens": 16384},
     "gpt-5.1": {"api_version": "v1", "max_tokens": 10000},
@@ -37,95 +37,96 @@ FUXI_MODELS = {
     "gemini-3-flash-preview": {"api_version": "v1", "max_tokens": 65536},
     "deepseek-v4-pro": {"api_version": "v1", "max_tokens": 16000},
     "deepseek-v4-flash": {"api_version": "v1", "max_tokens": 16000},
-    # DeepSeek via Leihuo (free!) — non-thinking and thinking variants
-    "dsv4-lh": {"api_version": "leihuo", "max_tokens": 16000, "model_name": "deepseek-v4-pro"},
-    "dsv4-lh-think": {"api_version": "leihuo", "max_tokens": 16000, "thinking_budget": 500, "model_name": "deepseek-v4-pro"},
-    "dsv4-flash-lh": {"api_version": "leihuo", "max_tokens": 16000, "model_name": "deepseek-v4-flash"},
-    "dsv4-flash-lh-think": {"api_version": "leihuo", "max_tokens": 16000, "thinking_budget": 500, "model_name": "deepseek-v4-flash"},
-    # Gemini via Leihuo (OpenAI-compatible): must NOT send the `thinking`
+    # DeepSeek via the bearer gateway (free tier) — non-thinking and thinking variants
+    "dsv4-lh": {"api_version": "bearer", "max_tokens": 16000, "model_name": "deepseek-v4-pro"},
+    "dsv4-lh-think": {"api_version": "bearer", "max_tokens": 16000, "thinking_budget": 500, "model_name": "deepseek-v4-pro"},
+    "dsv4-flash-lh": {"api_version": "bearer", "max_tokens": 16000, "model_name": "deepseek-v4-flash"},
+    "dsv4-flash-lh-think": {"api_version": "bearer", "max_tokens": 16000, "thinking_budget": 500, "model_name": "deepseek-v4-flash"},
+    # Gemini via the bearer gateway (OpenAI-compatible): must NOT send the `thinking`
     # field — disabled/enabled both break it (empty content). thinking_budget
     # = False marks "omit the field entirely" (three-state: None/0 = force
     # disabled, >0 = enabled with budget, False = omit).
-    "gemini-3.1-pro-preview": {"api_version": "leihuo", "max_tokens": 65536,
+    "gemini-3.1-pro-preview": {"api_version": "bearer", "max_tokens": 65536,
                                "thinking_budget": False, "model_name": "gemini-3.1-pro-preview"},
-    "gemini-3.7-flash": {"api_version": "leihuo", "max_tokens": 65536,
+    "gemini-3.7-flash": {"api_version": "bearer", "max_tokens": 65536,
                          "thinking_budget": False, "model_name": "gemini-3.7-flash"},
-    "gemini-3.1-flash-lite": {"api_version": "leihuo", "max_tokens": 65536,
+    "gemini-3.1-flash-lite": {"api_version": "bearer", "max_tokens": 65536,
                               "thinking_budget": False, "model_name": "gemini-3.1-flash-lite"},
-    "kimi-k3": {"api_version": "leihuo", "max_tokens": 65536},
-    "kimi-k2.5": {"api_version": "leihuo", "max_tokens": 65536},
-    "glm-5.2": {"api_version": "leihuo", "max_tokens": 65536},
-    "glm-5": {"api_version": "leihuo", "max_tokens": 65536},
+    "kimi-k3": {"api_version": "bearer", "max_tokens": 65536},
+    "kimi-k2.5": {"api_version": "bearer", "max_tokens": 65536},
+    "glm-5.2": {"api_version": "bearer", "max_tokens": 65536},
+    "glm-5": {"api_version": "bearer", "max_tokens": 65536},
     "deepseek-r1": {"api_version": "v2", "max_tokens": 16000},
     "deepseek-v3.1-250821": {"api_version": "v2", "max_tokens": 16000},
     "qwen-max": {"api_version": "v2", "max_tokens": 8192},
-    # Claude via Leihuo (2026-09-07, from /v1/models): ONLY the Anthropic
-    # /v1/messages endpoint accepts these — /v1/chat/completions returns
-    # 403 "请勿使用端点". Route through api_version "leihuo-claude".
-    "claude-opus-4-8-v4-pro": {"api_version": "leihuo-claude", "max_tokens": 65536,
+    # Claude via the bearer gateway (2026-09-07, from /v1/models): ONLY the
+    # Anthropic /v1/messages endpoint accepts these; the OpenAI-style
+    # chat-completions route rejects them. Route via api_version
+    # "bearer-anthropic".
+    "claude-opus-4-8-v4-pro": {"api_version": "bearer-anthropic", "max_tokens": 65536,
                                "model_name": "claude-opus-4-8-v4-pro"},
-    "claude-opus-4-8-v4-flash": {"api_version": "leihuo-claude", "max_tokens": 65536,
+    "claude-opus-4-8-v4-flash": {"api_version": "bearer-anthropic", "max_tokens": 65536,
                                  "model_name": "claude-opus-4-8-v4-flash"},
-    "claude-opus-4-6-v4-pro": {"api_version": "leihuo-claude", "max_tokens": 65536,
+    "claude-opus-4-6-v4-pro": {"api_version": "bearer-anthropic", "max_tokens": 65536,
                                "model_name": "claude-opus-4-6-v4-pro"},
 }
 
 # ── API credentials (env vars / optional local secrets file) ─────
 # Never hard-code keys in this file. For local use, either:
-#   1) export FUXI_* / LEIHUO_* (see .env.example), or
-#   2) place fuxi_secrets.local.py next to this module (gitignored).
+#   1) export GATEWAY_* / BEARER_* (see .env.example), or
+#   2) place gateway_secrets.local.py next to this module (gitignored).
 
 
 def _load_api_configs() -> dict:
     """Build API_CONFIGS from environment, then overlay local secrets if present."""
     configs = {
         "v1": {
-            "app_id": os.environ.get("FUXI_V1_APP_ID", ""),
-            "app_key": os.environ.get("FUXI_V1_APP_KEY", ""),
-            "project_id": os.environ.get("FUXI_V1_PROJECT_ID", ""),
-            "bearer_app_key": os.environ.get("FUXI_V1_BEARER", ""),
+            "app_id": os.environ.get("GATEWAY_V1_APP_ID", ""),
+            "app_key": os.environ.get("GATEWAY_V1_APP_KEY", ""),
+            "project_id": os.environ.get("GATEWAY_V1_PROJECT_ID", ""),
+            "bearer_app_key": os.environ.get("GATEWAY_V1_BEARER", ""),
             "end_point": os.environ.get(
-                "FUXI_V1_ENDPOINT",
+                "GATEWAY_V1_ENDPOINT",
                 "",
             ),
         },
         "v2": {
-            "app_id": os.environ.get("FUXI_V2_APP_ID", ""),
-            "app_key": os.environ.get("FUXI_V2_APP_KEY", ""),
-            "project_id": os.environ.get("FUXI_V2_PROJECT_ID", ""),
+            "app_id": os.environ.get("GATEWAY_V2_APP_ID", ""),
+            "app_key": os.environ.get("GATEWAY_V2_APP_KEY", ""),
+            "project_id": os.environ.get("GATEWAY_V2_PROJECT_ID", ""),
             "end_point": os.environ.get(
-                "FUXI_V2_ENDPOINT",
+                "GATEWAY_V2_ENDPOINT",
                 "",
             ),
         },
         "v3": {
-            "app_id": os.environ.get("FUXI_V3_APP_ID", ""),
-            "app_key": os.environ.get("FUXI_V3_APP_KEY", ""),
-            "project_id": os.environ.get("FUXI_V3_PROJECT_ID", ""),
+            "app_id": os.environ.get("GATEWAY_V3_APP_ID", ""),
+            "app_key": os.environ.get("GATEWAY_V3_APP_KEY", ""),
+            "project_id": os.environ.get("GATEWAY_V3_PROJECT_ID", ""),
             "end_point": os.environ.get(
-                "FUXI_V3_ENDPOINT",
+                "GATEWAY_V3_ENDPOINT",
                 "",
             ),
         },
-        "leihuo": {
-            "bearer_app_key": os.environ.get("LEIHUO_API_KEY", ""),
+        "bearer": {
+            "bearer_app_key": os.environ.get("BEARER_API_KEY", ""),
             "end_point": os.environ.get(
-                "LEIHUO_ENDPOINT",
+                "BEARER_ENDPOINT",
                 "",
             ),
         },
-        "leihuo-claude": {
+        "bearer-anthropic": {
             "bearer_app_key": os.environ.get(
-                "LEIHUO_CLAUDE_API_KEY",
-                os.environ.get("LEIHUO_API_KEY", ""),
+                "BEARER_ANTHROPIC_API_KEY",
+                os.environ.get("BEARER_API_KEY", ""),
             ),
             "end_point": os.environ.get(
-                "LEIHUO_CLAUDE_ENDPOINT",
+                "BEARER_ANTHROPIC_ENDPOINT",
                 "",
             ),
         },
     }
-    local = Path(__file__).with_name("fuxi_secrets.local.py")
+    local = Path(__file__).with_name("gateway_secrets.local.py")
     if local.exists():
         ns: dict = {}
         exec(compile(local.read_text(encoding="utf-8"), str(local), "exec"), ns)
@@ -149,8 +150,8 @@ def _md5_sign(app_id: str, app_key: str) -> tuple[dict, str, str]:
     return nonce, timestamp, sign
 
 
-class FuxiClient(ModelClient):
-    """Synchronous Fuxi API client implementing the ModelClient interface."""
+class GatewayClient(ModelClient):
+    """Synchronous gateway API client implementing the ModelClient interface."""
 
     def __init__(
         self,
@@ -158,12 +159,12 @@ class FuxiClient(ModelClient):
         temperature: float = 0.0,
         max_retries: int = 3,
     ):
-        if model not in FUXI_MODELS:
+        if model not in GATEWAY_MODELS:
             raise ValueError(
-                f"Unknown model: {model}. Available: {list(FUXI_MODELS.keys())}"
+                f"Unknown model: {model}. Available: {list(GATEWAY_MODELS.keys())}"
             )
         self.model = model
-        self._config = FUXI_MODELS[model]
+        self._config = GATEWAY_MODELS[model]
         self._api_version = self._config["api_version"]
         self._api = API_CONFIGS[self._api_version]
         self._model_name = self._config.get("model_name", model)  # override for API call
@@ -178,7 +179,7 @@ class FuxiClient(ModelClient):
 
     @property
     def name(self) -> str:
-        return f"fuxi/{self.model}"
+        return f"gateway/{self.model}"
 
     def complete(self, messages: list[dict], **kwargs) -> str:
         """Send messages and return model response text."""
@@ -209,17 +210,17 @@ class FuxiClient(ModelClient):
                     time.sleep(2 ** attempt)
                 else:
                     raise RuntimeError(
-                        f"Fuxi API failed after {self.max_retries} retries: {e}"
+                        f"gateway API failed after {self.max_retries} retries: {e}"
                     )
         return ""
 
     def _build_headers(self) -> dict:
-        if self._api_version in ("leihuo", "leihuo-claude"):
+        if self._api_version in ("bearer", "bearer-anthropic"):
             headers = {
                 "Authorization": f"Bearer {self._api['bearer_app_key']}",
                 "Content-Type": "application/json",
             }
-            if self._api_version == "leihuo-claude":
+            if self._api_version == "bearer-anthropic":
                 headers["anthropic-version"] = "2023-06-01"
             return headers
         elif self._api_version == "v1":
@@ -242,7 +243,7 @@ class FuxiClient(ModelClient):
             }
 
     def _build_body(self, messages: list[dict], max_tokens: int) -> dict:
-        if self._api_version == "leihuo-claude":
+        if self._api_version == "bearer-anthropic":
             # Anthropic Messages API: system prompt goes to the top-level
             # `system` field (role=system is rejected inside `messages`).
             sys_parts, conv = [], []
@@ -262,7 +263,7 @@ class FuxiClient(ModelClient):
             if sys_parts:
                 body["system"] = "\n\n".join(sys_parts)
             return body
-        elif self._api_version == "leihuo":
+        elif self._api_version == "bearer":
             body = {
                 "model": self._model_name,
                 "messages": self._flatten_messages(messages),
@@ -273,7 +274,7 @@ class FuxiClient(ModelClient):
             # Add thinking config for models that support it.
             # Three states: >0 budget = enabled; 0/None = force disabled
             # (DeepSeek V4 defaults to reasoning and eats all max_tokens);
-            # False = omit the field entirely (Gemini via Leihuo returns
+            # False = omit the field entirely (Gemini via the bearer gateway returns
             # empty content when the field is present in either state).
             if hasattr(self, '_thinking_budget') and self._thinking_budget:
                 body["thinking"] = {"type": "enabled", "budget_tokens": self._thinking_budget}
@@ -319,7 +320,7 @@ class FuxiClient(ModelClient):
 
         Previously this stripped image parts from list content, which
         silently degraded every 'image'-modality evaluation to text-only.
-        The gateways (v1/v2/leihuo) accept OpenAI-format multimodal
+        The gateways (v1/v2/bearer) accept OpenAI-format multimodal
         content; text-only messages (plain strings) pass through unchanged.
         """
         flat = []
@@ -334,20 +335,20 @@ class FuxiClient(ModelClient):
 
     def _parse_response(self, data: dict) -> tuple[str, int]:
         """Parse response and return (text, total_tokens)."""
-        if self._api_version == "leihuo-claude":
+        if self._api_version == "bearer-anthropic":
             # Anthropic Messages format: content = [{type: text, text: ...}]
             blocks = data.get("content", [])
             text = "".join(b.get("text", "") for b in blocks if b.get("type") == "text")
             if not text:
-                raise RuntimeError(f"Leihuo-claude no content: {json.dumps(data)[:200]}")
+                raise RuntimeError(f"bearer-anthropic gateway: no content: {json.dumps(data)[:200]}")
             usage = data.get("usage", {})
             tokens = usage.get("input_tokens", 0) + usage.get("output_tokens", 0)
             return text, tokens
-        elif self._api_version == "leihuo":
+        elif self._api_version == "bearer":
             # Standard OpenAI format
             choices = data.get("choices", [])
             if not choices:
-                raise RuntimeError(f"Leihuo no choices: {json.dumps(data)[:200]}")
+                raise RuntimeError(f"bearer gateway: no choices: {json.dumps(data)[:200]}")
             text = choices[0].get("message", {}).get("content", "")
             usage = data.get("usage", {})
             tokens = usage.get("total_tokens", 0)

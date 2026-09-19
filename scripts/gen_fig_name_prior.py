@@ -35,6 +35,8 @@ GROUPS = [
 ]
 COND_COLS = [C_ANON, C_TRUE, C_MIS]
 COND_LABS = ["anonymous", "named-true", "named-misleading"]
+# Solid / diagonals / crosshatch: grayscale-safe condition keys (cf. wall_decomp).
+HATCHES = ["", "///", "xx"]
 
 # E-C2 six conditions, Qwen3.5-9B, 600 envs each (SR %, successes / 600)
 SIX = [
@@ -51,6 +53,8 @@ SIX_A800_ANON = (1.17, 7)          # cross-host control, same suite
 from matplotlib.colors import to_rgb
 
 W, H = 5.5, 2.30
+# Keep layout coordinates and point-sized type, but use a shallower canvas.
+FIG_HEIGHT = 1.95
 RULE, SECONDARY = "#D8DDDF", "#5F6970"
 COLORS = [C_ANON, C_TRUE, C_MIS]
 
@@ -68,7 +72,7 @@ def rounded_top_bar(ax, x, value, width, color):
     """1.1-point upper corners, flat clipped base, and exact data-coordinate top."""
     # Convert corner dimensions to screen space so x/y units cannot distort them.
     sx = ax.get_position().width * W * 72 / (ax.get_xlim()[1] - ax.get_xlim()[0])
-    sy = ax.get_position().height * H * 72 / (ax.get_ylim()[1] - ax.get_ylim()[0])
+    sy = ax.get_position().height * FIG_HEIGHT * 72 / (ax.get_ylim()[1] - ax.get_ylim()[0])
     rx, ry = 1.1 / sx, 1.1 / sy
     bar = patches.FancyBboxPatch(
         (x - width / 2, -ry), width, value + ry,
@@ -81,7 +85,8 @@ def rounded_top_bar(ax, x, value, width, color):
 
 
 def build():
-    fig = plt.figure(figsize=(W, H), facecolor="white")
+    plt.rcParams["hatch.linewidth"] = .35
+    fig = plt.figure(figsize=(W, FIG_HEIGHT), facecolor="white")
     label(fig, .04, 2.18, "(a) Label sensitivity", fontsize=8.2, weight="bold")
     label(fig, 3.18, 2.18, "(b) Frozen-suite replication", fontsize=8.2, weight="bold")
     fig.add_artist(plt.Line2D([3.05 / W] * 2, [.04 / H, 2.03 / H],
@@ -95,6 +100,7 @@ def build():
         for k, (value, color) in enumerate(zip(group[2], COLORS)):
             x = center + (k - 1) * width
             rounded_top_bar(ax, x, value, width * .84, color)
+            ax.patches[-1].set_hatch(HATCHES[k])
             ax.text(x, value + 2.0, f"{value:g}", fontsize=6.5,
                     ha="center", va="bottom", color=INK)
     ax.set_xticks(centers, ["F1", "F2", "F1", "F2"], fontsize=7)
@@ -112,8 +118,9 @@ def build():
         label(fig, xf, 1.83, modality, fontsize=6.5, color=SECONDARY, ha="center")
     # A subtle divider separates models without background bands.
     ax.axvline(1.88, color=RULE, lw=.5, zorder=0)
-    ax.legend(handles=[patches.Patch(facecolor=soft_color(c), edgecolor=c, linewidth=.65, label=n)
-                       for c, n in zip(COLORS, ["Anonymous", "True names", "Misleading"])],
+    ax.legend(handles=[patches.Patch(facecolor=soft_color(c), edgecolor=c, linewidth=.65,
+                                     hatch=HATCHES[k], label=n)
+                       for k, (c, n) in enumerate(zip(COLORS, ["Anonymous", "True names", "Misleading"]))],
               loc="upper center", bbox_to_anchor=(.5, -.26), ncol=3,
               fontsize=6.5, handlelength=.9, handletextpad=.4, columnspacing=.9,
               borderaxespad=0, frameon=False)

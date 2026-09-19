@@ -13,6 +13,27 @@ Usage:
 
     # Resume interrupted run
     python scripts/run_eval.py --agent gpt-4o --resume
+
+    # E-C2 name-prior prereg runs: feed the frozen, pre-call-audited label
+    # packs read from disk (never recomputed); one condition per run, with a
+    # per-condition output directory
+    python scripts/run_eval.py --agent vllm:qwen3.5-9b \
+        --data-dir data/frozen_suites/replication_primary_v3 \
+        --split replication_primary --family all \
+        --label-pack-suite replication_primary_v3 \
+        --label-pack-condition nonce_matched \
+        --output results/name_prior_replication/nonce_matched
+
+Two label paths exist and must not be mixed:
+  * ``--label-pack-suite`` + ``--label-pack-condition`` (E-C2, preferred):
+    loads ``data/label_packages/<suite>/<condition>/env_<env_id>.json`` --
+    the exact bytes the pre-call audit approved (sha256-checked against the
+    suite manifest).  A missing/mismatched pack aborts the run, and every
+    trajectory records the pack path + sha256 it was fed.
+  * ``--action-labels true|misleading`` (legacy, kept for backwards
+    compatibility with earlier analyses): recomputes labels via
+    ``alienbody.labels.labels_for``-equivalent logic; its ``misleading`` is the
+    ``+1`` rotation, NOT the pre-registered per-environment derangement.
 """
 from __future__ import annotations
 
@@ -36,20 +57,57 @@ from alienbody.env.generator import validate_solvable
 from alienbody.agents import RandomAgent, OracleAgent, run_episode, DONE_EXPLORING
 from alienbody.eval import compute_all_metrics, aggregate_metrics
 from alienbody.trajectory import TrajectoryWriter, get_completed_env_ids
+from alienbody.labels import (
+    CONDITIONS,
+    DEFAULT_LABEL_PACK_DIR,
+    LabelPack,
+    LabelPackError,
+    load_label_pack,
+    resolve_pack_dir,
+)
 
 
-def load_environments(data_dir: Path, family: str, split: str) -> list[EnvConfig]:
-    """Load all environment configs for given family and split."""
+class MissingFamilyPoolError(RuntimeError):
+    """A requested family's environment pool is absent from the data dir."""
+
+
+def load_environments(data_dir: Path, family: str, split: str,
+                      allow_missing: bool = False) -> list[EnvConfig]:
+    """Load all environment configs for given family and split.
+
+    A requested family whose pool directory (or env_*.json set) is missing is a
+    hard error: previously it only warned + skipped, so a partial local suite
+    produced a plausible SR and exit 0.  ``allow_missing=True`` restores the old
+    warn-and-skip behaviour for deliberate partial-suite runs.
+    """
     families = list(range(1, 7)) if family == "all" else [int(family)]
     configs = []
+    missing: list[str] = []
 
     for fam in families:
         env_dir = data_dir / f"family{fam}" / split
         if not env_dir.exists():
-            print(f"  Warning: {env_dir} not found, skipping")
+            missing.append(f"{env_dir} (directory not found)")
             continue
-        for json_file in sorted(env_dir.glob("env_*.json")):
+        env_files = sorted(env_dir.glob("env_*.json"))
+        if not env_files:
+            missing.append(f"{env_dir} (no env_*.json)")
+            continue
+        for json_file in env_files:
             configs.append(EnvConfig.from_file(str(json_file)))
+
+    if missing:
+        detail = "; ".join(missing)
+        if allow_missing:
+            print(f"  Warning: {len(missing)} requested family pool(s) missing, "
+                  f"skipping: {detail}")
+        else:
+            raise MissingFamilyPoolError(
+                f"requested family pool(s) missing for family={family!r} "
+                f"split={split!r}: {detail}.  Refusing to run: the SR would "
+                f"silently cover fewer families than requested.  Point --data-dir "
+                f"at a complete suite, or pass --allow-missing-family for a "
+                f"deliberate partial run.")
 
     return configs
 
@@ -60,7 +118,8 @@ def create_agent(agent_name: str, config: EnvConfig, modality: str = "image",
                  action_labels: list[str] | None = None,
                  tool: bool = False, code_tool: bool = False,
                  max_tokens: int | None = None,
-                 induce_rounds: int = 4, induce_fallback: bool = True):
+                 induce_rounds: int = 4, induce_fallback: bool = True,
+                 bon_n: int = 1):
     """Create an agent by name.
 
     Supported agents:
@@ -120,7 +179,7 @@ def create_agent(agent_name: str, config: EnvConfig, modality: str = "image",
         return DSLCatalogProposeAgent(config, client, induce_rounds=induce_rounds)
 
     # FMB with VLM induction: fmb-vlm+<model_spec>
-    # e.g. fmb-vlm+fuxi:gpt-4o, fmb-vlm+vllm:qwen3.5-4b
+    # e.g. fmb-vlm+gateway:gpt-4o, fmb-vlm+vllm:qwen3.5-4b
     if name_lower.startswith("fmb-vlm+"):
         from alienbody.agents.fmb_vlm import VLMFMBAgent
         from alienbody.agents.llm_agent import make_agent
@@ -137,7 +196,7 @@ def create_agent(agent_name: str, config: EnvConfig, modality: str = "image",
         return ActiveBabblingAgent(config, vlm_client)
 
     # Inductive FMB: LLM proposal + simulator verification loop
-    #   fmb-ind+<model_spec>  (e.g. fmb-ind+fuxi:gpt-4o)
+    #   fmb-ind+<model_spec>  (e.g. fmb-ind+gateway:gpt-4o)
     if name_lower.startswith("fmb-ind+"):
         from alienbody.agents.fmb_inductive import InductiveFMBAgent
         model_spec = agent_name[8:]  # part after "fmb-ind+"
@@ -154,9 +213,9 @@ def create_agent(agent_name: str, config: EnvConfig, modality: str = "image",
 
     # FMB with text-model LoRA or full model:
     #   fmb-text:<model_path>:<lora_path>[:cot|fullft]
-    # e.g. fmb-text:/project/model/Qwen3.5-4B:models/fmb_stage1_text_4b/final
-    #      fmb-text:/project/model/Qwen3.5-9B:models/f4_cot_2000/final:cot
-    #      fmb-text:/project/model/Qwen3.5-4B:models/f4_fullft_2000/final:fullft
+    # e.g. fmb-text:models/Qwen3.5-4B:models/fmb_stage1_text_4b/final
+    #      fmb-text:models/Qwen3.5-9B:models/f4_cot_2000/final:cot
+    #      fmb-text:models/Qwen3.5-4B:models/f4_fullft_2000/final:fullft
     if name_lower.startswith("fmb-text:"):
         from alienbody.agents.fmb_text import TextFMBAgent
         parts = agent_name[9:].split(":")
@@ -175,6 +234,18 @@ def create_agent(agent_name: str, config: EnvConfig, modality: str = "image",
     if name_lower == "memory":
         from alienbody.agents.algorithmic_agents import MemoryAugmentedExplorer
         return MemoryAugmentedExplorer(n_actions=config.n_actions)
+
+    # Permission-matched, observation-only baselines (P0-B).
+    # Constructed with n_actions ONLY -- not even the config object is passed,
+    # so these agents cannot read the ground-truth action mapping.
+    # ``obs_bayes`` is the alias used for the results directory name.
+    if name_lower in ("psrl", "rmax", "obs-bayes", "obs_bayes"):
+        from alienbody.agents.permission_matched import (
+            PSRLAgent, RMaxAgent, ObsBayesAgent)
+        agent_cls = {"psrl": PSRLAgent, "rmax": RMaxAgent,
+                     "obs-bayes": ObsBayesAgent,
+                     "obs_bayes": ObsBayesAgent}[name_lower]
+        return agent_cls(config.n_actions)
 
     # RL agents (require a trained model path)
     if name_lower.startswith("rl:"):
@@ -229,14 +300,14 @@ def create_agent(agent_name: str, config: EnvConfig, modality: str = "image",
                              prompt_variant=PromptVariant(prompt_variant))
         return None
 
-    # Fuxi API models (explicit prefix)
-    if name_lower.startswith("fuxi:"):
-        from alienbody.agents.fuxi_client import FuxiClient
+    # gateway API models (explicit prefix)
+    if name_lower.startswith("gateway:"):
+        from alienbody.agents.gateway_client import GatewayClient
         from alienbody.agents.llm_agent import LLMAgent
         from alienbody.prompts import PromptVariant
-        fuxi_model = agent_name[5:]
+        gateway_model = agent_name[5:]
         action_mapping_list = list(config.action_mapping) if assist_level == 3 else None
-        client = FuxiClient(model=fuxi_model)
+        client = GatewayClient(model=gateway_model)
         wrapped = _wrap_l3_tools(client, modality)
         if wrapped is not None:
             return wrapped
@@ -281,7 +352,7 @@ def create_agent(agent_name: str, config: EnvConfig, modality: str = "image",
         agent = make_agent(agent_name, modality=modality,
                            prompt_variant=prompt_variant, familiar=familiar,
                            assist_level=assist_level, action_mapping=action_mapping,
-                           **kwargs)
+                           bon_n=bon_n, **kwargs)
         return agent
     except (ImportError, ValueError) as e:
         raise ValueError(
@@ -298,23 +369,23 @@ def _make_model_client(model_spec: str, modality: str = "image",
                        prompt_variant: str = "minimal", familiar: bool = False):
     """Create a ModelClient from a model spec string.
 
-    Supports: fuxi:<model>, vllm:<model>, or bare model names
+    Supports: gateway:<model>, vllm:<model>, or bare model names
     (gpt-4o, gemini-2.5-pro, etc.) resolved through make_agent's client.
     """
     spec_lower = model_spec.lower()
 
-    if spec_lower.startswith("fuxi:"):
-        from alienbody.agents.fuxi_client import FuxiClient
-        return FuxiClient(model=model_spec[5:])
+    if spec_lower.startswith("gateway:"):
+        from alienbody.agents.gateway_client import GatewayClient
+        return GatewayClient(model=model_spec[5:])
 
     if spec_lower.startswith("vllm:"):
         from alienbody.agents.llm_agent import VLLMClient
         return VLLMClient(model=model_spec[5:])
 
-    # Bare model name: try Fuxi first, then vLLM
+    # Bare model name: try gateway first, then vLLM
     try:
-        from alienbody.agents.fuxi_client import FuxiClient
-        return FuxiClient(model=model_spec)
+        from alienbody.agents.gateway_client import GatewayClient
+        return GatewayClient(model=model_spec)
     except Exception:
         from alienbody.agents.llm_agent import VLLMClient
         return VLLMClient(model=model_spec)
@@ -326,7 +397,8 @@ def run_single(config: EnvConfig, agent_name: str, modality: str,
                action_labels: list[str] | None = None,
                tool: bool = False, code_tool: bool = False,
                max_tokens: int | None = None,
-               induce_rounds: int = 4, induce_fallback: bool = True) -> dict:
+               induce_rounds: int = 4, induce_fallback: bool = True,
+               bon_n: int = 1) -> dict:
     """Run a single episode and return trajectory with metrics."""
     env = AlienBodyEnv(config, render_mode="both")
     agent = create_agent(agent_name, config, modality, prompt_variant, familiar,
@@ -334,7 +406,8 @@ def run_single(config: EnvConfig, agent_name: str, modality: str,
                          action_labels=action_labels, tool=tool,
                          code_tool=code_tool,
                          max_tokens=max_tokens,
-                         induce_rounds=induce_rounds, induce_fallback=induce_fallback)
+                         induce_rounds=induce_rounds, induce_fallback=induce_fallback,
+                         bon_n=bon_n)
 
     trajectory = run_episode(env, agent)
 
@@ -394,6 +467,22 @@ def main():
                         help="Name-prior ablation: reveal button labels. "
                              "true = labels match the ground-truth mapping; "
                              "misleading = labels are a shifted permutation (all wrong)")
+    parser.add_argument("--label-pack-suite", type=str, default=None,
+                        metavar="SUITE",
+                        help="E-C2: load every environment's name-prior labels "
+                             "from the frozen, pre-call-audited pack files "
+                             f"({DEFAULT_LABEL_PACK_DIR}/<suite>/<condition>/"
+                             "env_<env_id>.json) instead of recomputing them. "
+                             "This is the path the preregistered runs must use. "
+                             "Requires --label-pack-condition; mutually exclusive "
+                             "with --action-labels (the legacy recompute path).")
+    parser.add_argument("--label-pack-condition", type=str, default=None,
+                        choices=list(CONDITIONS),
+                        help="Condition whose audited pack to load; requires "
+                             "--label-pack-suite. anonymous = no label block; "
+                             "true = ground truth; misleading = per-env "
+                             "derangement; nonce_matched / synonym_true / "
+                             "id_permuted as pre-registered.")
     parser.add_argument("--tool", action="store_true",
                         help="A1 clean-planning experiment: give the agent a "
                              "next_state(r,c,a) one-step transition oracle "
@@ -408,8 +497,9 @@ def main():
                              "(default 128; thinking models need >= 600; "
                              "code-tool default 2048)")
     parser.add_argument("--induce-rounds", type=int, default=4,
-                        help="Inductive FMB (fmb-ind+): verification-feedback "
-                             "rounds (0 = zero-shot proposal, no feedback)")
+                        help="Induction rounds for fmb-ind/dsl agents")
+    parser.add_argument("--bon", type=int, default=1,
+                        help="Best-of-N: sample N candidates per phase-2 step and majority-vote")
     parser.add_argument("--induce-fallback", action="store_true", default=True,
                         help="Inductive FMB: fall back to permutation "
                              "enumeration when no proposal fully verifies "
@@ -428,6 +518,11 @@ def main():
     parser.add_argument("--vllm-port", type=int, default=None,
                         help="vLLM server port (overrides VLLM_PORT env or default)")
     parser.add_argument("--data-dir", type=str, default="data/envs")
+    parser.add_argument("--allow-missing-family", action="store_true",
+                        help="Permit a requested family whose env pool is "
+                             "absent (default: hard error).  Only for "
+                             "deliberate partial-suite runs: the printed SR "
+                             "then covers fewer families than requested.")
     parser.add_argument("--output", type=str, default="results")
     parser.add_argument("--resume", action="store_true",
                         help="Skip already-completed environments")
@@ -441,14 +536,53 @@ def main():
     if args.tool and args.code_tool:
         parser.error("--tool and --code-tool are mutually exclusive")
 
+    # E-C2 label-pack path: frozen audited packs read from disk (see the module
+    # docstring).  The legacy --action-labels recompute path stays untouched.
+    if args.label_pack_condition and not args.label_pack_suite:
+        parser.error("--label-pack-condition requires --label-pack-suite")
+    if args.label_pack_suite and not args.label_pack_condition:
+        parser.error("--label-pack-suite requires --label-pack-condition "
+                     f"<{'|'.join(CONDITIONS)}>")
+    if args.label_pack_suite and args.action_labels:
+        parser.error("--label-pack-suite and --action-labels are mutually "
+                     "exclusive: --action-labels is the legacy recompute path "
+                     "(true/misleading only, its 'misleading' is the +1 "
+                     "rotation); the audited pack path selects its condition "
+                     "with --label-pack-condition")
+    if args.label_pack_suite and args.assist_level == 3:
+        parser.error("--label-pack-suite requires --assist-level 0, 1 or 2: the "
+                     "assist-level-3 prompt gives the action mapping and never "
+                     "shows interface labels")
+    if args.label_pack_suite:
+        pack_root = resolve_pack_dir(DEFAULT_LABEL_PACK_DIR)
+        suite_dir = pack_root / args.label_pack_suite
+        if not suite_dir.is_dir():
+            available = (sorted(p.name for p in pack_root.iterdir() if p.is_dir())
+                         if pack_root.is_dir() else [])
+            parser.error(f"unknown --label-pack-suite {args.label_pack_suite!r}: "
+                         f"{suite_dir} not found"
+                         + (f"; available suites: {', '.join(available)}"
+                            if available else f" (pack root {pack_root} missing)"))
+        if not (args.agent.lower().startswith("gateway:")
+                or args.agent.lower().startswith("vllm:")):
+            print(f"  WARNING: --label-pack-suite with agent {args.agent!r}: only "
+                  f"gateway:/vllm: agents forward interface labels to a model; any "
+                  f"other agent type ignores the pack labels.")
+
     data_dir = Path(__file__).parent.parent / args.data_dir
     output_dir = Path(__file__).parent.parent / args.output
 
-    # Load environments
-    configs = load_environments(data_dir, args.family, args.split)
+    # Load environments.  A requested family whose pool is absent aborts the
+    # run here (unless --allow-missing-family) instead of quietly evaluating a
+    # smaller suite and exiting 0.
+    try:
+        configs = load_environments(data_dir, args.family, args.split,
+                                    allow_missing=args.allow_missing_family)
+    except MissingFamilyPoolError as exc:
+        parser.error(str(exc))
     if not configs:
-        print(f"No environments found in {data_dir}")
-        return
+        parser.error(f"no environments found in {data_dir} "
+                     f"(family={args.family!r}, split={args.split!r})")
 
     if args.n_envs > 0:
         configs = configs[:args.n_envs]
@@ -480,13 +614,37 @@ def main():
         print(f"  Tool: next_state simulator oracle (A1)")
     if args.code_tool:
         print(f"  Tool: Python REPL over next_state (code-tool)")
+    if args.label_pack_suite:
+        print(f"  Labels: {args.label_pack_condition} "
+              f"(audited pack suite {args.label_pack_suite})")
     print(f"  Output: {output_file}")
     if vllm_base_url:
         print(f"  vLLM: {vllm_base_url}")
     print(f"{'='*60}")
 
+    # E-C2: read every env's audited label pack from disk up front.  A missing
+    # or mismatched pack aborts the run here -- before any episode -- instead
+    # of silently falling back to recomputed labels.
+    pack_labels: dict[str, LabelPack] | None = None
+    if args.label_pack_suite:
+        pack_labels = {}
+        for config in configs:
+            try:
+                pack_labels[config.env_id] = load_label_pack(
+                    args.label_pack_suite, args.label_pack_condition, config.env_id)
+            except LabelPackError as exc:
+                print(f"  ERROR: {exc}")
+                sys.exit(2)
+        n_labelled = sum(1 for pack in pack_labels.values() if pack.labels is not None)
+        print(f"  Label packs: {len(pack_labels)} loaded from disk "
+              f"({n_labelled} labelled, {len(pack_labels) - n_labelled} anonymous), "
+              f"sha256-checked against {args.label_pack_suite}/manifest.json")
+
     # Name-prior ablation: per-config button labels
     def _labels_for(config: EnvConfig) -> list[str] | None:
+        if pack_labels is not None:
+            # E-C2: exactly the audited bytes read from disk (never recomputed)
+            return pack_labels[config.env_id].labels
         if args.action_labels is None:
             return None
         mapping = list(config.action_mapping)
@@ -508,13 +666,15 @@ def main():
                                 args.prompt, args.familiar, args.assist_level,
                                 vllm_base_url, _labels_for(config), args.tool,
                                 args.code_tool, args.max_tokens, args.induce_rounds,
-                                args.induce_fallback): config
+                                args.induce_fallback, args.bon): config
                     for config in configs
                 }
                 for i, future in enumerate(as_completed(futures)):
                     config = futures[future]
                     try:
                         traj = future.result()
+                        if pack_labels is not None:
+                            traj["label_pack"] = pack_labels[config.env_id].as_meta()
                         writer.write(traj)
                         all_metrics.append(traj["metrics"])
                         _print_progress(i + 1, len(configs), traj, start_time)
@@ -528,7 +688,9 @@ def main():
                                       args.prompt, args.familiar, args.assist_level,
                                       vllm_base_url, _labels_for(config), args.tool,
                                       args.code_tool, args.max_tokens, args.induce_rounds,
-                                      args.induce_fallback)
+                                      args.induce_fallback, args.bon)
+                    if pack_labels is not None:
+                        traj["label_pack"] = pack_labels[config.env_id].as_meta()
                     writer.write(traj)
                     all_metrics.append(traj["metrics"])
                     _print_progress(i + 1, len(configs), traj, start_time)

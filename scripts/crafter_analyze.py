@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Aggregate + paired-bootstrap CI for the Crafter name-prior experiment (P-S1).
 
-Reads summary_*.json and per-run jsons from the output dir, reports
+Reads summary_*.json and per-run jsons from one or more output dirs, reports
 per-condition metrics and paired bootstrap CIs over shared seeds.
 
-Usage: python scripts/crafter_analyze.py [results_dir]
+Usage: python scripts/crafter_analyze.py [results_dir ...]
 """
 import argparse
 import glob
@@ -17,21 +17,28 @@ import numpy as np
 CONDS = ["named", "category", "anonymous"]
 
 
-def load_runs(d: str) -> dict:
-    """Per-condition list of run records, one per seed (newest file wins)."""
+def load_runs(dirs) -> dict:
+    """Per-condition list of run records, one per seed (newest file wins).
+
+    Accepts one or more directories; runs are merged by (condition, seed),
+    keeping the file with the newest timestamp in its name.
+    """
+    if isinstance(dirs, str):
+        dirs = [dirs]
     runs = {}
     for c in CONDS:
-        fs = glob.glob(os.path.join(d, f"{c}_seed*.json"))
-        fs = [f for f in fs if "summary" not in f]
         by_seed = {}
-        for f in fs:
-            try:
-                seed = int(os.path.basename(f).split("_seed")[1].split("_")[0])
-            except (IndexError, ValueError):
-                continue
-            # keep the newest file per seed (timestamp in filename)
-            if seed not in by_seed or f > by_seed[seed]:
-                by_seed[seed] = f
+        for d in dirs:
+            fs = glob.glob(os.path.join(d, f"{c}_seed*.json"))
+            fs = [f for f in fs if "summary" not in f]
+            for f in fs:
+                try:
+                    seed = int(os.path.basename(f).split("_seed")[1].split("_")[0])
+                except (IndexError, ValueError):
+                    continue
+                # keep the newest file per seed (timestamp in filename)
+                if seed not in by_seed or os.path.basename(f) > os.path.basename(by_seed[seed]):
+                    by_seed[seed] = f
         recs = []
         for seed in sorted(by_seed):
             data = json.load(open(by_seed[seed]))
@@ -88,9 +95,9 @@ def crafter_score(recs) -> float:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("results_dir", nargs="?",
-                    default=os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                                         "..", "results", "crafter_name_prior_gpt4o"))
+    ap.add_argument("results_dir", nargs="+",
+                    default=[os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                          "..", "results", "crafter_name_prior_gpt4o")])
     ap.add_argument("--n-boot", type=int, default=10000)
     args = ap.parse_args()
 

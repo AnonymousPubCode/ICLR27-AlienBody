@@ -212,7 +212,7 @@ class InductiveFMBAgent(FMBAgent):
             grid=self._render_color_grid(),
             observations=self._format_observations(),
         )
-        # The proposal prompt is sent as a user message: the Leihuo gateway's
+        # The proposal prompt is sent as a user message: the gateway's
         # Gemini upstream rejects system-only conversations ("at least one
         # contents field is required"), and user-message instructions are
         # equivalent for all three backends.

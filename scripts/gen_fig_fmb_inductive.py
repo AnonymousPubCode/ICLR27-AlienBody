@@ -34,14 +34,17 @@ def label_points(ax, x, ya, yb):
             continue
         hi, lo = (a, b) if a > b else (b, a)
         c_hi, c_lo = (C_GPT4O, C_DS) if a > b else (C_DS, C_GPT4O)
-        ax.annotate(f"{hi}", (xi, hi), xytext=(0, 4), textcoords="offset points",
-                    ha="center", va="bottom", fontsize=6.5, color=c_hi)
+        # Keep high-point labels clear of the 100% reference on the short axes.
+        high_label = dict(xytext=(-7, 0), ha="right", va="center") if hi >= 85 else dict(
+            xytext=(0, 4), ha="center", va="bottom")
+        ax.annotate(f"{hi}", (xi, hi), textcoords="offset points",
+                    fontsize=6.5, color=c_hi, **high_label)
         ax.annotate(f"{lo}", (xi, lo), xytext=(0, -4), textcoords="offset points",
                     ha="center", va="top", fontsize=6.5, color=c_lo)
 
 
 def build():
-    fig, axes = plt.subplots(1, 3, figsize=(W_COL, 1.8), sharey=True)
+    fig, axes = plt.subplots(1, 3, figsize=(W_COL, 1.6), sharey=True)
     x = np.arange(3)
 
     for k, (ax, (fam, gpt, ds, ev, afmb)) in enumerate(zip(axes, FAMILIES)):
@@ -82,10 +85,10 @@ def build():
     handles = [plt.Line2D([], [], color=c, marker=m, ls=l, ms=4, markerfacecolor="white",
                           markeredgewidth=1.2, lw=1.2) for _, c, m, l in SERIES]
     axes[0].legend(handles, [s[0] for s in SERIES], loc="lower right",
-                   bbox_to_anchor=(1.02, 0.02), fontsize=6.5, handlelength=1.8,
+                   bbox_to_anchor=(1.02, -0.04), fontsize=6.5, handlelength=1.8,
                    labelspacing=0.3)
 
-    fig.subplots_adjust(left=0.075, right=0.995, top=0.87, bottom=0.22, wspace=0.12)
+    fig.subplots_adjust(left=0.075, right=0.995, top=0.86, bottom=0.24, wspace=0.12)
     save(fig, "fmb_inductive")
 
 

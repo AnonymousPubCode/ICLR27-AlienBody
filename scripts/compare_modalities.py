@@ -36,8 +36,8 @@ MODEL_ALIASES = {
     "vllm:qwen3.5-35b": "Qwen3.5-35B",
     "vllm:qwen3.5-397b": "Qwen3.5-397B",
     "vllm:qwen3.6-27b": "Qwen3.6-27B",
-    "vllm:/project/model/Qwen3.5-4B-nothink": "Qwen3.5-4B",
-    "vllm:/project/model/Qwen3.5-9B-nothink": "Qwen3.5-9B",
+    "vllm:models/Qwen3.5-4B-nothink": "Qwen3.5-4B",
+    "vllm:models/Qwen3.5-9B-nothink": "Qwen3.5-9B",
 }
 
 

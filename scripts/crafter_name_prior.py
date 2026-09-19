@@ -236,9 +236,9 @@ def probe_calibration(client, condition: str, names: list[str]) -> dict:
 
 def run_episode(condition: str, model: str, seed: int, max_steps: int,
                 out_dir: str, do_probe: bool = True) -> dict:
-    from alienbody.agents.fuxi_client import FuxiClient
+    from alienbody.agents.gateway_client import GatewayClient
 
-    client = FuxiClient(model=model)
+    client = GatewayClient(model=model)
     env = crafter.Env(seed=seed)
     names = list(env.action_names)
 
@@ -325,11 +325,11 @@ def main():
     args = ap.parse_args()
 
     if args.probe_only:
-        from alienbody.agents.fuxi_client import FuxiClient
+        from alienbody.agents.gateway_client import GatewayClient
         with open(args.probe_only) as f:
             data = json.load(f)
         r = data["result"]
-        client = FuxiClient(model=r["model"])
+        client = GatewayClient(model=r["model"])
         names = list(crafter.Env(seed=0).action_names)
         probe = probe_calibration(client, r["condition"], names)
         data["result"]["probe"] = probe

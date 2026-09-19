@@ -30,6 +30,8 @@ OUT = os.path.join(HERE, "..", "..", "fig", "game_captures")
 
 KIRBY_ROM = os.path.join(VZG_ROOT, "roms", "kirby_dream_land_dx.gb")
 CRAFTER_RESULTS = os.path.join(HERE, "..", "results", "crafter_name_prior_gpt4o")
+CRAFTER_V2_RESULTS = os.path.join(HERE, "..", "results",
+                                  "crafter_name_prior_v2_gpt4o")
 KIRBY_RESULTS = os.path.join(HERE, "..", "results", "gb_name_prior_vision")
 
 
@@ -56,6 +58,63 @@ def pick_run(pattern: str, best: bool) -> str:
     scored = sorted((json.load(open(f))["result"].get("max_scroll_x", 0), f)
                     for f in fs)
     return scored[len(scored) // 2][1]
+
+
+def pick_v2_seed(cond: str) -> tuple[int, str, int]:
+    """Symmetric per-condition rule: the seed at the condition's median
+    achievement count (ties -> lowest seed).  Returns (seed, path, achievements)."""
+    rows = []
+    for f in glob.glob(os.path.join(CRAFTER_V2_RESULTS, f"{cond}_seed*_full20.json")):
+        r = json.load(open(f))["result"]
+        rows.append((r["seed"], f, r["achievements"]))
+    assert rows, f"no v2 runs for {cond}"
+    rows.sort()
+    counts = sorted(v for _, _, v in rows)
+    median = counts[(len(counts) - 1) // 2]           # lower median, 20 seeds
+    for seed, f, v in rows:
+        if v == median:
+            return seed, f, v
+    raise AssertionError
+
+
+def capture_crafter_v2():
+    """Crafter frames from the v2 (gloss-free, shared-history) protocol.
+
+    Replays each run under its *own* seed (the v1 helper's fixed seed=0 replay
+    was a bug) and reports the replayed end state so the caption text can be
+    written from the trace rather than from the image.
+    """
+    import crafter
+
+    for cond in ["named", "anonymous", "category"]:
+        seed, path, ach = pick_v2_seed(cond)
+        data = json.load(open(path))
+        log = [e for e in data["log"] if "delta" in e]
+        env = crafter.Env(seed=seed)
+        names = list(env.action_names)
+        env.reset()
+        pos0 = tuple(int(v) for v in env._player.pos)
+        info = {"achievements": {}, "inventory": {}}
+        acted = 0
+        for step, e in enumerate(log):
+            idx = e["action_index"] if e["action_index"] is not None else 0
+            _, _, done, info = env.step(idx)
+            if e["parse_ok"]:
+                acted += 1
+            if done:
+                break
+        pos_end = tuple(int(v) for v in info.get("player_pos", env._player.pos))
+        ach_end = sorted(n for n, c in info["achievements"].items() if c > 0)
+        frame = Image.fromarray(env.render()).resize((512, 512), Image.NEAREST)
+        name = f"crafter_v2_{cond}_seed{seed}_step{step:03d}.png"
+        save(frame, name)
+        print(f"{cond}: seed {seed} ({path.split(os.sep)[-1]}), median-ach {ach}, "
+              f"{len(log)} logged steps, {acted} acted, "
+              f"pos {pos0}->{pos_end} (tiles moved "
+              f"{abs(pos0[0]-pos_end[0])+abs(pos0[1]-pos_end[1])}), "
+              f"achievements {ach_end}, "
+              f"inventory { {k: v for k, v in info['inventory'].items() if v} }")
+    print("crafter v2 done")
 
 
 def capture_kirby():
@@ -125,5 +184,5 @@ def capture_crafter():
 
 
 if __name__ == "__main__":
-    capture_crafter()
+    capture_crafter_v2()
     capture_kirby()

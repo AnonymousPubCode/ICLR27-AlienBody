@@ -84,9 +84,9 @@ def main():
     data_dir = Path(__file__).parent.parent / args.data_dir
 
     models = [
-        ("gpt4o", "fuxi_gpt-4o"),
-        ("gemini", "fuxi_gemini-3-pro-preview"),
-        ("dsv4", "fuxi_dsv4-lh"),
+        ("gpt4o", "gateway_gpt-4o"),
+        ("gemini", "gateway_gemini-3-pro-preview"),
+        ("dsv4", "gateway_dsv4-lh"),
     ]
 
     print(f"{'model':8s} | {'cond':8s} | {'n':3s} | {'SR%':6s} | {'tool/ep':8s} | tool-med")

@@ -298,6 +298,15 @@ class ForwardModelSimulator:
         repeat = params.get("repeat", False)
         inverse = params.get("inverse", False)
 
+        # Ground truth apply_type_f is a NO-OP when a repeat/inverse schema has no
+        # usable history (prev_action < 0 or last_move_delta None); without this
+        # guard the fall-through below would move by the dir_idx default (UP).
+        # Caught by E-D1 held-out probes: 94/18,830 mismatches, all F6.
+        if (repeat or inverse) and not (
+            state.prev_action >= 0 and state.last_move_delta is not None
+        ):
+            return state
+
         if repeat and state.prev_action >= 0 and state.last_move_delta is not None:
             new_pos = state.agent_pos + state.last_move_delta
             if self._in_bounds(new_pos):

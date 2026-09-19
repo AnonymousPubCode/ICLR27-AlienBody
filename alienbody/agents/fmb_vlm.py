@@ -174,7 +174,7 @@ class VLMFMBAgent(FMBAgent):
     Phase 1→2: Calls VLM to induce ForwardModel from observation history.
     Phase 2: BFS plan over VLM-induced T-hat.
 
-    The VLM induction can use any ModelClient (GPT-4o via Fuxi, Qwen via vLLM, etc.).
+    The VLM induction can use any ModelClient (GPT-4o via the gateway, Qwen via vLLM, etc.).
     """
 
     def __init__(self, config, induction_client: ModelClient,
@@ -183,7 +183,7 @@ class VLMFMBAgent(FMBAgent):
         """
         Args:
             config: EnvConfig for the environment
-            induction_client: ModelClient for schema induction (e.g. FuxiClient, VLLMClient)
+            induction_client: ModelClient for schema induction (e.g. GatewayClient, VLLMClient)
             explore_agent_name: agent to use for Phase 1 exploration
                                 "systematic" = test each action once
                                 "double" = test each action twice (for direction-dependent)

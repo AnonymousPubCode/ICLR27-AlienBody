@@ -122,6 +122,11 @@ def build_system_prompt(
             None = anonymous buttons (default benchmark setting).
             The labels are presented as interface labels, with no claim
             about whether they match the actions' actual effects.
+            Pre-registered (E-C2) runs pass ``alienbody.labels
+            .load_label_pack(...).labels`` here -- the frozen, pre-call
+            audited bytes read from ``data/label_packages/`` -- never
+            recomputed labels; ``anonymous`` packs load as ``None``, which
+            is the no-label-block baseline.
     """
     action_list = ", ".join(f"Action {i}" for i in range(n_actions))
     action_range = f"0-{n_actions - 1}"

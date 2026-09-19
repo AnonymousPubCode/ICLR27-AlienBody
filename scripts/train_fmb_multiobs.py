@@ -9,23 +9,25 @@ action's ActionSchema. Same LoRA recipe as train_fmb_stage1_text.py.
 
 Usage (on the A800 server):
   python scripts/train_fmb_multiobs.py \
-      --model /project/model/Qwen3.5-9B \
+      --model models/Qwen3.5-9B \
       --data data/fmb_trajectories/f4_scale_2000.jsonl \
       --output models/fmb_multiobs_9b
 """
 from __future__ import annotations
 
 import os
-# Pin to GPU 6 (the only card with free memory on danlu-server-a800);
+# Pin to GPU 6 (the only card with free memory on the training host);
 # must run before any torch import.
 if "CUDA_VISIBLE_DEVICES" not in os.environ:
     os.environ["CUDA_VISIBLE_DEVICES"] = "6"
 
 import argparse
 import json
+import random
 from collections import defaultdict
 from pathlib import Path
 
+import numpy as np
 import torch
 from datasets import Dataset
 from peft import LoraConfig, get_peft_model, TaskType
@@ -105,13 +107,21 @@ def load_grouped(jsonl_path: str) -> list[dict]:
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--model", default="/project/model/Qwen3.5-9B")
+    ap.add_argument("--model", default="models/Qwen3.5-9B")
     ap.add_argument("--data", default="data/fmb_trajectories/f4_scale_2000.jsonl")
     ap.add_argument("--output", default="models/fmb_multiobs_9b")
     ap.add_argument("--epochs", type=int, default=8)
     ap.add_argument("--batch-size", type=int, default=1)
     ap.add_argument("--lr", type=float, default=1e-4)
+    ap.add_argument("--seed", type=int, default=42,
+                    help="Global seed for the induction-frontier repro")
     args = ap.parse_args()
+
+    random.seed(args.seed)
+    np.random.seed(args.seed)
+    torch.manual_seed(args.seed)
+    torch.cuda.manual_seed_all(args.seed)
+    print(f"Repro seed: {args.seed}")
 
     examples = load_grouped(args.data)
     rows = []
@@ -152,6 +162,7 @@ def main():
         warmup_ratio=0.03, lr_scheduler_type="cosine",
         logging_steps=10, save_strategy="epoch", bf16=True,
         report_to="none",
+        seed=args.seed, data_seed=args.seed,
     )
     trainer = Trainer(model=model, args=targs, train_dataset=ds,
                       data_collator=collator)

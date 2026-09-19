@@ -15,10 +15,10 @@ set -euo pipefail
 # ── Model Config ────────────────────────────────────────────
 
 declare -A MODEL_PATHS=(
-    ["4b"]="/project/models/Qwen3.5-VL-4B-Instruct"
-    ["9b"]="/project/models/Qwen3.5-VL-9B-Instruct"
-    ["35b"]="/project/models/Qwen3.5-VL-35B-Instruct"
-    ["397b"]="/project/models/Qwen3.5-VL-397B-Instruct"
+    ["4b"]="models/Qwen3.5-VL-4B-Instruct"
+    ["9b"]="models/Qwen3.5-VL-9B-Instruct"
+    ["35b"]="models/Qwen3.5-VL-35B-Instruct"
+    ["397b"]="models/Qwen3.5-VL-397B-Instruct"
 )
 
 declare -A PORTS=(
