@@ -1,0 +1,9 @@
+# Byte-exact artifacts.  The frozen suites record a digest over the file bytes
+# (scripts/verify_release_bundle.py recomputes it), so their line endings must
+# survive a checkout on any platform; the same goes for the trajectory data and
+# the figure assets.
+data/frozen_suites/**  -text
+data/fmb_trajectories/**  -text
+*.png  -text
+*.pdf  -text
+*.jpg  -text
