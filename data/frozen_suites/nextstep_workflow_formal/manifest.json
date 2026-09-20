@@ -1,0 +1,2875 @@
+{
+  "attempts": 107861,
+  "blocks": {
+    "members": {
+      "A": [
+        "wf8_formal_easy_101",
+        "wf8_formal_easy_74",
+        "wf8_formal_easy_31",
+        "wf8_formal_easy_07",
+        "wf8_formal_easy_29",
+        "wf8_formal_easy_77",
+        "wf8_formal_easy_61",
+        "wf8_formal_easy_53",
+        "wf8_formal_easy_86",
+        "wf8_formal_easy_100",
+        "wf8_formal_easy_11",
+        "wf8_formal_easy_110",
+        "wf8_formal_easy_06",
+        "wf8_formal_easy_113",
+        "wf8_formal_easy_92",
+        "wf8_formal_easy_83",
+        "wf8_formal_easy_03",
+        "wf8_formal_easy_114",
+        "wf8_formal_easy_20",
+        "wf8_formal_easy_69",
+        "wf8_formal_easy_109",
+        "wf8_formal_easy_79",
+        "wf8_formal_easy_38",
+        "wf8_formal_easy_62",
+        "wf8_formal_easy_67",
+        "wf8_formal_easy_49",
+        "wf8_formal_easy_54",
+        "wf8_formal_easy_82",
+        "wf8_formal_easy_71",
+        "wf8_formal_easy_80",
+        "wf8_formal_easy_99",
+        "wf8_formal_easy_18",
+        "wf8_formal_easy_10",
+        "wf8_formal_easy_01",
+        "wf8_formal_easy_108",
+        "wf8_formal_easy_98",
+        "wf8_formal_easy_81",
+        "wf8_formal_easy_102",
+        "wf8_formal_easy_76",
+        "wf8_formal_easy_56",
+        "wf8_formal_easy_44",
+        "wf8_formal_easy_96",
+        "wf8_formal_easy_27",
+        "wf8_formal_easy_26",
+        "wf8_formal_easy_16",
+        "wf8_formal_easy_42",
+        "wf8_formal_easy_23",
+        "wf8_formal_easy_66",
+        "wf8_formal_easy_58",
+        "wf8_formal_easy_94",
+        "wf8_formal_easy_90",
+        "wf8_formal_easy_00",
+        "wf8_formal_easy_65",
+        "wf8_formal_easy_57",
+        "wf8_formal_easy_85",
+        "wf8_formal_easy_88",
+        "wf8_formal_easy_87",
+        "wf8_formal_easy_106",
+        "wf8_formal_easy_13",
+        "wf8_formal_easy_22",
+        "wf8_formal_medium_10",
+        "wf8_formal_medium_76",
+        "wf8_formal_medium_37",
+        "wf8_formal_medium_144",
+        "wf8_formal_medium_105",
+        "wf8_formal_medium_154",
+        "wf8_formal_medium_127",
+        "wf8_formal_medium_128",
+        "wf8_formal_medium_149",
+        "wf8_formal_medium_133",
+        "wf8_formal_medium_155",
+        "wf8_formal_medium_143",
+        "wf8_formal_medium_120",
+        "wf8_formal_medium_01",
+        "wf8_formal_medium_96",
+        "wf8_formal_medium_111",
+        "wf8_formal_medium_123",
+        "wf8_formal_medium_00",
+        "wf8_formal_medium_21",
+        "wf8_formal_medium_156",
+        "wf8_formal_medium_59",
+        "wf8_formal_medium_71",
+        "wf8_formal_medium_30",
+        "wf8_formal_medium_74",
+        "wf8_formal_medium_68",
+        "wf8_formal_medium_80",
+        "wf8_formal_medium_136",
+        "wf8_formal_medium_94",
+        "wf8_formal_medium_139",
+        "wf8_formal_medium_152",
+        "wf8_formal_medium_119",
+        "wf8_formal_medium_82",
+        "wf8_formal_medium_95",
+        "wf8_formal_medium_46",
+        "wf8_formal_medium_135",
+        "wf8_formal_medium_56",
+        "wf8_formal_medium_153",
+        "wf8_formal_medium_106",
+        "wf8_formal_medium_54",
+        "wf8_formal_medium_06",
+        "wf8_formal_medium_47",
+        "wf8_formal_medium_77",
+        "wf8_formal_medium_131",
+        "wf8_formal_medium_100",
+        "wf8_formal_medium_58",
+        "wf8_formal_medium_09",
+        "wf8_formal_medium_137",
+        "wf8_formal_medium_28",
+        "wf8_formal_medium_38",
+        "wf8_formal_medium_34",
+        "wf8_formal_medium_48",
+        "wf8_formal_medium_91",
+        "wf8_formal_medium_02",
+        "wf8_formal_medium_41",
+        "wf8_formal_medium_98",
+        "wf8_formal_medium_92",
+        "wf8_formal_medium_57",
+        "wf8_formal_medium_84",
+        "wf8_formal_medium_89",
+        "wf8_formal_medium_107",
+        "wf8_formal_medium_122",
+        "wf8_formal_medium_116",
+        "wf8_formal_medium_69",
+        "wf8_formal_medium_134",
+        "wf8_formal_medium_32",
+        "wf8_formal_medium_150",
+        "wf8_formal_medium_43",
+        "wf8_formal_medium_25",
+        "wf8_formal_medium_72",
+        "wf8_formal_medium_125",
+        "wf8_formal_medium_66",
+        "wf8_formal_medium_87",
+        "wf8_formal_medium_81",
+        "wf8_formal_medium_145",
+        "wf8_formal_medium_13",
+        "wf8_formal_medium_88",
+        "wf8_formal_medium_42",
+        "wf8_formal_medium_29",
+        "wf8_formal_medium_138",
+        "wf8_formal_medium_110",
+        "wf8_formal_hard_115",
+        "wf8_formal_hard_64",
+        "wf8_formal_hard_91",
+        "wf8_formal_hard_58",
+        "wf8_formal_hard_73",
+        "wf8_formal_hard_119",
+        "wf8_formal_hard_83",
+        "wf8_formal_hard_82",
+        "wf8_formal_hard_72",
+        "wf8_formal_hard_77",
+        "wf8_formal_hard_18",
+        "wf8_formal_hard_31",
+        "wf8_formal_hard_37",
+        "wf8_formal_hard_32",
+        "wf8_formal_hard_88",
+        "wf8_formal_hard_10",
+        "wf8_formal_hard_21",
+        "wf8_formal_hard_101",
+        "wf8_formal_hard_57",
+        "wf8_formal_hard_41",
+        "wf8_formal_hard_49",
+        "wf8_formal_hard_11",
+        "wf8_formal_hard_26",
+        "wf8_formal_hard_24",
+        "wf8_formal_hard_34",
+        "wf8_formal_hard_96",
+        "wf8_formal_hard_109",
+        "wf8_formal_hard_65",
+        "wf8_formal_hard_15",
+        "wf8_formal_hard_87",
+        "wf8_formal_hard_102",
+        "wf8_formal_hard_02",
+        "wf8_formal_hard_90",
+        "wf8_formal_hard_108",
+        "wf8_formal_hard_05",
+        "wf8_formal_hard_66",
+        "wf8_formal_hard_99",
+        "wf8_formal_hard_01",
+        "wf8_formal_hard_55",
+        "wf8_formal_hard_53",
+        "wf8_formal_hard_117",
+        "wf8_formal_hard_42",
+        "wf8_formal_hard_70",
+        "wf8_formal_hard_118",
+        "wf8_formal_hard_62",
+        "wf8_formal_hard_12",
+        "wf8_formal_hard_61",
+        "wf8_formal_hard_03",
+        "wf8_formal_hard_07",
+        "wf8_formal_hard_16",
+        "wf8_formal_hard_33",
+        "wf8_formal_hard_27",
+        "wf8_formal_hard_56",
+        "wf8_formal_hard_76",
+        "wf8_formal_hard_30",
+        "wf8_formal_hard_81",
+        "wf8_formal_hard_93",
+        "wf8_formal_hard_36",
+        "wf8_formal_hard_29",
+        "wf8_formal_hard_69"
+      ],
+      "B": [
+        "wf8_formal_easy_103",
+        "wf8_formal_easy_35",
+        "wf8_formal_easy_05",
+        "wf8_formal_easy_119",
+        "wf8_formal_easy_47",
+        "wf8_formal_easy_93",
+        "wf8_formal_easy_97",
+        "wf8_formal_easy_78",
+        "wf8_formal_easy_75",
+        "wf8_formal_easy_14",
+        "wf8_formal_easy_19",
+        "wf8_formal_easy_09",
+        "wf8_formal_easy_48",
+        "wf8_formal_easy_52",
+        "wf8_formal_easy_89",
+        "wf8_formal_easy_64",
+        "wf8_formal_easy_107",
+        "wf8_formal_easy_04",
+        "wf8_formal_easy_115",
+        "wf8_formal_easy_59",
+        "wf8_formal_easy_33",
+        "wf8_formal_easy_50",
+        "wf8_formal_easy_117",
+        "wf8_formal_easy_39",
+        "wf8_formal_easy_25",
+        "wf8_formal_easy_73",
+        "wf8_formal_easy_46",
+        "wf8_formal_easy_63",
+        "wf8_formal_easy_68",
+        "wf8_formal_easy_21",
+        "wf8_formal_easy_116",
+        "wf8_formal_easy_51",
+        "wf8_formal_easy_41",
+        "wf8_formal_easy_43",
+        "wf8_formal_easy_28",
+        "wf8_formal_easy_111",
+        "wf8_formal_easy_34",
+        "wf8_formal_easy_12",
+        "wf8_formal_easy_112",
+        "wf8_formal_easy_08",
+        "wf8_formal_easy_104",
+        "wf8_formal_easy_30",
+        "wf8_formal_easy_40",
+        "wf8_formal_easy_45",
+        "wf8_formal_easy_17",
+        "wf8_formal_easy_72",
+        "wf8_formal_easy_95",
+        "wf8_formal_easy_02",
+        "wf8_formal_easy_91",
+        "wf8_formal_easy_36",
+        "wf8_formal_easy_118",
+        "wf8_formal_easy_24",
+        "wf8_formal_easy_32",
+        "wf8_formal_easy_84",
+        "wf8_formal_easy_37",
+        "wf8_formal_easy_105",
+        "wf8_formal_easy_15",
+        "wf8_formal_easy_70",
+        "wf8_formal_easy_60",
+        "wf8_formal_easy_55",
+        "wf8_formal_medium_121",
+        "wf8_formal_medium_140",
+        "wf8_formal_medium_117",
+        "wf8_formal_medium_17",
+        "wf8_formal_medium_61",
+        "wf8_formal_medium_40",
+        "wf8_formal_medium_90",
+        "wf8_formal_medium_55",
+        "wf8_formal_medium_44",
+        "wf8_formal_medium_126",
+        "wf8_formal_medium_60",
+        "wf8_formal_medium_49",
+        "wf8_formal_medium_118",
+        "wf8_formal_medium_130",
+        "wf8_formal_medium_93",
+        "wf8_formal_medium_36",
+        "wf8_formal_medium_132",
+        "wf8_formal_medium_23",
+        "wf8_formal_medium_141",
+        "wf8_formal_medium_07",
+        "wf8_formal_medium_75",
+        "wf8_formal_medium_16",
+        "wf8_formal_medium_33",
+        "wf8_formal_medium_124",
+        "wf8_formal_medium_114",
+        "wf8_formal_medium_85",
+        "wf8_formal_medium_78",
+        "wf8_formal_medium_101",
+        "wf8_formal_medium_151",
+        "wf8_formal_medium_12",
+        "wf8_formal_medium_129",
+        "wf8_formal_medium_08",
+        "wf8_formal_medium_159",
+        "wf8_formal_medium_50",
+        "wf8_formal_medium_20",
+        "wf8_formal_medium_148",
+        "wf8_formal_medium_70",
+        "wf8_formal_medium_27",
+        "wf8_formal_medium_62",
+        "wf8_formal_medium_147",
+        "wf8_formal_medium_73",
+        "wf8_formal_medium_99",
+        "wf8_formal_medium_112",
+        "wf8_formal_medium_65",
+        "wf8_formal_medium_31",
+        "wf8_formal_medium_67",
+        "wf8_formal_medium_53",
+        "wf8_formal_medium_18",
+        "wf8_formal_medium_158",
+        "wf8_formal_medium_102",
+        "wf8_formal_medium_113",
+        "wf8_formal_medium_05",
+        "wf8_formal_medium_52",
+        "wf8_formal_medium_45",
+        "wf8_formal_medium_115",
+        "wf8_formal_medium_15",
+        "wf8_formal_medium_14",
+        "wf8_formal_medium_83",
+        "wf8_formal_medium_39",
+        "wf8_formal_medium_26",
+        "wf8_formal_medium_97",
+        "wf8_formal_medium_142",
+        "wf8_formal_medium_157",
+        "wf8_formal_medium_86",
+        "wf8_formal_medium_79",
+        "wf8_formal_medium_04",
+        "wf8_formal_medium_11",
+        "wf8_formal_medium_109",
+        "wf8_formal_medium_35",
+        "wf8_formal_medium_108",
+        "wf8_formal_medium_103",
+        "wf8_formal_medium_22",
+        "wf8_formal_medium_03",
+        "wf8_formal_medium_19",
+        "wf8_formal_medium_64",
+        "wf8_formal_medium_104",
+        "wf8_formal_medium_63",
+        "wf8_formal_medium_24",
+        "wf8_formal_medium_146",
+        "wf8_formal_medium_51",
+        "wf8_formal_hard_86",
+        "wf8_formal_hard_43",
+        "wf8_formal_hard_98",
+        "wf8_formal_hard_47",
+        "wf8_formal_hard_80",
+        "wf8_formal_hard_60",
+        "wf8_formal_hard_25",
+        "wf8_formal_hard_14",
+        "wf8_formal_hard_06",
+        "wf8_formal_hard_45",
+        "wf8_formal_hard_54",
+        "wf8_formal_hard_28",
+        "wf8_formal_hard_35",
+        "wf8_formal_hard_59",
+        "wf8_formal_hard_67",
+        "wf8_formal_hard_46",
+        "wf8_formal_hard_94",
+        "wf8_formal_hard_04",
+        "wf8_formal_hard_51",
+        "wf8_formal_hard_85",
+        "wf8_formal_hard_75",
+        "wf8_formal_hard_48",
+        "wf8_formal_hard_71",
+        "wf8_formal_hard_13",
+        "wf8_formal_hard_107",
+        "wf8_formal_hard_44",
+        "wf8_formal_hard_17",
+        "wf8_formal_hard_40",
+        "wf8_formal_hard_92",
+        "wf8_formal_hard_39",
+        "wf8_formal_hard_111",
+        "wf8_formal_hard_68",
+        "wf8_formal_hard_23",
+        "wf8_formal_hard_63",
+        "wf8_formal_hard_95",
+        "wf8_formal_hard_113",
+        "wf8_formal_hard_74",
+        "wf8_formal_hard_22",
+        "wf8_formal_hard_114",
+        "wf8_formal_hard_20",
+        "wf8_formal_hard_50",
+        "wf8_formal_hard_106",
+        "wf8_formal_hard_19",
+        "wf8_formal_hard_112",
+        "wf8_formal_hard_09",
+        "wf8_formal_hard_110",
+        "wf8_formal_hard_08",
+        "wf8_formal_hard_84",
+        "wf8_formal_hard_116",
+        "wf8_formal_hard_78",
+        "wf8_formal_hard_79",
+        "wf8_formal_hard_52",
+        "wf8_formal_hard_100",
+        "wf8_formal_hard_104",
+        "wf8_formal_hard_89",
+        "wf8_formal_hard_105",
+        "wf8_formal_hard_97",
+        "wf8_formal_hard_103",
+        "wf8_formal_hard_38",
+        "wf8_formal_hard_00"
+      ]
+    },
+    "names": [
+      "A",
+      "B"
+    ],
+    "rule": "within each stratum, the accepted members are shuffled with random.Random(block_seed) and split into equal consecutive slices, one per block, in the order given",
+    "seed": 20260920,
+    "shapes": {
+      "A": {
+        "easy": 60,
+        "hard": 60,
+        "medium": 80
+      },
+      "B": {
+        "easy": 60,
+        "hard": 60,
+        "medium": 80
+      }
+    }
+  },
+  "complete": true,
+  "counts": {
+    "easy": 120,
+    "hard": 120,
+    "medium": 160
+  },
+  "exclusions": [
+    {
+      "keys": 24,
+      "path": "code\\data\\frozen_suites\\nextstep_workflow_dev\\dev_instances.json",
+      "sha256": "4b1b4f3820592553c25dab144979eb956568dfc3f18e3cb505048fcd6e676455"
+    }
+  ],
+  "forbidden_keys_count": 24,
+  "instances": [
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_00",
+      "schema_fingerprint": "0a7de1bb294ec081",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_01",
+      "schema_fingerprint": "4d290f6059888a3b",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_02",
+      "schema_fingerprint": "e5625b6945c5a491",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_03",
+      "schema_fingerprint": "3929a2213a40689d",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_04",
+      "schema_fingerprint": "c8f53bfc86c32318",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_05",
+      "schema_fingerprint": "dda65778c47ebdac",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_06",
+      "schema_fingerprint": "04ff5df003226271",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_07",
+      "schema_fingerprint": "016465df1997a434",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_08",
+      "schema_fingerprint": "d94d4fab2ef6e459",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_09",
+      "schema_fingerprint": "888b487b42d4046f",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_10",
+      "schema_fingerprint": "655ab27032d21e6f",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_100",
+      "schema_fingerprint": "1e9c7381783148c6",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_101",
+      "schema_fingerprint": "1ed5b20687d3c548",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_102",
+      "schema_fingerprint": "f4ae758fd8532fbd",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_103",
+      "schema_fingerprint": "e0ab23e4bbe050d2",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_104",
+      "schema_fingerprint": "df0e3103dd48aa05",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_105",
+      "schema_fingerprint": "ceb7d04e8c0350b8",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_106",
+      "schema_fingerprint": "cbe43eb973f5a3f2",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_107",
+      "schema_fingerprint": "a505ab7fe4b0d53c",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_108",
+      "schema_fingerprint": "15e10df3f2ef2888",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_109",
+      "schema_fingerprint": "9ed97eb12c31b834",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_11",
+      "schema_fingerprint": "72ee10ce27e2e0f9",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_110",
+      "schema_fingerprint": "8de23b7c26931715",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_111",
+      "schema_fingerprint": "6484cd6b0e3e2f1e",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_112",
+      "schema_fingerprint": "2210424416a8a535",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_113",
+      "schema_fingerprint": "5cdeec03c8b35a8d",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_114",
+      "schema_fingerprint": "c86fcb0e77ab085f",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_115",
+      "schema_fingerprint": "b805ddfe74a40df7",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_116",
+      "schema_fingerprint": "37ccceaa5f093b53",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_117",
+      "schema_fingerprint": "1c77309fc7d834cd",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_118",
+      "schema_fingerprint": "9b206dd8978a56a0",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_119",
+      "schema_fingerprint": "8026859ff4b9f858",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_12",
+      "schema_fingerprint": "67c34747c32dcf14",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_13",
+      "schema_fingerprint": "86622bddbc21a9b3",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_14",
+      "schema_fingerprint": "5c13ef6b1e1a8ed8",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_15",
+      "schema_fingerprint": "237c47ad7670597d",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_16",
+      "schema_fingerprint": "ee787a24a015aab0",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_17",
+      "schema_fingerprint": "ee246d0948b7c6aa",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_18",
+      "schema_fingerprint": "9121eaecb7cb22f0",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_19",
+      "schema_fingerprint": "a43a978eb3db5c40",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_20",
+      "schema_fingerprint": "5dade4de98f2e676",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_21",
+      "schema_fingerprint": "ce103cc139dd3e0c",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_22",
+      "schema_fingerprint": "1633a61030b3fd27",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_23",
+      "schema_fingerprint": "ff57204dc834b5eb",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_24",
+      "schema_fingerprint": "0f347d034db4f0b8",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_25",
+      "schema_fingerprint": "e9a329a69e152eb5",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_26",
+      "schema_fingerprint": "90a1dfe5f24e2efb",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_27",
+      "schema_fingerprint": "b48ca1f930242c53",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_28",
+      "schema_fingerprint": "ea8ba88f6cb0d245",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_29",
+      "schema_fingerprint": "bcc84c3720fdbe6a",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_30",
+      "schema_fingerprint": "f60ede02599a771d",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_31",
+      "schema_fingerprint": "589e4210d743d18b",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_32",
+      "schema_fingerprint": "f56e80352f6f2ea7",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_33",
+      "schema_fingerprint": "ef55b24cbcedb54e",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_34",
+      "schema_fingerprint": "9f5d47c2da5d221e",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_35",
+      "schema_fingerprint": "d0a1b1280ae02a93",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_36",
+      "schema_fingerprint": "925d890a1f335e66",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_37",
+      "schema_fingerprint": "7371a825196846e7",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_38",
+      "schema_fingerprint": "3289b4002dcd0378",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_39",
+      "schema_fingerprint": "18ce66f622ef9e92",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_40",
+      "schema_fingerprint": "610c1c3e9e4ff413",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_41",
+      "schema_fingerprint": "f5e1ba199795510a",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_42",
+      "schema_fingerprint": "0f3d19a0b6883ff1",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_43",
+      "schema_fingerprint": "6105bd13b42ae5c1",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_44",
+      "schema_fingerprint": "9128b482f7aaa547",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_45",
+      "schema_fingerprint": "2d0c26bbbaa4268b",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_46",
+      "schema_fingerprint": "48597a7732c59f61",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_47",
+      "schema_fingerprint": "0889431bf3c0cbf5",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_48",
+      "schema_fingerprint": "e3afccdf06be5222",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_49",
+      "schema_fingerprint": "51785dc6eecfa4a8",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_50",
+      "schema_fingerprint": "cd5e2b9f3bcdd4c4",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_51",
+      "schema_fingerprint": "563f0cd7ef23e60a",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_52",
+      "schema_fingerprint": "1e28c293503f8db5",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_53",
+      "schema_fingerprint": "fffe7974bc72fa2d",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_54",
+      "schema_fingerprint": "c3be4a54a9e08772",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_55",
+      "schema_fingerprint": "44e8cd5f3bce58c6",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_56",
+      "schema_fingerprint": "1e467e84ea44e9e5",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_57",
+      "schema_fingerprint": "048f6b189c0c02d3",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_58",
+      "schema_fingerprint": "0d2d46907435dcc5",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_59",
+      "schema_fingerprint": "034ae2e342f60e6d",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_60",
+      "schema_fingerprint": "f22a026b13f12f79",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_61",
+      "schema_fingerprint": "d8ebc834753fd8ba",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_62",
+      "schema_fingerprint": "128856113e10f75e",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_63",
+      "schema_fingerprint": "60bd4c842d577091",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_64",
+      "schema_fingerprint": "3a0db9b53890784c",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_65",
+      "schema_fingerprint": "e9435b2666bf59aa",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_66",
+      "schema_fingerprint": "68699ee4e9882736",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_67",
+      "schema_fingerprint": "b63920877edaf30f",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_68",
+      "schema_fingerprint": "c614de884b9fc5ee",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_69",
+      "schema_fingerprint": "1f17cb2d1960a3fd",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_70",
+      "schema_fingerprint": "aafb7df1e0b190eb",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_71",
+      "schema_fingerprint": "0b3ec437ec8361f2",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_72",
+      "schema_fingerprint": "47edb82a79045c60",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_73",
+      "schema_fingerprint": "b58d977bab159ea5",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_74",
+      "schema_fingerprint": "6dd3bbeb622ef71f",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_75",
+      "schema_fingerprint": "95c423f34999792a",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_76",
+      "schema_fingerprint": "998c3fdb2d809c0f",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_77",
+      "schema_fingerprint": "10522f72b6367162",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_78",
+      "schema_fingerprint": "235cc195e54da54b",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_79",
+      "schema_fingerprint": "2966f0e19272f854",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_80",
+      "schema_fingerprint": "3f32e1819684c016",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_81",
+      "schema_fingerprint": "99a1d27aad37e25f",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_82",
+      "schema_fingerprint": "ceeca8d42910b763",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_83",
+      "schema_fingerprint": "a9c427473e5a8d57",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_84",
+      "schema_fingerprint": "f4f2bcb7b7b0df00",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_85",
+      "schema_fingerprint": "e2b9dc9d52bb1634",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_86",
+      "schema_fingerprint": "0779a015190d2812",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_87",
+      "schema_fingerprint": "8881d40802547303",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_88",
+      "schema_fingerprint": "08dfbf7347ee992b",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_89",
+      "schema_fingerprint": "451dcf75350e4bfb",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_90",
+      "schema_fingerprint": "1a3713430110dd1a",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_91",
+      "schema_fingerprint": "09d83f385bccdc32",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_92",
+      "schema_fingerprint": "834176a99b662ce1",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_93",
+      "schema_fingerprint": "8567098d0504ed37",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_94",
+      "schema_fingerprint": "df5ad1e9e6c87468",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_95",
+      "schema_fingerprint": "c656e3018ad0d569",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_96",
+      "schema_fingerprint": "5023668f850c7f30",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_97",
+      "schema_fingerprint": "26654e7e97d1f03d",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_98",
+      "schema_fingerprint": "3bb27a817a8b981b",
+      "shortest_plan_len": 3
+    },
+    {
+      "difficulty": "easy",
+      "instance_id": "wf8_formal_easy_99",
+      "schema_fingerprint": "a3ae7d7c637d0c77",
+      "shortest_plan_len": 2
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_00",
+      "schema_fingerprint": "944fb4b86d5d751f",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_01",
+      "schema_fingerprint": "afd13d56ff6e74a9",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_02",
+      "schema_fingerprint": "4004166b0a068b32",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_03",
+      "schema_fingerprint": "a6c2dd5368ef6d09",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_04",
+      "schema_fingerprint": "2950241195e38fa4",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_05",
+      "schema_fingerprint": "a286117dd3979b8d",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_06",
+      "schema_fingerprint": "bea9b993dc6a23c4",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_07",
+      "schema_fingerprint": "ce6607f5c332a020",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_08",
+      "schema_fingerprint": "fdd375696e0c2c69",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_09",
+      "schema_fingerprint": "f0863a6151ec03b5",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_10",
+      "schema_fingerprint": "714bc8394c0b66f9",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_100",
+      "schema_fingerprint": "d4f8f567414a83ac",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_101",
+      "schema_fingerprint": "19a8513c6e48c502",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_102",
+      "schema_fingerprint": "ca0e7485e87e5553",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_103",
+      "schema_fingerprint": "66de9b93a952cb82",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_104",
+      "schema_fingerprint": "fe8a64840cc13404",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_105",
+      "schema_fingerprint": "d5d0ccc8b8aa5cff",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_106",
+      "schema_fingerprint": "04848d934cbd1568",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_107",
+      "schema_fingerprint": "eee768dcbd8dbb39",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_108",
+      "schema_fingerprint": "1c7cb83f6192fd21",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_109",
+      "schema_fingerprint": "af96a9e8df015a61",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_11",
+      "schema_fingerprint": "f0731b9f6c553c44",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_110",
+      "schema_fingerprint": "538c38456b243707",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_111",
+      "schema_fingerprint": "42866dfcdc5b086b",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_112",
+      "schema_fingerprint": "db45e05e096b697d",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_113",
+      "schema_fingerprint": "505e86d7d516f7cc",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_114",
+      "schema_fingerprint": "0f6c89d8efb94bbf",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_115",
+      "schema_fingerprint": "c4d75c2fb88bd5da",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_116",
+      "schema_fingerprint": "2dce666befc3919c",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_117",
+      "schema_fingerprint": "109c209e1fc6e1f2",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_118",
+      "schema_fingerprint": "e626990dc51c16b1",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_119",
+      "schema_fingerprint": "6300ae539f9db57f",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_12",
+      "schema_fingerprint": "734ec72ec9517126",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_120",
+      "schema_fingerprint": "61c6c22058c41ae1",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_121",
+      "schema_fingerprint": "17db19680441cc55",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_122",
+      "schema_fingerprint": "32582fd03e7455c0",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_123",
+      "schema_fingerprint": "d695328241c2559f",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_124",
+      "schema_fingerprint": "ccc6f34b346d373e",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_125",
+      "schema_fingerprint": "7bed8a3ff66f9741",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_126",
+      "schema_fingerprint": "adfd6852483cae8f",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_127",
+      "schema_fingerprint": "8f59c282df036e18",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_128",
+      "schema_fingerprint": "9f97eeddccfd6c7b",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_129",
+      "schema_fingerprint": "989f7823a159a12b",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_13",
+      "schema_fingerprint": "2f7441f532c0a749",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_130",
+      "schema_fingerprint": "7c1ad90dafd3e32a",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_131",
+      "schema_fingerprint": "6a0e27d5cc985a59",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_132",
+      "schema_fingerprint": "788105e7a20b1ce9",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_133",
+      "schema_fingerprint": "03c2e8623b8271c4",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_134",
+      "schema_fingerprint": "3d52a6145591738c",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_135",
+      "schema_fingerprint": "4dd7024298580ce1",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_136",
+      "schema_fingerprint": "b4d813f243e2c894",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_137",
+      "schema_fingerprint": "fc182fe12127e933",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_138",
+      "schema_fingerprint": "9009dcb645101241",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_139",
+      "schema_fingerprint": "dfaca5bd9e5d8309",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_14",
+      "schema_fingerprint": "e5b79c7607dde3f2",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_140",
+      "schema_fingerprint": "4feca0f6dbb433c5",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_141",
+      "schema_fingerprint": "f1cab6f50edc814e",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_142",
+      "schema_fingerprint": "f3add617406fd5c0",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_143",
+      "schema_fingerprint": "ed5911e487754e18",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_144",
+      "schema_fingerprint": "1919ef528daa246d",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_145",
+      "schema_fingerprint": "962a8c609a3fbdaa",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_146",
+      "schema_fingerprint": "ac2f0e812ecf2da0",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_147",
+      "schema_fingerprint": "f26bff47c627650d",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_148",
+      "schema_fingerprint": "0f7cd32df70a083d",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_149",
+      "schema_fingerprint": "0fccfe5e23184047",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_15",
+      "schema_fingerprint": "f19df444fabe0e22",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_150",
+      "schema_fingerprint": "83ea343c4b8f6cc4",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_151",
+      "schema_fingerprint": "e10df155d860d1e6",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_152",
+      "schema_fingerprint": "2c01b6ae5def13c3",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_153",
+      "schema_fingerprint": "423dfcd92adb83ee",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_154",
+      "schema_fingerprint": "b738fdcb88945fd9",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_155",
+      "schema_fingerprint": "00f11fe0314a62a3",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_156",
+      "schema_fingerprint": "54d9e263ee9cd0f6",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_157",
+      "schema_fingerprint": "a0aa4d35bc915b42",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_158",
+      "schema_fingerprint": "806e352ad563f95f",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_159",
+      "schema_fingerprint": "7c527dd329849e6d",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_16",
+      "schema_fingerprint": "693b7f7f62a18d5e",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_17",
+      "schema_fingerprint": "570616c00aae5763",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_18",
+      "schema_fingerprint": "6e0450e3c1da9431",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_19",
+      "schema_fingerprint": "2539de35bf162733",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_20",
+      "schema_fingerprint": "dc11c30506daab2a",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_21",
+      "schema_fingerprint": "6590815b10257f41",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_22",
+      "schema_fingerprint": "b7c55a2eb1f424b7",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_23",
+      "schema_fingerprint": "22be719ac672f25e",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_24",
+      "schema_fingerprint": "0965b1cfca5a3ff5",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_25",
+      "schema_fingerprint": "ba5da8b4ebe25c95",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_26",
+      "schema_fingerprint": "3c9cfd7509d79bec",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_27",
+      "schema_fingerprint": "e28170ce59db1879",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_28",
+      "schema_fingerprint": "ac7e4379720235bd",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_29",
+      "schema_fingerprint": "a499ee229e695553",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_30",
+      "schema_fingerprint": "af04450efafae74f",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_31",
+      "schema_fingerprint": "3df2af733cd487f5",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_32",
+      "schema_fingerprint": "820e2905740de1a7",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_33",
+      "schema_fingerprint": "281b861932a438bb",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_34",
+      "schema_fingerprint": "28797fbd84435c7c",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_35",
+      "schema_fingerprint": "449337e65eb94676",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_36",
+      "schema_fingerprint": "b6169c4fe7f03070",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_37",
+      "schema_fingerprint": "5ffee430076456d6",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_38",
+      "schema_fingerprint": "f5616018fc8dde12",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_39",
+      "schema_fingerprint": "b5b2e57a4ae67338",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_40",
+      "schema_fingerprint": "c00846b6d58f790b",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_41",
+      "schema_fingerprint": "7532f80af9a1c83b",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_42",
+      "schema_fingerprint": "4b1e0b9eb1bae031",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_43",
+      "schema_fingerprint": "daddd0f571550be1",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_44",
+      "schema_fingerprint": "3139e7996b3e9ba6",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_45",
+      "schema_fingerprint": "273fd632b719f1f5",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_46",
+      "schema_fingerprint": "77f86c34c41beef1",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_47",
+      "schema_fingerprint": "7472ecac8d8289b4",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_48",
+      "schema_fingerprint": "bc9bcc774f9708c8",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_49",
+      "schema_fingerprint": "5e4d17fdc9eeca3e",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_50",
+      "schema_fingerprint": "6dccc50e9b86aed0",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_51",
+      "schema_fingerprint": "a76b595f60863f6f",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_52",
+      "schema_fingerprint": "1c10451e597af62f",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_53",
+      "schema_fingerprint": "3505542c08fa7189",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_54",
+      "schema_fingerprint": "1cd2d2598b8e016e",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_55",
+      "schema_fingerprint": "11287a6709fe5c89",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_56",
+      "schema_fingerprint": "7ec0132a021eebcd",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_57",
+      "schema_fingerprint": "c24cf8ab0d71ff88",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_58",
+      "schema_fingerprint": "e0b45ab288f11473",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_59",
+      "schema_fingerprint": "e1d1b4f46448daed",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_60",
+      "schema_fingerprint": "2cf107f209e43c51",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_61",
+      "schema_fingerprint": "05da491092345f0c",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_62",
+      "schema_fingerprint": "addc53dfdeb309a9",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_63",
+      "schema_fingerprint": "f4d5a71f3a5eeee6",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_64",
+      "schema_fingerprint": "bb778c4279a3f4ff",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_65",
+      "schema_fingerprint": "8ba617655ad99479",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_66",
+      "schema_fingerprint": "d936b82414343f8f",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_67",
+      "schema_fingerprint": "3b7098edf7115004",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_68",
+      "schema_fingerprint": "a5a8eb759c591269",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_69",
+      "schema_fingerprint": "fd6f2f418abc02f6",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_70",
+      "schema_fingerprint": "25a6a4840e37d008",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_71",
+      "schema_fingerprint": "4ec344ca17b4aec1",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_72",
+      "schema_fingerprint": "a5e45ed1ab1cb6df",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_73",
+      "schema_fingerprint": "f4a83f0b392f40c1",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_74",
+      "schema_fingerprint": "ab8952145145ac76",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_75",
+      "schema_fingerprint": "6384e6a74e49869d",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_76",
+      "schema_fingerprint": "cfe193232fd7ffdb",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_77",
+      "schema_fingerprint": "af2b593278d396bb",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_78",
+      "schema_fingerprint": "199b578b5fd1f619",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_79",
+      "schema_fingerprint": "58c8e28068a50c87",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_80",
+      "schema_fingerprint": "3622f1510751cbbf",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_81",
+      "schema_fingerprint": "af9dfe29b3068975",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_82",
+      "schema_fingerprint": "5965d651185decae",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_83",
+      "schema_fingerprint": "9dbc6026b476d7b7",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_84",
+      "schema_fingerprint": "9d187fdee31fd33b",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_85",
+      "schema_fingerprint": "9ef179ab269377a5",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_86",
+      "schema_fingerprint": "65708d9d2dde6533",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_87",
+      "schema_fingerprint": "d41cad986c6067c5",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_88",
+      "schema_fingerprint": "1741c3182c1f4f8f",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_89",
+      "schema_fingerprint": "c442678f1409c5b4",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_90",
+      "schema_fingerprint": "fd3380a53c2d9a25",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_91",
+      "schema_fingerprint": "051884320d95c7b5",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_92",
+      "schema_fingerprint": "48db18e2d05d375a",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_93",
+      "schema_fingerprint": "181308f188f8caf3",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_94",
+      "schema_fingerprint": "a2b1970ecd4a830d",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_95",
+      "schema_fingerprint": "f9dc2555470f1bd5",
+      "shortest_plan_len": 6
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_96",
+      "schema_fingerprint": "4ba21a70e3b5fe2d",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_97",
+      "schema_fingerprint": "946cb43a0fd36f5c",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_98",
+      "schema_fingerprint": "2e47b439e17fcf45",
+      "shortest_plan_len": 4
+    },
+    {
+      "difficulty": "medium",
+      "instance_id": "wf8_formal_medium_99",
+      "schema_fingerprint": "7b899aba2202572d",
+      "shortest_plan_len": 5
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_00",
+      "schema_fingerprint": "10be95bba44e9964",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_01",
+      "schema_fingerprint": "96db301a989c00a3",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_02",
+      "schema_fingerprint": "bb56d67a1026991d",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_03",
+      "schema_fingerprint": "8bd3298153ddd447",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_04",
+      "schema_fingerprint": "ae52644055070c8a",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_05",
+      "schema_fingerprint": "65013d56703b8ff6",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_06",
+      "schema_fingerprint": "9b27f298fd681040",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_07",
+      "schema_fingerprint": "bde18cda7a5f02e0",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_08",
+      "schema_fingerprint": "fea10e6cee544258",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_09",
+      "schema_fingerprint": "c63c14471f589acf",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_10",
+      "schema_fingerprint": "78212ec654c8f1d4",
+      "shortest_plan_len": 10
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_100",
+      "schema_fingerprint": "221b174afc5e788c",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_101",
+      "schema_fingerprint": "482603193ae15162",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_102",
+      "schema_fingerprint": "e750f6f760ebbdfa",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_103",
+      "schema_fingerprint": "b2970c498c04d3b8",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_104",
+      "schema_fingerprint": "9f758ba32560e98a",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_105",
+      "schema_fingerprint": "9bebb1d5375adc6b",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_106",
+      "schema_fingerprint": "4b44b7345785a90d",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_107",
+      "schema_fingerprint": "b667d77fc501afc9",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_108",
+      "schema_fingerprint": "9a7dc817899a38d9",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_109",
+      "schema_fingerprint": "fed967096ac614a8",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_11",
+      "schema_fingerprint": "792d94db8d8e3d45",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_110",
+      "schema_fingerprint": "26202256f3f65d07",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_111",
+      "schema_fingerprint": "82d980c6d2c4166d",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_112",
+      "schema_fingerprint": "451a870f67c7f877",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_113",
+      "schema_fingerprint": "5af819dc51dbf919",
+      "shortest_plan_len": 9
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_114",
+      "schema_fingerprint": "8c2d538db0c1d3a5",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_115",
+      "schema_fingerprint": "02650617855ca259",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_116",
+      "schema_fingerprint": "9456b94d3a6ec3f9",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_117",
+      "schema_fingerprint": "9919fe68ec1b0082",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_118",
+      "schema_fingerprint": "03ffec20fb91c096",
+      "shortest_plan_len": 9
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_119",
+      "schema_fingerprint": "db849a7e4db667ed",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_12",
+      "schema_fingerprint": "f52730b82f94fc40",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_13",
+      "schema_fingerprint": "693b1b033312d99b",
+      "shortest_plan_len": 9
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_14",
+      "schema_fingerprint": "e24fcac16b51ff8d",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_15",
+      "schema_fingerprint": "d77815b85b38298b",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_16",
+      "schema_fingerprint": "1acf93a1709bed4b",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_17",
+      "schema_fingerprint": "a25e99fb46459057",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_18",
+      "schema_fingerprint": "274607c0896dcb83",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_19",
+      "schema_fingerprint": "8b47538c523d03a3",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_20",
+      "schema_fingerprint": "4d269192c88f24fc",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_21",
+      "schema_fingerprint": "6c5a4baa0d35413b",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_22",
+      "schema_fingerprint": "7a0a67b066669060",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_23",
+      "schema_fingerprint": "b5b62f53fb79eb56",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_24",
+      "schema_fingerprint": "cea1dd97c1a178fe",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_25",
+      "schema_fingerprint": "8710edb78333606f",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_26",
+      "schema_fingerprint": "63e75ad7fbe533ad",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_27",
+      "schema_fingerprint": "6d4a1f87c8256c22",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_28",
+      "schema_fingerprint": "3e337fa33188a909",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_29",
+      "schema_fingerprint": "0d348677c514de5b",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_30",
+      "schema_fingerprint": "7af553de45108755",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_31",
+      "schema_fingerprint": "6a59ada21170b192",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_32",
+      "schema_fingerprint": "a511c446939ce827",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_33",
+      "schema_fingerprint": "a12d298a6668a7fa",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_34",
+      "schema_fingerprint": "9292c45eaef06192",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_35",
+      "schema_fingerprint": "cb784f70799f86af",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_36",
+      "schema_fingerprint": "79808df18c63ab69",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_37",
+      "schema_fingerprint": "35b8ec7f3e45e304",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_38",
+      "schema_fingerprint": "0238659e57514d94",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_39",
+      "schema_fingerprint": "0e161062467e1058",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_40",
+      "schema_fingerprint": "5da29baca3147c7a",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_41",
+      "schema_fingerprint": "a73bc3ba9c5d6d39",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_42",
+      "schema_fingerprint": "fc2647cae1565c5b",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_43",
+      "schema_fingerprint": "be13dfa340611457",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_44",
+      "schema_fingerprint": "8863479dd66d121d",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_45",
+      "schema_fingerprint": "d3fd89f794d117c6",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_46",
+      "schema_fingerprint": "1d5c2a792696b401",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_47",
+      "schema_fingerprint": "aeddd7fde524d1dc",
+      "shortest_plan_len": 10
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_48",
+      "schema_fingerprint": "7c51d8024306a782",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_49",
+      "schema_fingerprint": "4b9013b8bb6d635a",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_50",
+      "schema_fingerprint": "564f9eaecc09faff",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_51",
+      "schema_fingerprint": "843518f77d423be2",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_52",
+      "schema_fingerprint": "c1310ab2c60e9002",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_53",
+      "schema_fingerprint": "1eae9b7fc0d88989",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_54",
+      "schema_fingerprint": "7a99b69c54ae3866",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_55",
+      "schema_fingerprint": "ac832a8c93a80dc7",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_56",
+      "schema_fingerprint": "874e5684988f8a1c",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_57",
+      "schema_fingerprint": "d73aea02bfa06dfc",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_58",
+      "schema_fingerprint": "70c6bfbf948019a1",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_59",
+      "schema_fingerprint": "a9d6095ae3715304",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_60",
+      "schema_fingerprint": "dda35f20525228ae",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_61",
+      "schema_fingerprint": "0663f5b3f7459dda",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_62",
+      "schema_fingerprint": "2523993250322112",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_63",
+      "schema_fingerprint": "ade4998f4c25195c",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_64",
+      "schema_fingerprint": "357e7f7b745d4021",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_65",
+      "schema_fingerprint": "96a8e6a0a1ea2b4b",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_66",
+      "schema_fingerprint": "7abe71cf26d91f7b",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_67",
+      "schema_fingerprint": "4e4b68ae97583493",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_68",
+      "schema_fingerprint": "51375fc8ac4b7df5",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_69",
+      "schema_fingerprint": "93e3828f1cd4bb83",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_70",
+      "schema_fingerprint": "4fcca5626b6a13aa",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_71",
+      "schema_fingerprint": "a98cda2d40c7e425",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_72",
+      "schema_fingerprint": "2f2d68992b81edaa",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_73",
+      "schema_fingerprint": "eac306d72401eff3",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_74",
+      "schema_fingerprint": "de1a7404ff3db49a",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_75",
+      "schema_fingerprint": "eafc2af3a5ce1288",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_76",
+      "schema_fingerprint": "a75ecc75b9096473",
+      "shortest_plan_len": 9
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_77",
+      "schema_fingerprint": "d819712951feb8c6",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_78",
+      "schema_fingerprint": "9987eba0e048b543",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_79",
+      "schema_fingerprint": "df2fda26fcbc267d",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_80",
+      "schema_fingerprint": "db99e0ef7a104cd6",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_81",
+      "schema_fingerprint": "cc5205f11785f064",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_82",
+      "schema_fingerprint": "cef3f54823fc3b8e",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_83",
+      "schema_fingerprint": "11316e383f441247",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_84",
+      "schema_fingerprint": "0ad80e9364b4b7cb",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_85",
+      "schema_fingerprint": "96ee97722a6b49c4",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_86",
+      "schema_fingerprint": "3db948206515636e",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_87",
+      "schema_fingerprint": "a79c41d916073bfb",
+      "shortest_plan_len": 9
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_88",
+      "schema_fingerprint": "3ea551324ffce8bc",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_89",
+      "schema_fingerprint": "ac0cee76e19f5fca",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_90",
+      "schema_fingerprint": "3fdba8770ff62705",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_91",
+      "schema_fingerprint": "c0a46dc23cef9170",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_92",
+      "schema_fingerprint": "7a735eaa8ef9d5ab",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_93",
+      "schema_fingerprint": "54de5f776a33c4bc",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_94",
+      "schema_fingerprint": "075e7f516026b3b0",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_95",
+      "schema_fingerprint": "d94a27ec88a864ad",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_96",
+      "schema_fingerprint": "5ba788ca3e0fa3f7",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_97",
+      "schema_fingerprint": "f7e47492695fb89d",
+      "shortest_plan_len": 8
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_98",
+      "schema_fingerprint": "8b7b0acb60f8423d",
+      "shortest_plan_len": 7
+    },
+    {
+      "difficulty": "hard",
+      "instance_id": "wf8_formal_hard_99",
+      "schema_fingerprint": "d9422a2deb12473d",
+      "shortest_plan_len": 7
+    }
+  ],
+  "k": 8,
+  "m": 16,
+  "max_attempts": 400000,
+  "missing_strata": [],
+  "per_difficulty": {
+    "easy": 120,
+    "hard": 120,
+    "medium": 160
+  },
+  "protocol": "workflow-dev-v1",
+  "rejection_histogram": {
+    "duplicate_action_schema": 1890,
+    "length_out_of_range": 7869,
+    "start_satisfies_goal": 5773,
+    "stratum_full": 11716,
+    "unsolvable": 20866,
+    "vacuous_action": 59347
+  },
+  "requested_counts": {
+    "easy": 120,
+    "hard": 120,
+    "medium": 160
+  },
+  "result_sha256": "c07c5acde0aa4cca257348be1dd1d1df4d49e3c3f5d31cc0fc09771d261a8af1",
+  "seed": 20260915,
+  "strata_filled": {
+    "easy": true,
+    "hard": true,
+    "medium": true
+  }
+}

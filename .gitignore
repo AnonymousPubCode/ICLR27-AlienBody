@@ -9,6 +9,8 @@ __pycache__/
 
 # Large / local-only
 results/
+models/
+logs/
 *.log
 *.pdf
 

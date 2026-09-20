@@ -139,9 +139,15 @@ Most agent benchmarks leak action semantics through button names. AlienBody expo
 ```
 AlienBody/
 ├── alienbody/           # env + agents (oracle, enum, AFMB, VLM clients)
+│   ├── nextstep/        # J-protocol arms: adapters, interfaces, records, blocks
+│   └── workflow/        # AlienWorkflow flagship task (bit-state schema)
 ├── data/envs/           # Tier-M train/dev/test (720; secret withheld)
 ├── data/envs_m8/        # Relational n=8 stress set (50)
-├── scripts/             # generate / run_eval / demos
+├── data/frozen_suites/  # nextstep F4 / workflow formal sets (400 envs each)
+├── data/fmb_trajectories/  # F4-only training data for the induction-frontier rows
+├── protocols/nextstep/  # J-protocol specs + prereg env ids (see its README)
+├── tests/               # offline stub regressions (no network, no GPU)
+├── scripts/             # generate / run_eval / demos / reproduce / verify
 ├── web/                 # interactive FastAPI demo (+ sprite assets)
 ├── assets/
 │   ├── figures/         # paper figures (PNG)
@@ -150,6 +156,12 @@ AlienBody/
 ├── index.html           # GitHub Pages landing (anonymouspubcode.github.io/…)
 ├── website/             # style.css + redirect helper
 └── DEPLOY*.md           # hosting notes
+```
+
+Check what you have before running anything:
+
+```bash
+python scripts/verify_release_bundle.py   # imports, data digests, hygiene, stub regressions
 ```
 
 ## Quick start
@@ -180,6 +192,41 @@ python scripts/run_eval.py --agent gpt-4o --family 1 --split test --n-envs 5 --m
 ```
 
 Vendor marks in `assets/icons/` are from [Simple Icons](https://simpleicons.org/) (CC0); see [`assets/ATTRIBUTION.md`](assets/ATTRIBUTION.md).
+
+## Reproduce the induction frontier (training rows)
+
+The paper's induction-frontier table has a row per trained variant, all but one
+flat at the same floor. To let you re-run those rows instead of trusting them:
+
+```bash
+pip install -r requirements.txt -r requirements-train.txt
+bash scripts/reproduce_induction_frontier.sh          # 5 default rows: train + eval
+bash scripts/reproduce_induction_frontier.sh train    # train only
+bash scripts/reproduce_induction_frontier.sh eval     # eval only (after training)
+```
+
+The script prints a preflight and stops before training if anything is
+missing. What you must supply yourself:
+
+* **Base weights** — Qwen3.5-9B and Qwen3.5-4B in HF layout; point `BASE9` /
+  `BASE4` at them. Nothing here downloads them.
+* **One CUDA device** — selected via `CUDA_VISIBLE_DEVICES`; the script sets no
+  device. LoRA runs fit a single card; the full-FT row is heavier.
+* **What is not one command**: the J-protocol launcher
+  (`run_nextstep.py`, which reads the run configs of our cluster runs) and the
+  trained checkpoints are not part of this release; the script trains the
+  checkpoints, and the launcher's assertions are kept as skipped tests in
+  `tests/`.
+
+Two rows are **archival records, not evidence** (their defects are documented
+in the paper's appendix and in the script headers): the multi-observation row's
+evaluation loop never called the model, and the full-FT row trained on an input
+that contained the ground-truth schema and was evaluated against base weights.
+They are off by default; `ARCHIVE_ROWS=1` runs them as records only.
+
+Re-runs are expected to be *statistically* equivalent, not bit-identical: the
+original runs were not hash-pinned, so record the commit you used alongside any
+number you quote.
 
 ## Deploy
 

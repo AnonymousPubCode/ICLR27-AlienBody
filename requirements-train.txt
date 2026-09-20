@@ -1,0 +1,11 @@
+# Training stack for scripts/reproduce_induction_frontier.sh — install on top
+# of requirements.txt (which covers the evaluation/demo path only).
+#
+# Floors, not pins: the original runs used recent releases of each.  A CPU-only
+# wheel is enough to import these modules but not to train; the induction
+# frontier rows need one CUDA device (9B LoRA or 4B full FT, bf16).
+torch>=2.4
+transformers>=4.45
+peft>=0.13
+datasets>=2.20
+accelerate>=1.0

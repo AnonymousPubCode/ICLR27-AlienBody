@@ -1,5 +1,12 @@
 #!/usr/bin/env python3
-"""Multi-observation F4 induction training (reviewer B fix).
+"""Multi-observation F4 induction training.
+
+ARCHIVAL RECORD — NOT EVIDENCE.  This trainer is shipped as the historical
+record of the paper's multi-observation row.  That row's evaluation loop
+never called the model (an undefined formatting helper made every action fall
+through to the scripted fallback), so its reported numbers are the fallback
+baseline, not a trained model's capability.  The paper keeps the row as a
+record that contributes no evidence; do not quote its numbers.
 
 The original trained variants saw only the action's LAST observation
 (fmb_text.py `records[-1]`). This trainer builds examples where the model
@@ -7,7 +14,7 @@ sees ALL Phase-1 observations of the action (12-27 records per action from
 f4_scale_2000.jsonl, grouped by (env_id, action)) and must output the
 action's ActionSchema. Same LoRA recipe as train_fmb_stage1_text.py.
 
-Usage (on the A800 server):
+Usage (single device; select the card with CUDA_VISIBLE_DEVICES):
   python scripts/train_fmb_multiobs.py \
       --model models/Qwen3.5-9B \
       --data data/fmb_trajectories/f4_scale_2000.jsonl \
@@ -16,10 +23,9 @@ Usage (on the A800 server):
 from __future__ import annotations
 
 import os
-# Pin to GPU 6 (the only card with free memory on the training host);
-# must run before any torch import.
-if "CUDA_VISIBLE_DEVICES" not in os.environ:
-    os.environ["CUDA_VISIBLE_DEVICES"] = "6"
+# The original run pinned a specific card on our training host; that pin is
+# machine-specific and is not reproduced.  Set CUDA_VISIBLE_DEVICES before
+# launching to choose the device (this must happen before any torch import).
 
 import argparse
 import json
