@@ -7,12 +7,12 @@
 <h1 align="center">AlienBody</h1>
 
 <p align="center">
-  <b>The Gap Between Action Knowledge and Control in LLM Agents</b><br/>
+  <b>Diagnosing How LLM Agents Acquire and Use Action Models</b><br/>
   <sub>Anonymous code &amp; benchmark release · under peer review</sub>
 </p>
 
 <p align="center">
-  Discover what anonymous actions <i>do</i> — action grounding, not name retrieval.
+  Separate acquisition from use — anonymous actions, then controlled interventions.
 </p>
 
 <p align="center">
@@ -43,7 +43,7 @@
 
 <p align="center">
   <a href="https://anonymouspubcode.github.io/ICLR27-AlienBody/">
-    <img src="assets/figures/teaser.png" width="920" alt="Figure 1 teaser: the name-prior fallacy (click for project website)"/>
+    <img src="assets/figures/teaser.png" width="920" alt="Figure 1 teaser: action names change measured success (click for project website)"/>
   </a>
 </p>
 <p align="center"><sub>Figure&nbsp;1 — Same environment, same model: only button labels change, and success tracks the labels. <a href="https://anonymouspubcode.github.io/ICLR27-AlienBody/">Open the project website</a> for animated clips.</sub></p>
@@ -54,11 +54,11 @@
 
 | | |
 |---|---|
-| **Problem** | Agent benchmarks leak action meaning through button names (`click`, `move_left`, …). Models look calibrated when they are only retrieving names. |
+| **Problem** | Agent scores conflate familiar action names, interaction evidence, and planning. AlienBody separates how models *acquire* vs *use* action models. |
 | **Protocol** | Phase&nbsp;1: probe anonymous IDs (`action_0`…). Phase&nbsp;2: navigate to a hidden-then-revealed target with the induced mapping. |
-| **Name prior** | On F2, GPT-4o: named-true **40%** · anonymous **23%** · named-misleading **9%** (same envs). |
-| **External games** | Kirby &amp; Crafter: named ≫ anonymous under matched visual protocols (see clips below). |
-| **Planning wall** | End-to-end VLMs stall once search depth grows; code-externalized search over a transition oracle nearly closes the gap. |
+| **Name prior** | On Spatial (F2), GPT-4o: named-true **40%** · anonymous **25%** · named-misleading **9%** (same 50 envs). |
+| **External games** | Kirby &amp; Crafter: naming shifts measured success under matched visual protocols (see clips below). |
+| **Using knowledge** | With effect names supplied, in-context agents stay near 0–10% on Relational; programmable interfaces raise success by tens of points vs conversational oracles. |
 | **Release** | Env code · 720 Tier-M envs (train/dev/test; secret withheld) · local web demo · evaluation scripts · media |
 
 ## Explore

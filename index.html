@@ -4,8 +4,8 @@
 <link rel="canonical" href="https://anonymouspubcode.github.io/ICLR27-AlienBody/">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AlienBody — The Gap Between Action Knowledge and Control</title>
-<meta name="description" content="AlienBody: the gap between action knowledge and control in LLM agents. Anonymous benchmark release under peer review.">
+<title>AlienBody — Diagnosing How LLM Agents Acquire and Use Action Models</title>
+<meta name="description" content="AlienBody: diagnosing how LLM agents acquire and use action models. Anonymous benchmark release under peer review.">
 <link rel="icon" href="assets/alienbody-logo.png">
 <link rel="stylesheet" href="website/style.css">
 </head>
@@ -28,11 +28,11 @@
 <div class="hero">
   <div class="wrap">
     <div class="eyebrow">Diagnostic benchmark · under peer review</div>
-    <h1>The Gap Between Action Knowledge and Control in LLM Agents</h1>
+    <h1>Diagnosing How LLM Agents Acquire and Use Action Models</h1>
     <p class="subtitle">
       Most agent benchmarks leak action meaning through button names.
-      AlienBody exposes anonymous IDs and asks models to <em>calibrate, then plan</em> —
-      separating exploration, interpretation, and search failures.
+      AlienBody randomizes mappings and runs controlled interventions —
+      separating how agents <em>acquire</em> action knowledge from how they <em>use</em> it.
     </p>
     <div class="btnrow">
       <a class="btn" href="https://anonymouspubcode.github.io/ICLR27-AlienBody/">Project website</a>
@@ -53,7 +53,7 @@
 
   <section>
     <div class="eyebrow">Paper figure</div>
-    <h2>The name-prior fallacy in one figure</h2>
+    <h2>Action names change measured success</h2>
     <figure>
       <img src="assets/figures/teaser.png" alt="Teaser figure">
       <figcaption>Same environment, same model — only labels change.</figcaption>

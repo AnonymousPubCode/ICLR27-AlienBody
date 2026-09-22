@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: "AlienBody: The Gap Between Action Knowledge and Control in LLM Agents"
+title: "AlienBody: Diagnosing How LLM Agents Acquire and Use Action Models"
 message: "If you use this software / benchmark, please cite the camera-ready paper once available."
 type: software
 authors:
@@ -8,11 +8,12 @@ authors:
 license: MIT
 repository-code: "https://github.com/AnonymousPubCode/ICLR27-AlienBody"
 abstract: >-
-  AlienBody is a diagnostic benchmark for action knowledge and control in LLM agents:
-  anonymous action IDs, a calibrate-then-plan protocol, and an interface ladder
-  that separates exploration, interpretation, and planning failures.
+  AlienBody is a 900-instance diagnostic benchmark that randomizes action
+  mappings to separate exploration, interpretation, and planning. Controlled
+  naming, rule-definition, and interface interventions make acquisition and
+  use of action models separately measurable for LLM agents.
 keywords:
   - LLM agents
-  - action grounding
+  - action models
   - anonymous actions
   - diagnostic benchmark
